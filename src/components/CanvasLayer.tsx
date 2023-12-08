@@ -13,7 +13,7 @@ export default forwardRef(
         })
 
         return (
-            <canvas ref={innerRef}></canvas>
+            <canvas id="canv" ref={innerRef}></canvas>
         );
     }
 );
