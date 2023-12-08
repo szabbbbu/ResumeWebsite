@@ -1,3 +1,4 @@
+import React from "react";
 import { forwardRef, useRef, useImperativeHandle } from "react";
 
 export default forwardRef(
@@ -13,7 +14,7 @@ export default forwardRef(
         })
 
         return (
-            <canvas id="canv" ref={innerRef}></canvas>
+            <canvas data-testid="myCanvas" id="myCanvas" ref={innerRef}></canvas>
         );
     }
 );
