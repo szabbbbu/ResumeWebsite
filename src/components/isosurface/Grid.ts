@@ -1,12 +1,13 @@
 import GridPoint from "./GridPoint";
 
-class Grid {
+class GridPoints {
     private Rows: number;
     private Cols: number;
     private Width: number;
     private Height: number;
     private aspectRatio: number;
-    private Grid: GridPoint[][] | null; //[row][col]
+    private GridPoints: GridPoint[][] | null; //[row][col]
+    // private GridCells:
 
     constructor(dim: number, width: number, height: number) {
         if (dim < 2) {
@@ -17,7 +18,7 @@ class Grid {
         this.Cols = dim;
         this.Width = width;
         this.Height = height;
-        this.Grid = null;
+        this.GridPoints = null;
         
         console.log('aspect ratio', this.aspectRatio)
     }
@@ -41,12 +42,12 @@ class Grid {
     }
 
     getGrid(): GridPoint[][] {
-        if (this.Grid == null) {
-            this.Grid = this.assembleGrid();
-            return this.Grid;
+        if (this.GridPoints == null) {
+            this.GridPoints = this.assembleGrid();
+            return this.GridPoints;
         }
-        else return this.Grid;
+        else return this.GridPoints;
     }
 }
 
-export default Grid;
+export default GridPoints;

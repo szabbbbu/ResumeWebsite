@@ -9,7 +9,7 @@ module.exports = {
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
   transform: {
   //NEXT USES 'preserve', we need 'react'
-    '^.+\\.(t|j)sx?$': 
+    '^.+\.(t|j)sx?$': 
       ['ts-jest',
       {
         tsconfig: {jsx: 'react'}

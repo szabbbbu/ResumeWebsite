@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "NODE_ENV=test jest",
-    "test:watch": "jest --watchAll"
+    "test": "NODE_ENV=test jest --coverage",
+    "test:watch": "jest --watchAll --coverage"
   },
   "dependencies": {
     "next": "14.0.3",
