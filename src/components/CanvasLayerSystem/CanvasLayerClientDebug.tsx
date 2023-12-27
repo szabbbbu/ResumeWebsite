@@ -14,10 +14,9 @@ export default function CanvasLayerClientDebug() {
 
     useEffect(() => {
         if (layerRef.current) {
-            console.log("yes");
+            // console.log("yes");
             const ctx = layerRef.current.getCanvasContext();
-            console.log(ctx);
-            
+            // console.log(ctx);
         }
     }, []);
 

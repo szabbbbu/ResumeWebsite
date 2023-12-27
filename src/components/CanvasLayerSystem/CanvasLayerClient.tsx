@@ -14,11 +14,10 @@ export default function CanvasLayerClient() {
 
     useEffect(() => {
         if (layerRef.current) {
-            console.log("yes");
             const ctx = layerRef.current.getCanvasContext();
             console.log(ctx);
-            const c1 = new Circle(100, 100, ctx)
-            c1.drawShape(30, "white", "transparent");
+            const c1 = new Circle(100, 100, 30, ctx)
+            c1.drawShape("white", "transparent");
         }
     }, []);
 

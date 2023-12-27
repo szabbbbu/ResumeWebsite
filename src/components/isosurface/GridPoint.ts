@@ -20,6 +20,7 @@ class GridPoint {
         return this.Val;
     }
     
+    //calculates distance from another given point
     calcDistanceFromPoint(pointX: number, pointY: number): void {
         this.Val = Math.sqrt(Math.pow(this.X - pointX, 2) + Math.pow(this.Y - pointY, 2))
     }

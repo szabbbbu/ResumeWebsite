@@ -1,30 +1,26 @@
-
-type Props = {
-
-}
+import Pair from "../util/Pair"
 
 interface I_Shape {
     drawShape: (...args: any[]) => void;
     clearShape: () => void;
     getContext: () => CanvasRenderingContext2D | null;
-    getPos: () => {x: number, y: number}
+    getPos: () => Pair;
 }
 
 abstract class Shape implements I_Shape {
-    private X: number;
-    private Y: number;
+    protected position: Pair;
     protected CanvasContext?: CanvasRenderingContext2D;
 
     constructor(xPos: number, yPos: number, ctx?: CanvasRenderingContext2D) {
-        this.X = xPos;
-        this.Y = yPos;
+        this.position = new Pair(xPos, yPos);
         this.CanvasContext = ctx;
     }
 
     abstract drawShape(...args: any[]): void;
+    // abstract moveShape(dx: number, dy: number);
 
-    getPos(): {x: number, y: number} {
-        return {x: this.X, y: this.Y};
+    getPos(): Pair {
+        return this.position;
     }
 
     getContext(): CanvasRenderingContext2D | null {
