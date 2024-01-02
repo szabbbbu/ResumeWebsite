@@ -52,6 +52,17 @@ describe("Circle", () => {
         expect(right.X).toBe(160);
     });
 
+    it("should update the inner circle position correctly", () => {
+        circle.setPos(new Pair(7,7));
+        const newPosition = circle.getPos();
+        expect(newPosition.X).toBe(7);
+        expect(newPosition.Y).toBe(7);
+    })
+
+    it("should update move circle function correctly", () => {
+        // const newPostion: Pair = circle.moveCircle(new Pair(0,-4), 2);
+        
+    })
 })
 
 

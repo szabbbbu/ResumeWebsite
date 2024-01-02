@@ -17,10 +17,15 @@ abstract class Shape implements I_Shape {
     }
 
     abstract drawShape(...args: any[]): void;
+    abstract calcHitboxBoundaries(): void;
     // abstract moveShape(dx: number, dy: number);
 
     getPos(): Pair {
         return this.position;
+    }
+
+    setPos(newPos: Pair): void {
+        this.position = newPos;
     }
 
     getContext(): CanvasRenderingContext2D | null {
