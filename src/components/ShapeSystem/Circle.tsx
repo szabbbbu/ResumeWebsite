@@ -4,11 +4,11 @@ import Pair from "../util/Pair";
 class Circle extends Shape {
 
     public radius: number;
-    protected BoundaryTop!: Pair; //! signifies it will be instantiated outside constuctor
-    protected BoundaryBtm!: Pair;
-    protected BoundaryRight!: Pair;
-    protected BoundaryLeft!: Pair;
-    protected Direction: Pair;
+    protected BoundaryTop!: number; //! signifies it will be instantiated outside constuctor
+    protected BoundaryBtm!: number;
+    protected BoundaryRight!: number;
+    protected BoundaryLeft!: number;
+    protected Direction: Pair; //the vector dictating direction of circle movement
     protected Speed: number;
 
     constructor(x: number, y: number, radius: number, ctx?: CanvasRenderingContext2D) {
@@ -22,19 +22,21 @@ class Circle extends Shape {
     }
 
     calcHitboxBoundaries() {
-        this.BoundaryTop = new Pair(this.position.X, this.position.Y - this.radius);
-        this.BoundaryBtm = new Pair(this.position.X, this.position.Y + this.radius);
-        this.BoundaryLeft = new Pair(this.position.X - this.radius, this.position.Y);
-        this.BoundaryRight = new Pair(this.position.X + this.radius, this.position.Y);
+        this.BoundaryTop = this.position.Y - this.radius;
+        this.BoundaryBtm = this.position.Y + this.radius;
+        this.BoundaryLeft = this.position.X - this.radius;
+        this.BoundaryRight = this.position.X + this.radius;
     }
+
+    
 
     moveCircle(): void {
         //calculate vector magnitude
         /** track boundaries */
-        if (this.BoundaryLeft.X <= 0 || this.BoundaryRight.X >= window.innerWidth) {
+        if (this.BoundaryLeft <= 0 || this.BoundaryRight >= window.innerWidth) {
             this.Direction.X *= -1;
         }
-        if (this.BoundaryTop.Y <= 0 || this.BoundaryBtm.Y >= window.innerHeight) {
+        if (this.BoundaryTop <= 0 || this.BoundaryBtm >= window.innerHeight) {
             this.Direction.Y *= -1;
         }
         const magnitude: number = Math.sqrt(Math.pow(this.Direction.X, 2) + Math.pow(this.Direction.Y, 2));
