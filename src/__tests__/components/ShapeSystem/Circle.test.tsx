@@ -39,17 +39,17 @@ describe("Circle", () => {
     });
 
     it("should calculate hitbox boundaries correctly", () => {
-        const top: Pair = circle.getBoundaryTop();
-        expect(top.X).toBe(circle.getPos().X);
-        expect(top.Y).toBe(40); // 100 - 60
-        const btm: Pair = circle.getBoundaryBtm();
-        expect(btm.X).toBe(circle.getPos().X);
-        expect(btm.Y).toBe(160);
-        const left: Pair = circle.getBoundaryLeft();
-        expect(left.X).toBe(40);
-        expect(left.Y).toBe(100);
-        const right: Pair = circle.getBoundaryRight();
-        expect(right.X).toBe(160);
+        const top = circle.getBoundaryTop();
+        expect(top).toBe(circle.getPos().X);
+        expect(top).toBe(40); // 100 - 60
+        const btm = circle.getBoundaryBtm();
+        expect(btm).toBe(circle.getPos().X);
+        expect(btm).toBe(160);
+        const left = circle.getBoundaryLeft();
+        expect(left).toBe(40);
+        expect(left).toBe(100);
+        const right = circle.getBoundaryRight();
+        expect(right).toBe(160);
     });
 
     it("should update the inner circle position correctly", () => {

@@ -17,7 +17,6 @@ abstract class Shape implements I_Shape {
     }
 
     abstract drawShape(...args: any[]): void;
-    abstract calcHitboxBoundaries(): void;
     // abstract moveShape(dx: number, dy: number);
 
     getPos(): Pair {
