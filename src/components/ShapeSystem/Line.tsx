@@ -1,18 +1,25 @@
+import Pair from "../util/Pair";
 import Shape from "./Shape";
 
 
 class Line extends Shape {
-    constructor(x: number, y: number, ctx?: CanvasRenderingContext2D) {
+    private Finish: Pair;
+    private Width: number;
+    constructor(x: number, y: number, start: Pair, finish: Pair, width: number, ctx: CanvasRenderingContext2D) {
         super(x, y, ctx);
+
+        this.Finish = finish;
+        this.Width = width;
     }
 
-    drawShape(from: {x: number, y: number}, to: {x: number, y: number}, stroke:string="black"): void {
+    drawShape(stroke:string="white"): void {
         const ctx = super.getContext();
         if (!ctx) return;
         ctx.beginPath();
         ctx.strokeStyle = stroke;
-        ctx.moveTo(from.x, from.y);
-        ctx.lineTo(to.x, to.y);
+        ctx.lineWidth = this.Width;
+        ctx.moveTo(this.position.X, this.position.Y);
+        ctx.lineTo(this.Finish.X, this.Finish.Y);
         ctx.stroke();
     }
 }

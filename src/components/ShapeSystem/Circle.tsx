@@ -11,7 +11,7 @@ class Circle extends Shape {
     protected Direction: Pair; //the vector dictating direction of circle movement
     protected Speed: number;
 
-    constructor(x: number, y: number, radius: number, ctx?: CanvasRenderingContext2D) {
+    constructor(x: number, y: number, radius: number, ctx: CanvasRenderingContext2D | null) {
         super(x, y, ctx);
         this.radius = radius;
         this.calcHitboxBoundaries();

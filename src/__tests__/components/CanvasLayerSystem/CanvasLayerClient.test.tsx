@@ -4,12 +4,7 @@ import { render, screen } from "@testing-library/react";
 import Circle from "@/components/ShapeSystem/Circle";
 
 describe('CanvasLayerClient component', () => {
-    beforeAll(() => {
-        // Mock the necessary implementations or global objects (e.g., window.innerWidth) used in your component
-        // For example:
-        Object.defineProperty(window, 'innerWidth', { value: 800 });
-        Object.defineProperty(window, 'innerHeight', { value: 600 });
-      });
+    
     it('accesses circles drawn on the canvas', () => {
       // Render the CanvasLayerClient component
       const { container } = render(<CanvasLayerClient />);

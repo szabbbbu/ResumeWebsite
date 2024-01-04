@@ -19,6 +19,7 @@ export default function CanvasLayerClient() {
     useEffect(() => {
         if (layerRef.current) {
             const ctx = layerRef.current.getCanvasContext();
+            if (!ctx) return
             for (let i = 0; i < 5; i++) {
                 const randRadius = Math.floor(Math.random() * 100 + 40);
                 const randX = Math.floor(Math.random() * (window.innerWidth - (2*randRadius)) + randRadius);

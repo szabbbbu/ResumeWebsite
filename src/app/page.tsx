@@ -1,4 +1,5 @@
 import CanvasLayerClient from '@/components/CanvasLayerSystem/CanvasLayerClient';
+import CanvasLayerClientDebug from '@/components/CanvasLayerSystem/CanvasLayerClientDebug';
 
 export default function Home() {
   console.log("HOME RENDERED:")
@@ -7,6 +8,7 @@ export default function Home() {
       hello
       <div>
         <CanvasLayerClient />
+        <CanvasLayerClientDebug />
       </div>
     </div>
   );

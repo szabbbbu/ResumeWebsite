@@ -37,6 +37,7 @@ export default forwardRef(
                     if (innerRef.current) {
                         return innerRef.current.getContext('2d');
                     }
+                    else return null;
                 }
             }
         })

@@ -9,9 +9,9 @@ interface I_Shape {
 
 abstract class Shape implements I_Shape {
     protected position: Pair;
-    protected CanvasContext?: CanvasRenderingContext2D;
+    protected CanvasContext: CanvasRenderingContext2D | null;
 
-    constructor(xPos: number, yPos: number, ctx?: CanvasRenderingContext2D) {
+    constructor(xPos: number, yPos: number, ctx: CanvasRenderingContext2D | null) {
         this.position = new Pair(xPos, yPos);
         this.CanvasContext = ctx;
     }
