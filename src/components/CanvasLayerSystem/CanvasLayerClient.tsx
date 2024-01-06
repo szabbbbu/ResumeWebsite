@@ -12,14 +12,13 @@ interface I_CanvasLayer {
 //renders and animates the circles
 function Client() {
 
-    const {appWidth, appHeight, setAppWidth} = useAppContext();
+    const {appWidth, appHeight, isoGrid} = useAppContext();
     const layerRef = useRef<I_CanvasLayer>(null);
     const circles: Circle[] = []
 
     // console.log("WHAT")
 
     const generateCircles = useCallback((ctx: CanvasRenderingContext2D) => {
-        console.log("DO CIRCLES EXIST?", circles.length, appWidth, appHeight);
         if (circles.length == 0) {
             for (let i = 0; i < 5; i++) {
                 const randRadius = Math.floor(Math.random() * 100 + 40);
@@ -43,29 +42,33 @@ function Client() {
             const ctx = layerRef.current.getCanvasContext();
             if (!ctx) return
             generateCircles(ctx);
+            isoGrid.getDistanceValues(circles)
         }
     }, [appWidth, appHeight]);
 
     /** HANDLES ANIMATION */
-    useEffect(() => {
-        const animate = () => {
-            //clear the canvas
-            if (layerRef.current) {
-                const ctx = layerRef.current.getCanvasContext();
-                if (!ctx) return;
-                ctx.clearRect(0,0, window.innerWidth, window.innerHeight);
-            }
-            //movethecircles
-            circles.forEach(circle => {
+    // useEffect(() => {
+    //     const animate = () => {
+    //         //clear the canvas
+    //         if (layerRef.current) {
+    //             const ctx = layerRef.current.getCanvasContext();
+    //             if (!ctx) return;
+    //             ctx.clearRect(0,0, window.innerWidth, window.innerHeight);
+    //         }
+    //         //movethecircles
+    //         circles.forEach(circle => {
                 
-                circle.moveCircle()
-            })
-            requestAnimationFrame(animate);
-        }
-        animate();
-    }, [])
+    //             circle.moveCircle()
+    //         })
+    //         requestAnimationFrame(animate);
+    //     }
+    //     animate();
+    // }, [])
+
     return (
-        <CanvasLayer ref={layerRef}/>
+        <>
+            <CanvasLayer ref={layerRef}/>
+        </>
     );
 }
 

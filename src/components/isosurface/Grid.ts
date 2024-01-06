@@ -1,4 +1,5 @@
 import GridPoint from "./GridPoint";
+import Circle from "../ShapeSystem/Circle";
 
 class GridPoints {
     private Rows: number;
@@ -6,7 +7,8 @@ class GridPoints {
     private Width: number;
     private Height: number;
     private aspectRatio: number;
-    private GridPoints: GridPoint[][] | null; //[row][col]
+    private GridPoints: GridPoint[][]; //[row][col]
+    private GridCells: GridCell[][] | null;
     // private GridCells:
 
     constructor(dim: number, width: number, height: number) {
@@ -18,17 +20,14 @@ class GridPoints {
         this.Cols = dim;
         this.Width = width;
         this.Height = height;
-        this.GridPoints = null;
-        
-        console.log('aspect ratio', this.aspectRatio)
+        this.GridPoints = this.assembleGridPoints();
     }
     
-    private assembleGrid(): GridPoint[][] {
+    private assembleGridPoints(): GridPoint[][] {
         const newGrid: GridPoint[][] = [];
         const widthInterval: number = this.Width / this.Cols;
         const heightInterval: number = this.Height / this.Rows; 
         // console.log("WIDTH & HEIGHT INTERVALS:", widthInterval, heightInterval)
-
         for (let i = 0; i <= this.Rows; i++) {
             const currYLine = heightInterval * i;
             const newRow: GridPoint[] = [];
@@ -41,12 +40,21 @@ class GridPoints {
         return newGrid;
     }
 
+    getDistanceValues(circles: Circle[]): void {
+        if (this.GridPoints == null) this.getGrid();
+        this.GridPoints.forEach(row => {
+            row.forEach(point => {
+                circles.forEach(circle => {
+                    const circlePos = circle.getPos()
+                    point.calcDistanceFromPoint(circlePos.X, circlePos.Y, circle.radius);
+                    console.log("newVal", point.getValue())
+                });
+            });
+        });
+    }
+
     getGrid(): GridPoint[][] {
-        if (this.GridPoints == null) {
-            this.GridPoints = this.assembleGrid();
-            return this.GridPoints;
-        }
-        else return this.GridPoints;
+        return this.GridPoints;
     }
 }
 

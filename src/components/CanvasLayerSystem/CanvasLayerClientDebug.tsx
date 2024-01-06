@@ -2,6 +2,7 @@
 
 import {useEffect, useRef} from "react"
 import CanvasLayer from "./CanvasLayer"
+import { useAppContext } from "@/contexts/useAppContext";
 import Line from "../ShapeSystem/Line";
 import Pair from "../util/Pair";
 import Grid from "../isosurface/Grid";
@@ -13,7 +14,7 @@ interface I_CanvasLayer {
 
 //renders the debug layer (grid)
 export default function CanvasLayerClientDebug() {
-
+    const {isoGrid} = useAppContext()
     const layerRef = useRef<I_CanvasLayer>(null);
 
     useEffect(() => {
@@ -22,8 +23,7 @@ export default function CanvasLayerClientDebug() {
             const ctx: CanvasRenderingContext2D | null= layerRef.current.getCanvasContext();
             if (!ctx) return;
             /** ASSEMBLE GRID HERE */
-            const grid = new Grid(12, window.innerWidth, window.innerHeight)
-            const g = grid.getGrid();
+            const g = isoGrid.getGrid();
             g.forEach(row => {
                 row.forEach(point => {
                     const newGridPoint = new Circle(point.getXPos(), point.getYPos(), 5, ctx);

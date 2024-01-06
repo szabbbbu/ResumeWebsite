@@ -36,8 +36,7 @@ class Circle extends Shape {
 
     moveCircle(): void {
         //calculate vector magnitude
-        /** track boundaries */
-
+        /** track boundaries, ensure items aren't stuck */
         if (this.BoundaryLeft <= 0) {
             this.Direction.X = Math.abs(this.Direction.X);
         }
@@ -52,16 +51,10 @@ class Circle extends Shape {
         }
         const magnitude: number = Math.sqrt(Math.pow(this.Direction.X, 2) + Math.pow(this.Direction.Y, 2));
 
-        // console.log("magnitude", magnitude)
         // create the "normalized" vector
         const normalizedVec: Pair = new Pair(this.Direction.X / magnitude, this.Direction.Y / magnitude);
-        // console.log("normalized vec", normalizedVec.X, normalizedVec.Y);
         const displacement = [this.Speed * normalizedVec.X, this.Speed * normalizedVec.Y];
-        // console.log("displacement::: ", displacement)
-        // console.log("Current position: ", this.position.X, this.position.Y);
         const newPos = new Pair(this.position.X + displacement[0], this.position.Y + displacement[1]);
-        // console.log("newPos", newPos.X, newPos.Y);
-        // this.clearShape();
         this.setPos(newPos);
         this.calcHitboxBoundaries();
         this.drawShape();
@@ -82,11 +75,6 @@ class Circle extends Shape {
         ctx.stroke();
     }
 
-    // clearShape(): void {
-    //     if (this.CanvasContext) {
-    //         this.CanvasContext.clearRect(this.position.X - this.radius, this.position.Y - this.radius, this.position.X + this.radius, this.position.Y + (this.radius))
-    //     }
-    // }
 }
 
 

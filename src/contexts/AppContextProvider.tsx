@@ -1,6 +1,7 @@
 "use client"
 import { ReactNode, useEffect, useState } from "react";
 import { AppContext } from "./AppContext";
+import Grid from "../components/isosurface/Grid";
 
 type Props = {
     children: ReactNode;
@@ -10,6 +11,7 @@ export default function AppContextProvider({children}: Props) {
     
     const [appWidth, setAppWidth] = useState<number>(window.innerWidth);
     const [appHeight, setAppHeight] = useState<number>(window.innerHeight);
+
 
     useEffect(() => {
         const handleResize = () => {
@@ -30,7 +32,8 @@ export default function AppContextProvider({children}: Props) {
                     appHeight: appHeight,
                     appWidth: appWidth,
                     setAppHeight:setAppHeight,
-                    setAppWidth: setAppWidth
+                    setAppWidth: setAppWidth,
+                    isoGrid: new Grid(12, appWidth, appHeight)
                 }
             }
         >
