@@ -21,6 +21,10 @@ class Circle extends Shape {
         this.Speed = 2
     }
 
+    getBoundaries() {
+        return [this.BoundaryTop, this.BoundaryRight, this.BoundaryBtm, this.BoundaryLeft];
+    }
+
     calcHitboxBoundaries() {
         this.BoundaryTop = this.position.Y - this.radius;
         this.BoundaryBtm = this.position.Y + this.radius;
@@ -33,11 +37,18 @@ class Circle extends Shape {
     moveCircle(): void {
         //calculate vector magnitude
         /** track boundaries */
-        if (this.BoundaryLeft <= 0 || this.BoundaryRight >= window.innerWidth) {
-            this.Direction.X *= -1;
+
+        if (this.BoundaryLeft <= 0) {
+            this.Direction.X = Math.abs(this.Direction.X);
         }
-        if (this.BoundaryTop <= 0 || this.BoundaryBtm >= window.innerHeight) {
-            this.Direction.Y *= -1;
+        if (this.BoundaryRight >= window.innerWidth) {
+            this.Direction.X = Math.abs(this.Direction.X) * -1;
+        }
+        if (this.BoundaryTop <= 0) {
+            this.Direction.Y = Math.abs(this.Direction.Y);
+        }
+        if (this.BoundaryBtm >= window.innerHeight) {
+            this.Direction.Y = Math.abs(this.Direction.X) * -1;
         }
         const magnitude: number = Math.sqrt(Math.pow(this.Direction.X, 2) + Math.pow(this.Direction.Y, 2));
 

@@ -2,6 +2,9 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
+import CanvasLayerClient from '@/components/CanvasLayerSystem/CanvasLayerClient'
+import CanvasLayerClientDebug from '@/components/CanvasLayerSystem/CanvasLayerClientDebug'
+import AppContextProvider from '@/contexts/AppContextProvider'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -19,6 +22,10 @@ export default function RootLayout({
       <body className={inter.className}>
         
         <Header />
+        <AppContextProvider>
+          <CanvasLayerClient />
+          <CanvasLayerClientDebug />
+        </AppContextProvider>
         {children}
       
       </body>
