@@ -14,7 +14,7 @@ class Circle extends Shape {
     protected Speed: number;
 
     protected EnvelopedPoints: Set<GridPoint>;
-    protected grid: Grid | undefined;
+    static grid = new Grid(40, window.innerWidth, window.innerHeight);
 
     constructor(x: number, y: number, radius: number, ctx: CanvasRenderingContext2D | null) {
         super(x, y, ctx);
@@ -24,9 +24,7 @@ class Circle extends Shape {
         const randomVy = Math.floor((Math.random() * 80) - 40);
         this.Direction = new Pair(randomVx, randomVy);
         this.EnvelopedPoints = new Set<GridPoint>();
-        this.Speed = 2
-        if (ctx)
-        this.grid = new Grid(12, ctx.canvas.width, ctx.canvas.height)
+        this.Speed = 2;
     }
 
     getBoundaries() {
@@ -39,8 +37,6 @@ class Circle extends Shape {
         this.BoundaryLeft = this.position.X - this.radius;
         this.BoundaryRight = this.position.X + this.radius;
     }
-
-    
 
     moveCircle(): void {
         //calculate vector magnitude
@@ -83,10 +79,11 @@ class Circle extends Shape {
         ctx.stroke();
     }
     //reads the isogrid and creates a set of points enveloped currently by the circle
+    //TODO: Remove get from this method declaration, since it's a void func
     getGridStatus() {
-        if (!this.grid) this.grid = new Grid(12, 1000, 500)
+        if (!Circle.grid) Circle.grid = new Grid(12, 1000, 500)
         this.EnvelopedPoints.clear();
-        const g = this.grid.getGrid();
+        const g = Circle.grid.getGrid();
         g.forEach(row => {
             row.forEach(point => {
                 point.calcDistanceFromPoint(this.position.X, this.position.Y, this.radius);
@@ -95,14 +92,12 @@ class Circle extends Shape {
                 }
             })
         })
-        console.log("enveloped points for circle: ", this.radius,this.EnvelopedPoints)
+        // console.log("enveloped points for circle: ", this.radius,this.EnvelopedPoints)
     }
 
     getEnvelopedPoints() {
         return this.EnvelopedPoints;
     }
-
-
 }
 
 

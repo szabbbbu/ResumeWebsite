@@ -3,7 +3,6 @@
 import {useEffect, useRef} from "react"
 import CanvasLayer from "./CanvasLayer"
 import { useAppContext } from "@/contexts/useAppContext";
-import Circle from "../ShapeSystem/Circle";
 
 interface I_CanvasLayer {
     getCanvasContext: () => CanvasRenderingContext2D | null;
@@ -25,7 +24,10 @@ export default function CanvasLayerClientDebug() {
                 const coveredPoints = circle.getEnvelopedPoints();
                 coveredPoints.forEach(point => {
                     ctx.fillStyle = "white"
-                    ctx.fillText(String(point.getValue()), point.getXPos()+ 10, point.getYPos() + 10)
+                    ctx.beginPath();
+                    ctx.arc(point.getXPos(), point.getYPos(), 2, 0, 360)
+                    ctx.fill();
+                    ctx.fillText(String(point.getValue().toFixed(2)), point.getXPos()+ 5, point.getYPos() + 10);
                 });
             });
         }
