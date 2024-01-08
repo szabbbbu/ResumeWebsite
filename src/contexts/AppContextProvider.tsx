@@ -2,6 +2,7 @@
 import { ReactNode, useEffect, useState } from "react";
 import { AppContext } from "./AppContext";
 import Grid from "../components/isosurface/Grid";
+import Circle from "@/components/ShapeSystem/Circle";
 
 type Props = {
     children: ReactNode;
@@ -11,6 +12,8 @@ export default function AppContextProvider({children}: Props) {
     
     const [appWidth, setAppWidth] = useState<number>(window.innerWidth);
     const [appHeight, setAppHeight] = useState<number>(window.innerHeight);
+    const [isoGrid, setIsoGrid] = useState<Grid>(new Grid(12, appWidth, appHeight));
+    const [circles, setCircles] = useState<Circle[]>([])
 
 
     useEffect(() => {
@@ -33,7 +36,10 @@ export default function AppContextProvider({children}: Props) {
                     appWidth: appWidth,
                     setAppHeight:setAppHeight,
                     setAppWidth: setAppWidth,
-                    isoGrid: new Grid(12, appWidth, appHeight)
+                    isoGrid: isoGrid,
+                    setIsoGrid: setIsoGrid,
+                    circles: circles, 
+                    setCircles: setCircles
                 }
             }
         >

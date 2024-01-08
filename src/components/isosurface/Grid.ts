@@ -8,7 +8,7 @@ class GridPoints {
     private Height: number;
     private aspectRatio: number;
     private GridPoints: GridPoint[][]; //[row][col]
-    private GridCells: GridCell[][] | null;
+    // private GridCells: GridCell[][] | null;
     // private GridCells:
 
     constructor(dim: number, width: number, height: number) {
@@ -38,19 +38,6 @@ class GridPoints {
             newGrid.push(newRow);
         }
         return newGrid;
-    }
-
-    getDistanceValues(circles: Circle[]): void {
-        if (this.GridPoints == null) this.getGrid();
-        this.GridPoints.forEach(row => {
-            row.forEach(point => {
-                circles.forEach(circle => {
-                    const circlePos = circle.getPos()
-                    point.calcDistanceFromPoint(circlePos.X, circlePos.Y, circle.radius);
-                    console.log("newVal", point.getValue())
-                });
-            });
-        });
     }
 
     getGrid(): GridPoint[][] {

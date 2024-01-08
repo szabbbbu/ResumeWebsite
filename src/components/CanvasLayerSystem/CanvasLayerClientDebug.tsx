@@ -3,9 +3,6 @@
 import {useEffect, useRef} from "react"
 import CanvasLayer from "./CanvasLayer"
 import { useAppContext } from "@/contexts/useAppContext";
-import Line from "../ShapeSystem/Line";
-import Pair from "../util/Pair";
-import Grid from "../isosurface/Grid";
 import Circle from "../ShapeSystem/Circle";
 
 interface I_CanvasLayer {
@@ -14,25 +11,33 @@ interface I_CanvasLayer {
 
 //renders the debug layer (grid)
 export default function CanvasLayerClientDebug() {
-    const {isoGrid} = useAppContext()
+    const {isoGrid, appWidth, appHeight ,circles} = useAppContext()
     const layerRef = useRef<I_CanvasLayer>(null);
 
-    useEffect(() => {
+    const assembleGrid = () => {
+        /** ASSEMBLE GRID HERE */
         if (layerRef.current) {
-            // console.log("yes")Á
-            const ctx: CanvasRenderingContext2D | null= layerRef.current.getCanvasContext();
+            const ctx: CanvasRenderingContext2D | null = layerRef.current.getCanvasContext();
             if (!ctx) return;
-            /** ASSEMBLE GRID HERE */
-            const g = isoGrid.getGrid();
-            g.forEach(row => {
-                row.forEach(point => {
-                    const newGridPoint = new Circle(point.getXPos(), point.getYPos(), 5, ctx);
-                    newGridPoint.drawShape("white");
-                    ctx.fillText(`${point.getValue()}`, point.getXPos() + 10, point.getYPos() + 10)
+            ctx.clearRect(0,0,appWidth, appHeight)
+
+            circles.forEach(circle => {
+                const coveredPoints = circle.getEnvelopedPoints();
+                coveredPoints.forEach(point => {
+                    ctx.fillStyle = "white"
+                    ctx.fillText(String(point.getValue()), point.getXPos()+ 10, point.getYPos() + 10)
                 });
-            });   
+            });
         }
-    });
+    }
+
+    useEffect(() => {
+        const update = () => {
+            assembleGrid();
+            requestAnimationFrame(update);
+        }
+        update();
+    }, [])
 
     return (
         <CanvasLayer ref={layerRef}/>

@@ -1,5 +1,7 @@
 import Shape from "./Shape";
 import Pair from "../util/Pair";
+import GridPoint from "../isosurface/GridPoint";
+import Grid from "../isosurface/Grid";
 
 class Circle extends Shape {
 
@@ -11,6 +13,9 @@ class Circle extends Shape {
     protected Direction: Pair; //the vector dictating direction of circle movement
     protected Speed: number;
 
+    protected EnvelopedPoints: Set<GridPoint>;
+    protected grid: Grid | undefined;
+
     constructor(x: number, y: number, radius: number, ctx: CanvasRenderingContext2D | null) {
         super(x, y, ctx);
         this.radius = radius;
@@ -18,7 +23,10 @@ class Circle extends Shape {
         const randomVx = Math.floor((Math.random() * 80) - 40);
         const randomVy = Math.floor((Math.random() * 80) - 40);
         this.Direction = new Pair(randomVx, randomVy);
+        this.EnvelopedPoints = new Set<GridPoint>();
         this.Speed = 2
+        if (ctx)
+        this.grid = new Grid(12, ctx.canvas.width, ctx.canvas.height)
     }
 
     getBoundaries() {
@@ -74,6 +82,26 @@ class Circle extends Shape {
         ctx.fill();
         ctx.stroke();
     }
+    //reads the isogrid and creates a set of points enveloped currently by the circle
+    getGridStatus() {
+        if (!this.grid) this.grid = new Grid(12, 1000, 500)
+        this.EnvelopedPoints.clear();
+        const g = this.grid.getGrid();
+        g.forEach(row => {
+            row.forEach(point => {
+                point.calcDistanceFromPoint(this.position.X, this.position.Y, this.radius);
+                if (point.getValue() < 0) {
+                    this.EnvelopedPoints.add(point)
+                }
+            })
+        })
+        console.log("enveloped points for circle: ", this.radius,this.EnvelopedPoints)
+    }
+
+    getEnvelopedPoints() {
+        return this.EnvelopedPoints;
+    }
+
 
 }
 

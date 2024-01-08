@@ -12,10 +12,8 @@ interface I_CanvasLayer {
 //renders and animates the circles
 function Client() {
 
-    const {appWidth, appHeight, isoGrid} = useAppContext();
+    const {appWidth, appHeight, isoGrid, circles, setCircles} = useAppContext();
     const layerRef = useRef<I_CanvasLayer>(null);
-    const circles: Circle[] = []
-
     // console.log("WHAT")
 
     const generateCircles = useCallback((ctx: CanvasRenderingContext2D) => {
@@ -34,36 +32,35 @@ function Client() {
                 circle.drawShape()
             })
         }
-        
-    }, [appWidth, appHeight])
+        setCircles({...circles});
+    }, [appWidth, appHeight, circles])
 
     useEffect(() => {
         if (layerRef.current) {
             const ctx = layerRef.current.getCanvasContext();
             if (!ctx) return
             generateCircles(ctx);
-            isoGrid.getDistanceValues(circles)
         }
     }, [appWidth, appHeight]);
 
     /** HANDLES ANIMATION */
-    // useEffect(() => {
-    //     const animate = () => {
-    //         //clear the canvas
-    //         if (layerRef.current) {
-    //             const ctx = layerRef.current.getCanvasContext();
-    //             if (!ctx) return;
-    //             ctx.clearRect(0,0, window.innerWidth, window.innerHeight);
-    //         }
-    //         //movethecircles
-    //         circles.forEach(circle => {
-                
-    //             circle.moveCircle()
-    //         })
-    //         requestAnimationFrame(animate);
-    //     }
-    //     animate();
-    // }, [])
+    useEffect(() => {
+        const animate = () => {
+            //clear the canvas
+            if (layerRef.current) {
+                const ctx = layerRef.current.getCanvasContext();
+                if (!ctx) return;
+                ctx.clearRect(0,0, window.innerWidth, window.innerHeight);
+            }
+            circles.forEach(circle => {
+                circle.moveCircle()
+                circle.getGridStatus();
+            })
+            setCircles({...circles})
+            requestAnimationFrame(animate);
+        }
+        animate();
+    }, [])
 
     return (
         <>
