@@ -7,6 +7,8 @@ class GridPoints {
     private Width: number;
     private Height: number;
     private aspectRatio: number;
+    private widthInterval!: number;
+    private heightInterval!: number;
     private GridPoints: GridPoint[][]; //[row][col]
     // private GridCells: GridCell[][] | null;
     // private GridCells:
@@ -20,19 +22,18 @@ class GridPoints {
         this.Cols = dim;
         this.Width = width;
         this.Height = height;
+        this.widthInterval = this.Width / this.Cols;
+        this.heightInterval = this.Height / this.Rows;
         this.GridPoints = this.assembleGridPoints();
     }
     
     private assembleGridPoints(): GridPoint[][] {
         const newGrid: GridPoint[][] = [];
-        const widthInterval: number = this.Width / this.Cols;
-        const heightInterval: number = this.Height / this.Rows; 
-        // console.log("WIDTH & HEIGHT INTERVALS:", widthInterval, heightInterval)
         for (let i = 0; i <= this.Rows; i++) {
-            const currYLine = heightInterval * i;
+            const currYLine = this.heightInterval * i;
             const newRow: GridPoint[] = [];
             for (let j = 0; j <= this.Cols; j++) {
-                const currXLine = widthInterval * j;
+                const currXLine = this.widthInterval * j;
                 newRow.push(new GridPoint(currXLine, currYLine));
             }
             newGrid.push(newRow);
@@ -46,6 +47,14 @@ class GridPoints {
 
     setGrid(newGrid: GridPoint[][]): void {
         this.GridPoints = newGrid
+    }
+
+    getWidthInterval(): number {
+        return this.widthInterval;
+    }
+
+    getHeightInterval(): number {
+        return this.heightInterval;
     }
 }
 

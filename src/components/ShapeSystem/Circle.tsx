@@ -14,7 +14,6 @@ class Circle extends Shape {
     protected Speed: number;
 
     protected EnvelopedPoints: Set<GridPoint>;
-    static grid = new Grid(40, window.innerWidth, window.innerHeight);
 
     constructor(x: number, y: number, radius: number, ctx: CanvasRenderingContext2D | null) {
         super(x, y, ctx);
@@ -24,6 +23,7 @@ class Circle extends Shape {
         const randomVy = Math.floor((Math.random() * 80) - 40);
         this.Direction = new Pair(randomVx, randomVy);
         this.EnvelopedPoints = new Set<GridPoint>();
+        // this.Speed = (Math.random());
         this.Speed = 2;
     }
 

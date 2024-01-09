@@ -5,7 +5,7 @@ import Shape from "./Shape";
 class Line extends Shape {
     private Finish: Pair;
     private Width: number;
-    constructor(x: number, y: number, start: Pair, finish: Pair, width: number, ctx: CanvasRenderingContext2D) {
+    constructor(x: number, y: number, finish: Pair, width: number, ctx: CanvasRenderingContext2D) {
         super(x, y, ctx);
 
         this.Finish = finish;
