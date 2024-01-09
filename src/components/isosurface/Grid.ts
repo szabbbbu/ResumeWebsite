@@ -43,6 +43,10 @@ class GridPoints {
     getGrid(): GridPoint[][] {
         return this.GridPoints;
     }
+
+    setGrid(newGrid: GridPoint[][]): void {
+        this.GridPoints = newGrid
+    }
 }
 
 export default GridPoints;

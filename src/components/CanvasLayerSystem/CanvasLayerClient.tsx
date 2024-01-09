@@ -54,7 +54,7 @@ function Client() {
             }
             circles.forEach(circle => {
                 circle.moveCircle()
-                circle.getGridStatus();
+                // circle.getGridStatus();
             })
             setCircles({...circles})
             requestAnimationFrame(animate);

@@ -80,20 +80,20 @@ class Circle extends Shape {
     }
     //reads the isogrid and creates a set of points enveloped currently by the circle
     //TODO: Remove get from this method declaration, since it's a void func
-    getGridStatus() {
-        if (!Circle.grid) Circle.grid = new Grid(12, 1000, 500)
-        this.EnvelopedPoints.clear();
-        const g = Circle.grid.getGrid();
-        g.forEach(row => {
-            row.forEach(point => {
-                point.calcDistanceFromPoint(this.position.X, this.position.Y, this.radius);
-                if (point.getValue() < 0) {
-                    this.EnvelopedPoints.add(point)
-                }
-            })
-        })
-        // console.log("enveloped points for circle: ", this.radius,this.EnvelopedPoints)
-    }
+    // getGridStatus() {
+    //     if (!Circle.grid) Circle.grid = new Grid(12, 1000, 500)
+    //     this.EnvelopedPoints.clear();
+    //     const g = Circle.grid.getGrid();
+    //     g.forEach(row => {
+    //         row.forEach(point => {
+    //             point.calcDistanceFromPoint(this.position.X, this.position.Y, this.radius);
+    //             if (point.getValue() < 0) {
+    //                 this.EnvelopedPoints.add(point)
+    //             }
+    //         })
+    //     })
+    //     // console.log("enveloped points for circle: ", this.radius,this.EnvelopedPoints)
+    // }
 
     getEnvelopedPoints() {
         return this.EnvelopedPoints;
