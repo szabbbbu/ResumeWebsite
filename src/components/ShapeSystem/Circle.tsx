@@ -24,7 +24,7 @@ class Circle extends Shape {
         this.Direction = new Pair(randomVx, randomVy);
         this.EnvelopedPoints = new Set<GridPoint>();
         // this.Speed = (Math.random());
-        this.Speed = 2;
+        this.Speed = 1;
     }
 
     getBoundaries() {

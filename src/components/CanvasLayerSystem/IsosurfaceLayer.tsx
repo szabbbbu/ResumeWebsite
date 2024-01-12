@@ -11,6 +11,7 @@ interface I_CanvasLayer {
     getCanvasContext: () => CanvasRenderingContext2D | undefined;
 }
 
+
 enum ContourStates {
     "false,false,false,false" = 0, // 0000
     "false,false,false,true" = 1, // 0001
@@ -29,6 +30,26 @@ enum ContourStates {
     "true,true,true,false" = 14, // 1110
     "true,true,true,true" = 15 // 1111
 }
+
+function linearInterpolation(
+    value: number,
+    originalMin: number,
+    originalMax: number,
+    newMin: number,
+    newMax: number
+  ): number {
+    // Clamping the value within the original range
+    const clampedValue = Math.min(Math.max(value, originalMin), originalMax);
+
+    // const normalizedValue = (clampedValue - originalMin) / (originalMax - originalMin);
+
+  
+    // Perform the linear interpolation
+    const newValue = newMin + ((clampedValue - originalMin) * (newMax - newMin)) / (originalMax - originalMin);
+  
+    return newValue;
+  }
+
 
 export default function IsosurfaceLayer() {
 
@@ -51,71 +72,106 @@ export default function IsosurfaceLayer() {
         const s: string = config.toString();
         // console.log(contourStates[s])
         const currState: number = ContourStates[s];
-        
-        const contourIntervalW = isoGrid.getWidthInterval()/2;
-        const contourIntervalH = isoGrid.getHeightInterval()/2;
-
+        let interX: number;
+        let interY: number;
+        const clampingMax = 10;
         switch(currState) {
             case 0:
                 // console.log("No contour");
                 break;
             case 1: //* bottom left corner */
-                new Line(btmLeft.getXPos(), btmLeft.getYPos() - contourIntervalH, new Pair(btmLeft.getXPos() + contourIntervalW, btmLeft.getYPos()), 2, ctx)
+                // console.log(linearInterpolation(Math.abs(btmLeft.getValue()), 0,60,btmLeft.getXPos(), btmRight.getXPos()))
+                interX = linearInterpolation(Math.abs(btmLeft.getValue()), 0,clampingMax,btmLeft.getXPos(), btmRight.getXPos())
+                interY = linearInterpolation(btmLeft.getValue(), 0-clampingMax, 0, topLeft.getYPos(), btmLeft.getYPos())
+                new Line(btmLeft.getXPos(), interY, new Pair(interX, btmLeft.getYPos()), 2, ctx)
                 .drawShape()
                 break;
             case 2: /** bottom right */
-                new Line(btmRight.getXPos() - contourIntervalW, btmRight.getYPos(), new Pair(btmRight.getXPos(), btmRight.getYPos() - contourIntervalH), 2, ctx)
+                interX = linearInterpolation(btmRight.getValue(),0 - clampingMax,0, btmLeft.getXPos(), btmRight.getXPos())
+                interY = linearInterpolation(Math.abs(btmRight.getValue()), 0, clampingMax, btmRight.getYPos(), topRight.getYPos())
+                console.log("INTER X", interX)
+                new Line(interX, btmRight.getYPos(), new Pair(btmRight.getXPos(), interY), 2, ctx)
                 .drawShape();
                 break;
             case 3: /** bottom left, bottom right */
-                new Line(btmLeft.getXPos(), btmLeft.getYPos() - contourIntervalH, new Pair(btmRight.getXPos(), btmRight.getYPos() - contourIntervalH), 2, ctx)
+                const interYBtmRight = linearInterpolation(Math.abs(btmRight.getValue()), 0, clampingMax, btmRight.getYPos(), topRight.getYPos());
+                const interYBtmLeft = linearInterpolation(Math.abs(btmLeft.getValue()), 0, clampingMax, btmLeft.getYPos(), topLeft.getYPos())
+                
+                new Line(btmLeft.getXPos(), interYBtmLeft, new Pair(btmRight.getXPos(), interYBtmRight), 2, ctx)
                 .drawShape()
                 break;
             case 4: /** top right */
-                new Line(topRight.getXPos() - contourIntervalW, topRight.getYPos(), new Pair(topRight.getXPos(), topRight.getYPos() + contourIntervalH), 2, ctx)
+                interX = linearInterpolation(topRight.getValue(), 0-clampingMax,0,topLeft.getXPos(), topRight.getXPos())
+                interY = linearInterpolation(Math.abs(topRight.getValue()), 0,clampingMax, topLeft.getYPos(), btmLeft.getYPos())
+                new Line(interX, topRight.getYPos(), new Pair(topRight.getXPos(), interY), 2, ctx)
                 .drawShape();
                 break;
             case 5: /** top right, bottom left */
-                new Line(topRight.getXPos() - contourIntervalW, topRight.getYPos(), new Pair(topRight.getXPos(), topRight.getYPos() + contourIntervalH), 2, ctx)
-                .drawShape();
-                new Line(btmLeft.getXPos(), btmLeft.getYPos() - contourIntervalH, new Pair(btmLeft.getXPos() + contourIntervalW, btmLeft.getYPos()), 2, ctx)
+                interX = linearInterpolation(topRight.getValue(), 0-clampingMax,0,topLeft.getXPos(), topRight.getXPos()) // top right
+                interY = linearInterpolation(Math.abs(topRight.getValue()), 0,clampingMax, topLeft.getYPos(), btmLeft.getYPos()) // topRight
+                const interXBtmLeft1 = linearInterpolation(Math.abs(btmLeft.getValue()), 0,clampingMax,btmLeft.getXPos(), btmRight.getXPos())
+                const interYBtmLeft1 = linearInterpolation(btmLeft.getValue(), 0-clampingMax, 0, topLeft.getYPos(), btmLeft.getYPos())
+                new Line(interX, topRight.getYPos(), new Pair(topRight.getXPos(), interY), 2, ctx)
+                .drawShape()
+                new Line(btmLeft.getXPos(), interYBtmLeft1, new Pair(interXBtmLeft1, btmLeft.getYPos()), 2, ctx)
                 .drawShape()
                 break;
             case 6: /** top right, bottom right */
-                new Line(topRight.getXPos() - contourIntervalW, topRight.getYPos(), new Pair(btmRight.getXPos() - contourIntervalW, btmRight.getYPos()), 2, ctx)
+                const interXTopRight = linearInterpolation(topRight.getValue(), 0-clampingMax, 0, topLeft.getXPos(), topRight.getXPos());
+                const interXBtmRight = linearInterpolation(btmRight.getValue(), 0-clampingMax, 0, btmLeft.getXPos(), btmRight.getXPos());
+                new Line(interXTopRight, topRight.getYPos(), new Pair(interXBtmRight, btmRight.getYPos()), 2, ctx)
                 .drawShape()
                 break;
             case 7: /** top right, bottom right, bottom left */
-                new Line(topLeft.getXPos() + contourIntervalW, topLeft.getYPos(), new Pair(topLeft.getXPos(), topLeft.getYPos() + contourIntervalH), 2, ctx)
+                interX = linearInterpolation(topRight.getValue(), 0-clampingMax,0, topLeft.getXPos(), topRight.getXPos()) // top right
+                interY = linearInterpolation(btmLeft.getValue(), 0-clampingMax, 0, topLeft.getYPos(), btmLeft.getYPos())
+                new Line(interX, topLeft.getYPos(), new Pair(topLeft.getXPos(), interY), 2, ctx)
                 .drawShape()
                 break;
             case 8: /** top left */
-                new Line(topLeft.getXPos() + contourIntervalW, topLeft.getYPos(), new Pair(topLeft.getXPos(), topLeft.getYPos() + contourIntervalH), 2, ctx)
+                interX = linearInterpolation(Math.abs(topLeft.getValue()), 0, clampingMax, topLeft.getXPos(), topRight.getXPos())
+                interY = linearInterpolation(Math.abs(topLeft.getValue()), 0, clampingMax, topLeft.getYPos(), btmLeft.getYPos());
+                new Line(interX, topLeft.getYPos(), new Pair(topLeft.getXPos(), interY), 2, ctx)
                 .drawShape()
                 break;
             case 9: /** top left, bottom left */
-                new Line(topRight.getXPos() - contourIntervalW, topRight.getYPos(), new Pair(btmRight.getXPos() - contourIntervalW, btmRight.getYPos()), 2, ctx)
+                interX = linearInterpolation(Math.abs(topLeft.getValue()), 0, clampingMax, topLeft.getXPos(), topRight.getXPos())
+                interY = linearInterpolation(Math.abs(btmLeft.getValue()), 0, clampingMax, btmLeft.getXPos(), btmRight.getXPos())
+                new Line(interX, topRight.getYPos(), new Pair(interY, btmRight.getYPos()), 2, ctx)
                 .drawShape()
                 break;
-            case 10:
-                new Line(topRight.getXPos() - contourIntervalW, topRight.getYPos(), new Pair(topRight.getXPos(), topRight.getYPos() + contourIntervalH), 2, ctx)
-                .drawShape();
-                new Line(btmLeft.getXPos(), btmLeft.getYPos() + contourIntervalH, new Pair(btmLeft.getXPos() + contourIntervalW, btmLeft.getYPos()), 2, ctx)
+                case 10: /** top left, bottom right */
+                const interXLine1 = linearInterpolation(topLeft.getValue(), 0 - clampingMax, 0, topLeft.getXPos(), topRight.getXPos());
+                const interYLine1 = linearInterpolation(Math.abs(btmRight.getValue()), 0, clampingMax, btmRight.getYPos(), topRight.getYPos());
+            
+                const interYLine2 = linearInterpolation(btmRight.getValue(), 0 - clampingMax, 0, btmLeft.getYPos(), btmRight.getYPos());
+                const interXLine2 = linearInterpolation(Math.abs(topLeft.getValue()), 0, clampingMax, topLeft.getXPos(), btmLeft.getXPos());
+            
+                new Line(interXLine1, topRight.getYPos(), new Pair(topRight.getXPos(), interYLine1), 2, ctx).drawShape();
+                new Line(btmLeft.getXPos(), interYLine2, new Pair(interXLine2, btmLeft.getYPos()), 2, ctx).drawShape();
                 break;
-            case 11:
-                new Line(topRight.getXPos() - contourIntervalW, topRight.getYPos(), new Pair(topRight.getXPos(), topRight.getYPos() + contourIntervalH), 2, ctx)
+            case 11: /** top left, bottom left, bottom right */
+                interX = linearInterpolation(Math.abs(topLeft.getValue()), 0, clampingMax, topLeft.getXPos(), topRight.getXPos())
+                interY = linearInterpolation(btmRight.getValue(), 0-clampingMax,0, topLeft.getYPos(), btmLeft.getYPos())
+                new Line(interX, topRight.getYPos(), new Pair(topRight.getXPos(), interY), 2, ctx)
                 .drawShape();
                 break;
-            case 12:
-                new Line(btmLeft.getXPos(), btmLeft.getYPos() - contourIntervalH, new Pair(btmRight.getXPos(), btmRight.getYPos() - contourIntervalH), 2, ctx)
+            case 12: /** top left, top right */
+                interX = linearInterpolation(Math.abs(topLeft.getValue()), 0, clampingMax, topLeft.getYPos(), btmLeft.getYPos())
+                interY = linearInterpolation(Math.abs(topRight.getValue()), 0, clampingMax, topLeft.getYPos(), btmLeft.getYPos())
+                new Line(btmLeft.getXPos(), interX, new Pair(btmRight.getXPos(), interY), 2, ctx)
                 .drawShape()
                 break;
-            case 13:
-                new Line(btmRight.getXPos() - contourIntervalW, btmRight.getYPos(), new Pair(btmRight.getXPos(), btmRight.getYPos() - contourIntervalH), 2, ctx)
+            case 13: /** top left, top right, bottom left */
+                interX = linearInterpolation(Math.abs(btmLeft.getValue()), 0,clampingMax, btmLeft.getXPos(), btmRight.getXPos());
+                interY = linearInterpolation(Math.abs(topRight.getValue()), 0,clampingMax, topRight.getYPos(), btmRight.getYPos());
+                new Line(interX, btmRight.getYPos(), new Pair(btmRight.getXPos(), interY), 2, ctx)
                 .drawShape();
                 break;
-            case 14:
-                new Line(btmLeft.getXPos(), btmLeft.getYPos() - contourIntervalH, new Pair(btmLeft.getXPos() + contourIntervalW, btmLeft.getYPos()), 2, ctx)
+            case 14: /** top left, top right, bottom right */
+                interX = linearInterpolation(btmRight.getValue(), 0-clampingMax, 0, btmLeft.getXPos(), btmRight.getXPos());
+                interY = linearInterpolation(Math.abs(topLeft.getValue()), 0,clampingMax, topLeft.getYPos(), btmLeft.getYPos());
+                new Line(btmLeft.getXPos(), interY, new Pair(interX, btmLeft.getYPos()), 2, ctx)
                 .drawShape()
                 break;
             case 15:
@@ -146,7 +202,6 @@ export default function IsosurfaceLayer() {
                                 const circleRadius: number = circle.radius + 20;
                                 const newDistance = Math.sqrt(Math.pow(point.getXPos() - circlePos.X, 2) + Math.pow(point.getYPos() - circlePos.Y, 2)) - circleRadius;
                                 distValuesPerCircle.push(newDistance);
-                                // ctx.fill();
                                 point.setValue(newDistance);
                             })
                         let isOccupied = false;
@@ -162,12 +217,11 @@ export default function IsosurfaceLayer() {
                             determineContour(point, rowNum, colNum, currGrid, ctx);
                         }
                         // determineContour(point, rowNum, colNum, currGrid, ctx);
-                        // ctx.beginPath();
-                        // ctx.arc(point.getXPos(), point.getYPos(),1,0,360);
-                        // ctx.fill()
+                        ctx.beginPath();
+                        ctx.arc(point.getXPos(), point.getYPos(),1,0,360);
+                        ctx.fill()
                         // ctx.fillText(`${point.getOccupied()}`, point.getXPos() + 5, point.getYPos() + 10);
                         point.setOccupied(isOccupied);
-
                     })
                 })
                 isoGrid.setGrid(currGrid);
@@ -176,7 +230,6 @@ export default function IsosurfaceLayer() {
              requestAnimationFrame(update);
         }
         update();
-     
     }, []);
 
     return (

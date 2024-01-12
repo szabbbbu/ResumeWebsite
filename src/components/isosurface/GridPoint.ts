@@ -7,7 +7,8 @@ class GridPoint {
     constructor(x: number, y: number) {
         this.X = x;
         this.Y = y;
-        this.Val = Number.MAX_VALUE;
+        this.Val = Number.MAX_VALUE; // lowest distance value
+        // this.occupyingCircleRadius: Number;
         this.isOccupied = false;
     }
     getXPos(): number {
