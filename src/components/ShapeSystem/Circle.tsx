@@ -21,10 +21,10 @@ class Circle extends Shape {
         this.calcHitboxBoundaries();
         const randomVx = Math.floor((Math.random() * 80) - 40);
         const randomVy = Math.floor((Math.random() * 80) - 40);
-        this.Direction = new Pair(0.0001, 2);
+        this.Direction = new Pair(randomVx, randomVy);
         this.EnvelopedPoints = new Set<GridPoint>();
         // this.Speed = (Math.random());
-        this.Speed = .4;
+        this.Speed = 1.4;
     }
 
     getBoundaries() {

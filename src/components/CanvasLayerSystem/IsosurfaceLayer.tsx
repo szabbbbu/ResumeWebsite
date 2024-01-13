@@ -31,7 +31,7 @@ enum ContourStates {
     "true,true,true,true" = 15 // 1111
 }
 
-function linearInterpolation(
+function lerp(
     value: number,
     originalMin: number,
     originalMax: number,
@@ -45,6 +45,8 @@ function linearInterpolation(
   
     // Perform the linear interpolation
     const newValue = newMin + ((value - originalMin) * (newMax - newMin)) / (originalMax - originalMin);
+
+    // console.log("LERP VALUE::: ", newValue);
   
     return newValue;
   }
@@ -63,123 +65,91 @@ export default function IsosurfaceLayer() {
         currGrid: GridPoint[][],
         ctx: CanvasRenderingContext2D
         ) {
+        const dh = isoGrid.getHeightInterval();
+        const dw = isoGrid.getWidthInterval();
 
+        /** Points  */
         const topLeft = currGrid[rowNum - 1][colNum - 1];
         const topRight = currGrid[rowNum - 1][colNum];
         const btmLeft = currGrid[rowNum][colNum - 1];
+        /** Grid cell boundaries */
+        const leftBound = btmLeft.getXPos();
+        const rightBound = btmRight.getXPos();
+        const upBound = topLeft.getYPos();
+        const downBound = btmLeft.getYPos();
+
+        /** Square sides */
+        const sideA: Pair = new Pair(
+            leftBound+dw*lerp(1, topLeft.getValue(), topRight.getValue()),
+            upBound
+            ); //top side
+        const sideB: Pair = new Pair(
+            rightBound,
+            upBound+dh*lerp(1, topRight.getValue(), btmRight.getValue())
+        );
+        const sideC = new Pair( // btm side
+            leftBound+dw*lerp(1,btmLeft.getValue(),btmRight.getValue()),
+            downBound
+        );
+        const sideD: Pair = new Pair( //left side
+            leftBound,
+            upBound+dh*lerp(1, topLeft.getValue(), btmLeft.getValue()) 
+        );
+        // console.log("side d", sideD)
         const config = [topLeft.getOccupied(), topRight.getOccupied(), btmRight.getOccupied(), btmLeft.getOccupied()];
         const s: string = config.toString();
         // console.log(contourStates[s])
         const currState: number = ContourStates[s];
-        let interX: number;
-        let interY: number;
-        const clampingMax = isoGrid.getHeightInterval();
-        const intervalWidth = isoGrid.getWidthInterval();
         switch(currState) {
             case 0:
                 // console.log("No contour");
                 break;
-            // case 1: //* bottom left corner */
-            //     // console.log(linearInterpolation(Math.abs(btmLeft.getValue()), 0,60,btmLeft.getXPos(), btmRight.getXPos()))
-            //     interX = linearInterpolation(1, btmLeft.getValue(), btmRight.getValue())
-            //     // console.log("interx", )
-            //     interY = linearInterpolation(1, topLeft.getValue(), btmLeft.getValue());
-            //     new Line(btmLeft.getXPos(), topLeft.getYPos()+(isoGrid.getHeightInterval()*interY), new Pair(btmLeft.getXPos()+(intervalWidth*interX), btmLeft.getYPos()), 2, ctx)
-            //     .drawShape()
-            //     break;
-            // case 2: /** bottom right */
-            //     interX = linearInterpolation(btmRight.getValue(),0 - clampingMax,0, btmLeft.getXPos(), btmRight.getXPos())
-            //     interY = linearInterpolation(Math.abs(btmRight.getValue()), 0, clampingMax, btmRight.getYPos(), topRight.getYPos())
-            //     // console.log("INTER X", interX)
-            //     new Line(interX, btmRight.getYPos(), new Pair(btmRight.getXPos(), interY), 2, ctx)
-            //     .drawShape();
-            //     break;
-            // case 3: /** bottom left, bottom right */
-            //     const interYBtmRight = linearInterpolation(Math.abs(btmRight.getValue()), 0, clampingMax, btmRight.getYPos(), topRight.getYPos());
-            //     const interYBtmLeft = linearInterpolation(Math.abs(btmLeft.getValue()), 0, clampingMax, btmLeft.getYPos(), topLeft.getYPos())
-                
-            //     new Line(btmLeft.getXPos(), interYBtmLeft, new Pair(btmRight.getXPos(), interYBtmRight), 2, ctx)
-            //     .drawShape()
-            //     break;
-            // case 4: /** top right */
-            //     interX = linearInterpolation(topRight.getValue(), 0-clampingMax,0,topLeft.getXPos(), topRight.getXPos())
-            //     interY = linearInterpolation(Math.abs(topRight.getValue()), 0,clampingMax, topLeft.getYPos(), btmLeft.getYPos())
-            //     new Line(interX, topRight.getYPos(), new Pair(topRight.getXPos(), interY), 2, ctx)
-            //     .drawShape();
-            //     break;
-            // case 5: /** top right, bottom left */
-            //     interX = linearInterpolation(topRight.getValue(), 0-clampingMax,0,topLeft.getXPos(), topRight.getXPos()) // top right
-            //     interY = linearInterpolation(Math.abs(topRight.getValue()), 0,clampingMax, topLeft.getYPos(), btmLeft.getYPos()) // topRight
-            //     const interXBtmLeft1 = linearInterpolation(Math.abs(btmLeft.getValue()), 0,clampingMax,btmLeft.getXPos(), btmRight.getXPos())
-            //     const interYBtmLeft1 = linearInterpolation(btmLeft.getValue(), 0-clampingMax, 0, topLeft.getYPos(), btmLeft.getYPos())
-            //     new Line(interX, topRight.getYPos(), new Pair(topRight.getXPos(), interY), 2, ctx)
-            //     .drawShape()
-            //     new Line(btmLeft.getXPos(), interYBtmLeft1, new Pair(interXBtmLeft1, btmLeft.getYPos()), 2, ctx)
-            //     .drawShape()
-            //     break;
-            // case 6: /** top right, bottom right */
-            //     const interXTopRight = linearInterpolation(topRight.getValue(), 0-clampingMax, 0, topLeft.getXPos(), topRight.getXPos());
-            //     const interXBtmRight = linearInterpolation(btmRight.getValue(), 0-clampingMax, 0, btmLeft.getXPos(), btmRight.getXPos());
-            //     new Line(interXTopRight, topRight.getYPos(), new Pair(interXBtmRight, btmRight.getYPos()), 2, ctx)
-            //     .drawShape()
-            //     break;
-            // case 7: /** top right, bottom right, bottom left */
-            //     interX = linearInterpolation(topRight.getValue(), 0-clampingMax,0, topLeft.getXPos(), topRight.getXPos()) // top right
-            //     interY = linearInterpolation(btmLeft.getValue(), 0-clampingMax, 0, topLeft.getYPos(), btmLeft.getYPos())
-            //     new Line(interX, topLeft.getYPos(), new Pair(topLeft.getXPos(), interY), 2, ctx)
-            //     .drawShape()
-            //     break;
-            // case 8: /** top left */
-            //     interX = linearInterpolation(Math.abs(topLeft.getValue()), 0, clampingMax, topLeft.getXPos(), topRight.getXPos())
-            //     interY = linearInterpolation(Math.abs(topLeft.getValue()), 0, clampingMax, topLeft.getYPos(), btmLeft.getYPos());
-            //     new Line(interX, topLeft.getYPos(), new Pair(topLeft.getXPos(), interY), 2, ctx)
-            //     .drawShape()
-            //     break;
-            // case 9: /** top left, bottom left */
-            //     interX = linearInterpolation(Math.abs(topLeft.getValue()), 0, clampingMax, topLeft.getXPos(), topRight.getXPos())
-            //     interY = linearInterpolation(Math.abs(btmLeft.getValue()), 0, clampingMax, btmLeft.getXPos(), btmRight.getXPos())
-            //     new Line(interX, topRight.getYPos(), new Pair(interY, btmRight.getYPos()), 2, ctx)
-            //     .drawShape()
-            //     break;
-            //     case 10: /** top left, bottom right */
-            //     const interXLine1 = linearInterpolation(topLeft.getValue(), 0 - clampingMax, 0, topLeft.getXPos(), topRight.getXPos());
-            //     const interYLine1 = linearInterpolation(Math.abs(btmRight.getValue()), 0, clampingMax, btmRight.getYPos(), topRight.getYPos());
-            
-            //     const interYLine2 = linearInterpolation(btmRight.getValue(), 0 - clampingMax, 0, btmLeft.getYPos(), btmRight.getYPos());
-            //     const interXLine2 = linearInterpolation(Math.abs(topLeft.getValue()), 0, clampingMax, topLeft.getXPos(), btmLeft.getXPos());
-            
-            //     new Line(interXLine1, topRight.getYPos(), new Pair(topRight.getXPos(), interYLine1), 2, ctx).drawShape();
-            //     new Line(btmLeft.getXPos(), interYLine2, new Pair(interXLine2, btmLeft.getYPos()), 2, ctx).drawShape();
-            //     break;
-            case 11: /** top left, bottom left, bottom right */
-                interX = linearInterpolation(1, topLeft.getValue(), topRight.getValue());
-                interY = linearInterpolation(1, topRight.getValue(), btmRight.getValue())
-                new Line(btmLeft.getXPos() + (intervalWidth*interX), topRight.getYPos(), new Pair(topRight.getXPos(), topLeft.getYPos()+(isoGrid.getHeightInterval()*interY)), 2, ctx)
+            case 1: //* bottom left corner */
+            case 14:
+                // console.log(lerp(Math.abs(btmLeft.getValue()), 0,60,btmLeft.getXPos(), btmRight.getXPos()))
+                new Line(sideD.X, sideD.Y, sideC, 2, ctx)
+                .drawShape()
+                break;
+            case 2: /** bottom right */
+            case 13:
+                new Line(sideC.X, sideC.Y, sideB, 2, ctx)
                 .drawShape();
                 break;
-            // case 12: /** top left, top right */
-            //     interX = linearInterpolation(Math.abs(topLeft.getValue()), 0, clampingMax, topLeft.getYPos(), btmLeft.getYPos())
-            //     interY = linearInterpolation(Math.abs(topRight.getValue()), 0, clampingMax, topLeft.getYPos(), btmLeft.getYPos())
-            //     new Line(btmLeft.getXPos(), interX, new Pair(btmRight.getXPos(), interY), 2, ctx)
-            //     .drawShape()
-            //     break;
-            // case 13: /** top left, top right, bottom left */
-            //     interX = linearInterpolation(Math.abs(btmLeft.getValue()), 0,clampingMax, btmLeft.getXPos(), btmRight.getXPos());
-            //     interY = linearInterpolation(Math.abs(topRight.getValue()), 0,clampingMax, topRight.getYPos(), btmRight.getYPos());
-            //     new Line(interX, btmRight.getYPos(), new Pair(btmRight.getXPos(), interY), 2, ctx)
-            //     .drawShape();
-            //     break;
-            // case 14: /** top left, top right, bottom right */
-            //     interX = linearInterpolation(btmRight.getValue(), 0-clampingMax, 0, btmLeft.getXPos(), btmRight.getXPos());
-            //     interY = linearInterpolation(Math.abs(topLeft.getValue()), 0,clampingMax, topLeft.getYPos(), btmLeft.getYPos());
-            //     new Line(btmLeft.getXPos(), interY, new Pair(interX, btmLeft.getYPos()), 2, ctx)
-            //     .drawShape()
-            //     break;
-            // case 15:
-            //     break;
-            // default:
-            //     console.error("string generated that isn't defined in ContourStates enum")
-            //     break;
+            case 3: /** bottom left, bottom right */
+            case 12:
+                new Line(sideD.X, sideD.Y, sideB, 2, ctx)
+                .drawShape()
+                break;
+            case 4: /** top right */
+            case 11:
+                new Line(sideA.X, sideA.Y, sideB, 2, ctx)
+                .drawShape();
+                break;
+            case 5: /** top right, bottom left */
+                new Line(sideD.X, sideD.Y, sideA, 2, ctx)
+                .drawShape()
+                new Line(sideC.X, sideC.Y, sideB, 2, ctx)
+                .drawShape()
+                break;
+            case 6: /** top right, bottom right */
+            case 9:
+                new Line(sideA.X, sideA.Y, sideC, 2, ctx)
+                .drawShape()
+                break;
+            case 7: /** top right, bottom right, bottom left */
+            case 8:
+                new Line(sideD.X, sideD.Y, sideA, 2, ctx)
+                .drawShape()
+                break;
+            case 10:
+                new Line(sideA.X, sideA.Y, sideB,2,ctx).drawShape();
+                new Line(sideD.X, sideD.Y, sideC, 2 , ctx).drawShape();
+                break;
+            case 15:
+                break;
+            default:
+                console.error("string generated that isn't defined in ContourStates enum")
+                break;
         }
         
 
