@@ -33,6 +33,29 @@ enum ContourStates {
     "true,true,true,true" = 15 // 1111
 }
 
+function blerp(
+    x: number,
+    y: number,
+    topLeft: number,
+    topRight: number,
+    bottomLeft: number,
+    bottomRight: number
+  ): number {
+    // Calculate interpolation weights
+    const xWeight: number = 1 - x;
+    const yWeight: number = 1 - y;
+  
+    // Perform bilinear interpolation
+    const interpolatedValue: number =
+      topLeft * xWeight * yWeight +
+      topRight * x * yWeight +
+      bottomLeft * xWeight * (1 - y) +
+      bottomRight * x * (1 - y);
+  
+    return interpolatedValue;
+  }
+  
+
 function lerp(
     value: number,
     originalMin: number,
@@ -98,6 +121,8 @@ export default function IsosurfaceLayer() {
             leftBound,
             upBound+dh*lerp(1, topLeft.getValue(), btmLeft.getValue()) 
         );
+        
+        
         // console.log("side d", sideD)
         const config = [topLeft.getOccupied(), topRight.getOccupied(), btmRight.getOccupied(), btmLeft.getOccupied()];
         const s: string = config.toString();
@@ -114,7 +139,7 @@ export default function IsosurfaceLayer() {
                 new Line(sideD.X, sideD.Y, sideC, strokeWidth, ctx)
                 .drawShape()
                 break;
-            case 2: /** bottom right */ //TODO: RENDERING ERROR HAPPENING HERE
+            case 2: /** bottom right */
             case 13:
                 new Line(sideC.X, sideC.Y, sideB, strokeWidth, ctx)
                 .drawShape();
@@ -140,7 +165,6 @@ export default function IsosurfaceLayer() {
                 new Line(sideA.X, sideA.Y, sideC, strokeWidth, ctx)
                 .drawShape()
                 if (sideA.Y > btmLeft.getYPos() || sideA.Y < topLeft.getYPos()) console.log("DANGER!")
-
                 break;
             case 7: /** top right, bottom right, bottom left */
             case 8:
@@ -155,7 +179,7 @@ export default function IsosurfaceLayer() {
                 break;
             default:
                 console.error("string generated that isn't defined in ContourStates enum")
-                break;
+            //     break;
         }
     }
 
@@ -182,7 +206,7 @@ export default function IsosurfaceLayer() {
                             const distValuesPerCircle: number[] = []
                             circles.forEach((circle, i) => {
                                 const circlePos: Pair = circle.getPos();
-                                const circleRadius: number = circle.radius ;
+                                const circleRadius: number = circle.radius + 40;
                                 const newDistance = Math.sqrt(Math.pow(point.getXPos() - circlePos.X, 2) + Math.pow(point.getYPos() - circlePos.Y, 2)) - circleRadius;
                                 distValuesPerCircle.push(newDistance);
                                 point.setValue(newDistance);
@@ -196,15 +220,16 @@ export default function IsosurfaceLayer() {
                             }
                             point.setValue(Math.min(point.getValue(), val));
                         });
-                        if (colNum > 0 && rowNum > 0) {
-                            determineContour(point, rowNum, colNum, currGrid, ctx);
-                        }
+                        
                         // determineContour(point, rowNum, colNum, currGrid, ctx);
                         ctx.beginPath();
                         ctx.arc(point.getXPos(), point.getYPos(),1,0,360);
                         ctx.fill()
                         // ctx.fillText(`${point.getOccupied()}`, point.getXPos() + 5, point.getYPos() + 10);
                         point.setOccupied(isOccupied);
+                        if (colNum > 0 && rowNum > 0) {
+                            determineContour(point, rowNum, colNum, currGrid, ctx);
+                        }
                     })
                 })
                 isoGrid.setGrid(currGrid);

@@ -23,8 +23,8 @@ class Circle extends Shape {
         const randomVy = Math.floor((Math.random() * 80) - 40);
         this.Direction = new Pair(randomVx, randomVy);
         this.EnvelopedPoints = new Set<GridPoint>();
-        // this.Speed = (Math.random());
-        this.Speed = 1;
+        // this.Speed = (Math.random()*2);
+        this.Speed = 0.8;
     }
 
     getBoundaries() {
@@ -32,10 +32,10 @@ class Circle extends Shape {
     }
 
     calcHitboxBoundaries() {
-        this.BoundaryTop = this.position.Y - this.radius;
-        this.BoundaryBtm = this.position.Y + this.radius;
-        this.BoundaryLeft = this.position.X - this.radius;
-        this.BoundaryRight = this.position.X + this.radius;
+        this.BoundaryTop = this.position.Y - this.radius - 40;
+        this.BoundaryBtm = this.position.Y + this.radius + 40;
+        this.BoundaryLeft = this.position.X - this.radius - 40;
+        this.BoundaryRight = this.position.X + this.radius + 40;
     }
 
     moveCircle(): void {
@@ -61,7 +61,7 @@ class Circle extends Shape {
         const newPos = new Pair(this.position.X + displacement[0], this.position.Y + displacement[1]);
         this.setPos(newPos);
         this.calcHitboxBoundaries();
-        // this.drawShape();
+        this.drawShape();
     }
 
     drawShape(fill: string="transparent", stroke: string="white") {

@@ -12,10 +12,9 @@ export default function AppContextProvider({children}: Props) {
     
     const [appWidth, setAppWidth] = useState<number>(window.innerWidth);
     const [appHeight, setAppHeight] = useState<number>(window.innerHeight);
-    const [isoGrid, setIsoGrid] = useState<Grid>(new Grid(60, appWidth, appHeight));
+    const [isoGrid, setIsoGrid] = useState<Grid>(new Grid(30, appWidth, appHeight));
     const [circles, setCircles] = useState<Circle[]>([])
-
-
+    
     useEffect(() => {
         const handleResize = () => {
           setAppWidth(window.innerWidth);
