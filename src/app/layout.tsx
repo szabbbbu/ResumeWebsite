@@ -25,8 +25,8 @@ export default function RootLayout({
         <Header />
         <AppContextProvider>
           <CanvasLayerClient />
-          {/* <CanvasLayerClientDebug /> */}
           <IsosurfaceLayer />
+          {/* <CanvasLayerClientDebug /> */}
         </AppContextProvider>
         {children}
       

@@ -15,6 +15,7 @@ class Line extends Shape {
     drawShape(stroke:string="white"): void {
         const ctx = super.getContext();
         if (!ctx) return;
+        // ctx.lineCap = "round";
         ctx.beginPath();
         ctx.strokeStyle = stroke;
         ctx.lineWidth = this.Width;

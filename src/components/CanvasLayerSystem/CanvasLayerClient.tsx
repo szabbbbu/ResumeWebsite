@@ -19,7 +19,7 @@ function Client() {
     const generateCircles = useCallback((ctx: CanvasRenderingContext2D) => {
         if (circles.length == 0) {
             for (let i = 0; i < 5; i++) {
-                const randRadius = Math.floor(Math.random() * 100 + 50);
+                const randRadius = Math.floor(Math.random() * 100 + 80);
                 const randX = Math.floor(Math.random() * (appWidth - (2*randRadius)) + randRadius);
                 const randY = Math.floor(Math.random() * (appHeight - (2*randRadius)) + randRadius);
                 const c = new Circle(randX, randY, randRadius, ctx);

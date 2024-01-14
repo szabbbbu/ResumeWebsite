@@ -2,10 +2,12 @@
 import { useEffect, useRef } from "react";
 import CanvasLayer from "./CanvasLayer";
 import { useAppContext } from "@/contexts/useAppContext";
+import { clamp } from "../util/Clamp";
 import GridPoint from "../isosurface/GridPoint";
 import Circle from "../ShapeSystem/Circle";
 import Pair from "../util/Pair";
 import Line from "../ShapeSystem/Line";
+
 
 interface I_CanvasLayer {
     getCanvasContext: () => CanvasRenderingContext2D | undefined;
@@ -48,7 +50,8 @@ function lerp(
 
     // console.log("LERP VALUE::: ", newValue);
   
-    return newValue;
+    return clamp(newValue, 0, 1);
+    // return newValue
   }
 
 
@@ -100,6 +103,7 @@ export default function IsosurfaceLayer() {
         const s: string = config.toString();
         // console.log(contourStates[s])
         const currState: number = ContourStates[s];
+        const strokeWidth = 2;
         switch(currState) {
             case 0:
                 // console.log("No contour");
@@ -107,43 +111,45 @@ export default function IsosurfaceLayer() {
             case 1: //* bottom left corner */
             case 14:
                 // console.log(lerp(Math.abs(btmLeft.getValue()), 0,60,btmLeft.getXPos(), btmRight.getXPos()))
-                new Line(sideD.X, sideD.Y, sideC, 2, ctx)
+                new Line(sideD.X, sideD.Y, sideC, strokeWidth, ctx)
                 .drawShape()
                 break;
-            case 2: /** bottom right */
+            case 2: /** bottom right */ //TODO: RENDERING ERROR HAPPENING HERE
             case 13:
-                new Line(sideC.X, sideC.Y, sideB, 2, ctx)
+                new Line(sideC.X, sideC.Y, sideB, strokeWidth, ctx)
                 .drawShape();
                 break;
             case 3: /** bottom left, bottom right */
             case 12:
-                new Line(sideD.X, sideD.Y, sideB, 2, ctx)
+                new Line(sideD.X, sideD.Y, sideB, strokeWidth, ctx)
                 .drawShape()
                 break;
             case 4: /** top right */
             case 11:
-                new Line(sideA.X, sideA.Y, sideB, 2, ctx)
+                new Line(sideA.X, sideA.Y, sideB, strokeWidth, ctx)
                 .drawShape();
                 break;
             case 5: /** top right, bottom left */
-                new Line(sideD.X, sideD.Y, sideA, 2, ctx)
+                new Line(sideD.X, sideD.Y, sideA, strokeWidth, ctx)
                 .drawShape()
-                new Line(sideC.X, sideC.Y, sideB, 2, ctx)
+                new Line(sideC.X, sideC.Y, sideB, strokeWidth, ctx)
                 .drawShape()
                 break;
             case 6: /** top right, bottom right */
             case 9:
-                new Line(sideA.X, sideA.Y, sideC, 2, ctx)
+                new Line(sideA.X, sideA.Y, sideC, strokeWidth, ctx)
                 .drawShape()
+                if (sideA.Y > btmLeft.getYPos() || sideA.Y < topLeft.getYPos()) console.log("DANGER!")
+
                 break;
             case 7: /** top right, bottom right, bottom left */
             case 8:
-                new Line(sideD.X, sideD.Y, sideA, 2, ctx)
+                new Line(sideD.X, sideD.Y, sideA, strokeWidth, ctx)
                 .drawShape()
                 break;
             case 10:
-                new Line(sideA.X, sideA.Y, sideB,2,ctx).drawShape();
-                new Line(sideD.X, sideD.Y, sideC, 2 , ctx).drawShape();
+                new Line(sideA.X, sideA.Y, sideB,strokeWidth,ctx).drawShape();
+                new Line(sideD.X, sideD.Y, sideC, strokeWidth , ctx).drawShape();
                 break;
             case 15:
                 break;
@@ -151,17 +157,23 @@ export default function IsosurfaceLayer() {
                 console.error("string generated that isn't defined in ContourStates enum")
                 break;
         }
-        
-
     }
 
     useEffect(() => {
+        if (layerRef.current?.getCanvasContext()) {
+            const ctx = layerRef.current.getCanvasContext();
+            if (ctx) {
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = "high";
+            }
+        }
         const update = () => {
 
             if (layerRef.current) {
                 allEnvelopedPoints.clear();
                 const ctx = layerRef.current.getCanvasContext()
                 if (!ctx) return;
+
                 ctx.clearRect(0,0,appWidth, appHeight);
                 const currGrid = isoGrid.getGrid();
 
@@ -170,7 +182,7 @@ export default function IsosurfaceLayer() {
                             const distValuesPerCircle: number[] = []
                             circles.forEach((circle, i) => {
                                 const circlePos: Pair = circle.getPos();
-                                const circleRadius: number = circle.radius + 40;
+                                const circleRadius: number = circle.radius ;
                                 const newDistance = Math.sqrt(Math.pow(point.getXPos() - circlePos.X, 2) + Math.pow(point.getYPos() - circlePos.Y, 2)) - circleRadius;
                                 distValuesPerCircle.push(newDistance);
                                 point.setValue(newDistance);
