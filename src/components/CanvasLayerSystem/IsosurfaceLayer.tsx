@@ -2,9 +2,8 @@
 import { useEffect, useRef } from "react";
 import CanvasLayer from "./CanvasLayer";
 import { useAppContext } from "@/contexts/useAppContext";
-import { clamp } from "../util/Clamp";
+import { lerp } from "../util/LinearInterpolation";
 import GridPoint from "../isosurface/GridPoint";
-import Circle from "../ShapeSystem/Circle";
 import Pair from "../util/Pair";
 import Line from "../ShapeSystem/Line";
 
@@ -12,7 +11,6 @@ import Line from "../ShapeSystem/Line";
 interface I_CanvasLayer {
     getCanvasContext: () => CanvasRenderingContext2D | undefined;
 }
-
 
 enum ContourStates {
     "false,false,false,false" = 0, // 0000
@@ -33,51 +31,6 @@ enum ContourStates {
     "true,true,true,true" = 15 // 1111
 }
 
-function blerp(
-    x: number,
-    y: number,
-    topLeft: number,
-    topRight: number,
-    bottomLeft: number,
-    bottomRight: number
-  ): number {
-    // Calculate interpolation weights
-    const xWeight: number = 1 - x;
-    const yWeight: number = 1 - y;
-  
-    // Perform bilinear interpolation
-    const interpolatedValue: number =
-      topLeft * xWeight * yWeight +
-      topRight * x * yWeight +
-      bottomLeft * xWeight * (1 - y) +
-      bottomRight * x * (1 - y);
-  
-    return interpolatedValue;
-  }
-  
-
-function lerp(
-    value: number,
-    originalMin: number,
-    originalMax: number,
-    newMin=0,
-    newMax=1
-  ): number {
-    // Clamping the value within the original range
-    // const clampedValue = Math.min(Math.max(value, originalMin), originalMax);
-    // const normalizedValue = (clampedValue - originalMin) / (originalMax - originalMin);
-
-  
-    // Perform the linear interpolation
-    const newValue = newMin + ((value - originalMin) * (newMax - newMin)) / (originalMax - originalMin);
-
-    // console.log("LERP VALUE::: ", newValue);
-  
-    return clamp(newValue, 0, 1);
-    // return newValue
-  }
-
-
 export default function IsosurfaceLayer() {
 
     const layerRef = useRef<I_CanvasLayer>(null);
@@ -93,7 +46,6 @@ export default function IsosurfaceLayer() {
         ) {
         const dh = isoGrid.getHeightInterval();
         const dw = isoGrid.getWidthInterval();
-
         /** Points  */
         const topLeft = currGrid[rowNum - 1][colNum - 1];
         const topRight = currGrid[rowNum - 1][colNum];
@@ -122,16 +74,13 @@ export default function IsosurfaceLayer() {
             upBound+dh*lerp(1, topLeft.getValue(), btmLeft.getValue()) 
         );
         
-        
-        // console.log("side d", sideD)
         const config = [topLeft.getOccupied(), topRight.getOccupied(), btmRight.getOccupied(), btmLeft.getOccupied()];
         const s: string = config.toString();
         // console.log(contourStates[s])
-        const currState: number = ContourStates[s];
+        const currState: number = ContourStates[s as keyof typeof ContourStates];
         const strokeWidth = 2;
         switch(currState) {
             case 0:
-                // console.log("No contour");
                 break;
             case 1: //* bottom left corner */
             case 14:
@@ -172,7 +121,7 @@ export default function IsosurfaceLayer() {
                 .drawShape()
                 break;
             case 10:
-                new Line(sideA.X, sideA.Y, sideB,strokeWidth,ctx).drawShape();
+                new Line(sideA.X, sideA.Y, sideB, strokeWidth, ctx).drawShape();
                 new Line(sideD.X, sideD.Y, sideC, strokeWidth , ctx).drawShape();
                 break;
             case 15:
@@ -204,9 +153,10 @@ export default function IsosurfaceLayer() {
                 currGrid.forEach((row, rowNum) => {
                     row.forEach((point, colNum) => {
                             const distValuesPerCircle: number[] = []
+                            if (Array.isArray(circles))
                             circles.forEach((circle, i) => {
                                 const circlePos: Pair = circle.getPos();
-                                const circleRadius: number = circle.radius + 40;
+                                const circleRadius: number = circle.radius + 60;
                                 const newDistance = Math.sqrt(Math.pow(point.getXPos() - circlePos.X, 2) + Math.pow(point.getYPos() - circlePos.Y, 2)) - circleRadius;
                                 distValuesPerCircle.push(newDistance);
                                 point.setValue(newDistance);
@@ -214,22 +164,20 @@ export default function IsosurfaceLayer() {
                         let isOccupied = false;
                         ctx.fillStyle = "#cab456"
                         distValuesPerCircle.forEach(val => {
-                            if (val < 0) {
+                            if (val <= 2) {
                                 ctx.fillStyle = "blue";
                                 isOccupied = true;
                             }
                             point.setValue(Math.min(point.getValue(), val));
                         });
-                        
-                        // determineContour(point, rowNum, colNum, currGrid, ctx);
-                        ctx.beginPath();
-                        ctx.arc(point.getXPos(), point.getYPos(),1,0,360);
-                        ctx.fill()
-                        // ctx.fillText(`${point.getOccupied()}`, point.getXPos() + 5, point.getYPos() + 10);
+
                         point.setOccupied(isOccupied);
                         if (colNum > 0 && rowNum > 0) {
                             determineContour(point, rowNum, colNum, currGrid, ctx);
                         }
+                        // ctx.beginPath();
+                        // ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
+                        // ctx.fill();
                     })
                 })
                 isoGrid.setGrid(currGrid);
@@ -239,6 +187,12 @@ export default function IsosurfaceLayer() {
         }
         update();
     }, []);
+
+
+    useEffect(() => {
+        
+
+    }, [appWidth, appHeight])
 
     return (
         <CanvasLayer ref={layerRef}/>

@@ -18,7 +18,8 @@ class GridPoints {
             throw new Error("make a grid with more than 2 rows/cols");
         }
         this.aspectRatio = width / height;
-        this.Rows = Math.floor(dim / this.aspectRatio);
+        // this.Rows = Math.floor(dim / this.aspectRatio);
+        this.Rows = dim
         this.Cols = dim;
         this.Width = width;
         this.Height = height;
@@ -55,6 +56,12 @@ class GridPoints {
 
     getHeightInterval(): number {
         return this.heightInterval;
+    }
+
+    updateGridSize(newWidth: number, newHeight: number): void {
+        this.Width = newWidth;
+        this.Height = newHeight;
+        this.GridPoints = this.assembleGridPoints();
     }
 }
 

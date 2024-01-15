@@ -2,6 +2,7 @@ import Shape from "./Shape";
 import Pair from "../util/Pair";
 import GridPoint from "../isosurface/GridPoint";
 import Grid from "../isosurface/Grid";
+import { lerp } from "../util/LinearInterpolation";
 
 class Circle extends Shape {
 
@@ -23,8 +24,8 @@ class Circle extends Shape {
         const randomVy = Math.floor((Math.random() * 80) - 40);
         this.Direction = new Pair(randomVx, randomVy);
         this.EnvelopedPoints = new Set<GridPoint>();
-        // this.Speed = (Math.random()*2);
-        this.Speed = 0.8;
+        this.Speed = (Math.random()*1.2 + .1);
+        // this.Speed = .25;
     }
 
     getBoundaries() {
@@ -32,10 +33,10 @@ class Circle extends Shape {
     }
 
     calcHitboxBoundaries() {
-        this.BoundaryTop = this.position.Y - this.radius - 40;
-        this.BoundaryBtm = this.position.Y + this.radius + 40;
-        this.BoundaryLeft = this.position.X - this.radius - 40;
-        this.BoundaryRight = this.position.X + this.radius + 40;
+        this.BoundaryTop = this.position.Y - this.radius  - 60;
+        this.BoundaryBtm = this.position.Y + this.radius + 60;
+        this.BoundaryLeft = this.position.X - this.radius - 60;
+        this.BoundaryRight = this.position.X + this.radius + 60;
     }
 
     moveCircle(): void {
@@ -72,28 +73,12 @@ class Circle extends Shape {
         const pos = super.getPos();
         ctx.beginPath();
         ctx.arc(pos.X, pos.Y, this.radius, 0, 360)
-        ctx.fillStyle = fill;
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = stroke;
+        ctx.fillStyle = `rgb(0,0,0)`;
+        ctx.lineWidth = 4;
+        ctx.strokeStyle = `rgb(${255 * 1-lerp(this.position.X, 0, 1470)},${255 * lerp(this.position.Y, 0, 1470)},${255 * lerp(this.position.X, 0, 1470)})`;
         ctx.fill();
         ctx.stroke();
     }
-    //reads the isogrid and creates a set of points enveloped currently by the circle
-    //TODO: Remove get from this method declaration, since it's a void func
-    // getGridStatus() {
-    //     if (!Circle.grid) Circle.grid = new Grid(12, 1000, 500)
-    //     this.EnvelopedPoints.clear();
-    //     const g = Circle.grid.getGrid();
-    //     g.forEach(row => {
-    //         row.forEach(point => {
-    //             point.calcDistanceFromPoint(this.position.X, this.position.Y, this.radius);
-    //             if (point.getValue() < 0) {
-    //                 this.EnvelopedPoints.add(point)
-    //             }
-    //         })
-    //     })
-    //     // console.log("enveloped points for circle: ", this.radius,this.EnvelopedPoints)
-    // }
 
     getEnvelopedPoints() {
         return this.EnvelopedPoints;

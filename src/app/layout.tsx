@@ -18,16 +18,18 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  console.log("rendering layout")
   return (
     <html lang="en">
       <body className={inter.className}>
         
         <Header />
-        <AppContextProvider>
-          <CanvasLayerClient />
-          <IsosurfaceLayer />
-          {/* <CanvasLayerClientDebug /> */}
-        </AppContextProvider>
+
+          <AppContextProvider>
+            <CanvasLayerClient />
+            <IsosurfaceLayer />
+            {/* <CanvasLayerClientDebug /> */}
+          </AppContextProvider>
         {children}
       
       </body>
