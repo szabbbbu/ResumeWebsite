@@ -12,11 +12,12 @@ class Line extends Shape {
         this.Width = width;
     }
 
-    drawShape(stroke:string="white"): void {
+    drawShape(stroke:string="rgba(255,255,255,0.8)"): void {
         const ctx = super.getContext();
         if (!ctx) return;
         // ctx.lineCap = "round";
         ctx.beginPath();
+        
         ctx.strokeStyle = stroke;
         ctx.lineWidth = this.Width;
         ctx.moveTo(this.position.X, this.position.Y);

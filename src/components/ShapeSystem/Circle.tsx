@@ -44,15 +44,22 @@ class Circle extends Shape {
         /** track boundaries, ensure items aren't stuck */
         if (this.BoundaryLeft <= 0) {
             this.Direction.X = Math.abs(this.Direction.X);
+            this.Speed = Math.random() *1.2 + .1
         }
         if (this.BoundaryRight >= window.innerWidth) {
             this.Direction.X = Math.abs(this.Direction.X) * -1;
+            this.Speed = Math.random()*1.2 + .1
+
         }
         if (this.BoundaryTop <= 0) {
             this.Direction.Y = Math.abs(this.Direction.Y);
+            this.Speed = Math.random()*1.2 + .1
+
         }
         if (this.BoundaryBtm >= window.innerHeight) {
             this.Direction.Y = Math.abs(this.Direction.X) * -1;
+            this.Speed = Math.random()*1.2 + .1
+
         }
         const magnitude: number = Math.sqrt(Math.pow(this.Direction.X, 2) + Math.pow(this.Direction.Y, 2));
 
@@ -73,9 +80,9 @@ class Circle extends Shape {
         const pos = super.getPos();
         ctx.beginPath();
         ctx.arc(pos.X, pos.Y, this.radius, 0, 360)
-        ctx.fillStyle = `rgb(0,0,0)`;
+        ctx.fillStyle = `rgba(0,0,0,0.5)`;
         ctx.lineWidth = 4;
-        ctx.strokeStyle = `rgb(${255 * 1-lerp(this.position.X, 0, 1470)},${255 * lerp(this.position.Y, 0, 1470)},${255 * lerp(this.position.X, 0, 1470)})`;
+        ctx.strokeStyle = `rgba(${255 * 1-lerp(this.position.X, 0, 1470)},${255 * lerp(this.position.Y, 0, 1470)},${255 * lerp(this.position.X, 0, 1470)}, 0.9)`;
         ctx.fill();
         ctx.stroke();
     }

@@ -1,11 +1,12 @@
 "use client"
-import { useEffect, useRef } from "react";
+import { memo, useCallback, useEffect, useRef } from "react";
 import CanvasLayer from "./CanvasLayer";
 import { useAppContext } from "@/contexts/useAppContext";
 import { lerp } from "../util/LinearInterpolation";
 import GridPoint from "../isosurface/GridPoint";
 import Pair from "../util/Pair";
 import Line from "../ShapeSystem/Line";
+import Grid from "../isosurface/Grid"
 
 
 interface I_CanvasLayer {
@@ -31,11 +32,12 @@ enum ContourStates {
     "true,true,true,true" = 15 // 1111
 }
 
-export default function IsosurfaceLayer() {
+function IsoLayer() {
 
     const layerRef = useRef<I_CanvasLayer>(null);
     const {circles, isoGrid, setIsoGrid, appWidth, appHeight} = useAppContext();
-    const allEnvelopedPoints = new Set<GridPoint>();
+
+    const animFrameId = useRef<number | null>(null)
 
     function determineContour(
         btmRight: GridPoint,
@@ -55,6 +57,7 @@ export default function IsosurfaceLayer() {
         const rightBound = btmRight.getXPos();
         const upBound = topLeft.getYPos();
         const downBound = btmLeft.getYPos();
+        
 
         /** Square sides */
         const sideA: Pair = new Pair(
@@ -84,7 +87,8 @@ export default function IsosurfaceLayer() {
                 break;
             case 1: //* bottom left corner */
             case 14:
-                // console.log(lerp(Math.abs(btmLeft.getValue()), 0,60,btmLeft.getXPos(), btmRight.getXPos()))
+
+                console.log("CASE 1/14???")
                 new Line(sideD.X, sideD.Y, sideC, strokeWidth, ctx)
                 .drawShape()
                 break;
@@ -132,6 +136,54 @@ export default function IsosurfaceLayer() {
         }
     }
 
+    const update = useCallback(() => {
+        console.log("regraw?")
+        if (layerRef.current) {
+            const ctx = layerRef.current.getCanvasContext()
+            if (!ctx) return;
+
+            ctx.clearRect(0,0,appWidth, appHeight);
+            const currGrid = isoGrid.getGrid();
+            console.log("curr grid dimensions: ", isoGrid.Width, isoGrid.Height)
+
+            currGrid.forEach((row, rowNum) => {
+                row.forEach((point, colNum) => {
+                        const distValuesPerCircle: number[] = []
+                        if (Array.isArray(circles))
+                        circles.forEach(circle => {
+                            const circlePos: Pair = circle.getPos();
+                            const circleRadius: number = circle.radius + 60;
+                            const newDistance = Math.sqrt(Math.pow(point.getXPos() - circlePos.X, 2) + Math.pow(point.getYPos() - circlePos.Y, 2)) - circleRadius;
+                            distValuesPerCircle.push(newDistance);
+                            point.setValue(newDistance);
+                        })
+                    let isOccupied = false;
+                    ctx.fillStyle = "#cab456"
+                    distValuesPerCircle.forEach(val => {
+                        if (val <= 2) {
+                            ctx.fillStyle = "blue";
+                            isOccupied = true;
+                        }
+                        point.setValue(Math.min(point.getValue(), val));
+                    });
+
+                    point.setOccupied(isOccupied);
+                    if (colNum > 0 && rowNum > 0) {
+                        determineContour(point, rowNum, colNum, currGrid, ctx);
+                    }
+                    ctx.beginPath();
+                    ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
+                    ctx.fill();
+                })
+            })
+            
+            isoGrid.setGrid(currGrid);
+            setIsoGrid(isoGrid);
+            console.log("after?", isoGrid.Width, isoGrid.Height)
+         }
+        animFrameId.current = requestAnimationFrame(update);
+    }, [appHeight, appWidth, isoGrid])
+
     useEffect(() => {
         if (layerRef.current?.getCanvasContext()) {
             const ctx = layerRef.current.getCanvasContext();
@@ -140,62 +192,43 @@ export default function IsosurfaceLayer() {
                 ctx.imageSmoothingQuality = "high";
             }
         }
-        const update = () => {
-
-            if (layerRef.current) {
-                allEnvelopedPoints.clear();
-                const ctx = layerRef.current.getCanvasContext()
-                if (!ctx) return;
-
-                ctx.clearRect(0,0,appWidth, appHeight);
-                const currGrid = isoGrid.getGrid();
-
-                currGrid.forEach((row, rowNum) => {
-                    row.forEach((point, colNum) => {
-                            const distValuesPerCircle: number[] = []
-                            if (Array.isArray(circles))
-                            circles.forEach((circle, i) => {
-                                const circlePos: Pair = circle.getPos();
-                                const circleRadius: number = circle.radius + 60;
-                                const newDistance = Math.sqrt(Math.pow(point.getXPos() - circlePos.X, 2) + Math.pow(point.getYPos() - circlePos.Y, 2)) - circleRadius;
-                                distValuesPerCircle.push(newDistance);
-                                point.setValue(newDistance);
-                            })
-                        let isOccupied = false;
-                        ctx.fillStyle = "#cab456"
-                        distValuesPerCircle.forEach(val => {
-                            if (val <= 2) {
-                                ctx.fillStyle = "blue";
-                                isOccupied = true;
-                            }
-                            point.setValue(Math.min(point.getValue(), val));
-                        });
-
-                        point.setOccupied(isOccupied);
-                        if (colNum > 0 && rowNum > 0) {
-                            determineContour(point, rowNum, colNum, currGrid, ctx);
-                        }
-                        // ctx.beginPath();
-                        // ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
-                        // ctx.fill();
-                    })
-                })
-                isoGrid.setGrid(currGrid);
-                setIsoGrid(isoGrid);
-             }
-             requestAnimationFrame(update);
-        }
+        
         update();
     }, []);
 
+    // useEffect(() => {
+    //     const handleResize = () => {
+    //         // Update the canvas size and redraw the grid and contours
+    //         if (layerRef.current) {
+                
+    //             const ctx = layerRef.current.getCanvasContext();
+    //             if (ctx) {
+    //                 ctx.clearRect(0, 0, appWidth, appHeight);
+    //                 console.log("HO?", appWidth, appHeight);
+    //                 isoGrid.updateGridSize(appWidth,appHeight)
+    //                 setIsoGrid(isoGrid);
+    //                 update();
+    //             }
+    //         }
+    //     };
 
-    useEffect(() => {
-        
+    //     window.addEventListener("resize", handleResize);
 
-    }, [appWidth, appHeight])
+    //     return () => {
+    //         // Cleanup: Remove the event listener and cancel animation frame on unmount
+    //         window.removeEventListener("resize", handleResize);
+    //         if (animFrameId.current)
+    //             cancelAnimationFrame(animFrameId.current);
+    //     };
+    // }, [appWidth, appHeight]);
+
+    
 
     return (
         <CanvasLayer ref={layerRef}/>
     );
 }
+
+const IsosurfaceLayer = memo(IsoLayer);
+export default IsosurfaceLayer;
 

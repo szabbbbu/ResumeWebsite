@@ -18,10 +18,15 @@ function Client() {
 
     const generateCircles = useCallback((ctx: CanvasRenderingContext2D) => {
         if (circles.length == 0) {
-            for (let i = 0; i < 5; i++) {
-                const randRadius = Math.floor(Math.random() * 100 + 80);
-                const randX = Math.floor(Math.random() * (appWidth - (2*randRadius)) + randRadius);
-                const randY = Math.floor(Math.random() * (appHeight - (2*randRadius)) + randRadius);
+            for (let i = 0; i < 7; i++) {
+                let randRadius: number;
+                if (i % 2 == 0) // big circle
+                    randRadius = Math.floor(Math.random() * 100 + 80);
+                else // small circle
+                    randRadius = Math.floor(Math.random() * 60 + 40);
+                const randX = Math.floor(Math.random() * (appWidth - (2*(randRadius + 60))) + randRadius + 60);
+                const randY = Math.floor(Math.random() * (appHeight - (2*(randRadius + 60))) + randRadius + 60);
+                console.log("rand:",appHeight, randX, randY)
                 const c = new Circle(randX, randY, randRadius, ctx);
                 c.drawShape();
                 circles.push(c);
@@ -40,7 +45,7 @@ function Client() {
         if (layerRef.current) {
             const ctx = layerRef.current.getCanvasContext();
             if (!ctx) return
-            console.log("regen grid")
+            // console.log("regen grid")
             generateCircles(ctx);
         }
     }, [appWidth, appHeight]);

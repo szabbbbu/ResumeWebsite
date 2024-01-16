@@ -1,6 +1,6 @@
 "use client"
 import { useAppContext } from "@/contexts/useAppContext";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { forwardRef, useRef, useImperativeHandle} from "react";
 import Grid from "../isosurface/Grid";
 
@@ -15,22 +15,25 @@ export default forwardRef(
     (_, ref) => {
         const innerRef = useRef<HTMLCanvasElement>(null);
         const {appWidth, appHeight, setIsoGrid} = useAppContext();
-
+        // const [w, setW] = useState(typeof window == undefined ? 0 : window.innerWidth)
+        // const [h, setH] = useState(typeof window == undefined ? 0 : window.innerWidth)
         useEffect(() => {
             
             const handleResize = () => {
+                // setW(window.innerWidth);
+                // setH(window.innerHeight);
                 if (innerRef.current) {
-                    innerRef.current.width = window.innerWidth;
-                    innerRef.current.height = window.innerHeight;
+                    innerRef.current.width = appWidth;
+                    innerRef.current.height = appHeight;
+                    console.log(innerRef.current.width)
                 }
                 
             }
-
-            window.addEventListener("resize", handleResize);
-            handleResize();
-            if (!innerRef.current) {
-                return
-            }
+            import('react-dom').then(() => {
+                handleResize(); // Initialize with the current window size
+                window.addEventListener('resize', handleResize);
+              });
+          
 
             return () => {
                 window.removeEventListener("resize", handleResize);

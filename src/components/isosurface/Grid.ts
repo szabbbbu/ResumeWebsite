@@ -4,8 +4,8 @@ import Circle from "../ShapeSystem/Circle";
 class GridPoints {
     private Rows: number;
     private Cols: number;
-    private Width: number;
-    private Height: number;
+    Width: number;
+    Height: number;
     private aspectRatio: number;
     private widthInterval!: number;
     private heightInterval!: number;
@@ -63,6 +63,8 @@ class GridPoints {
         this.Height = newHeight;
         this.GridPoints = this.assembleGridPoints();
     }
+
+    
 }
 
 export default GridPoints;
