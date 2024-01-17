@@ -46,6 +46,7 @@ function IsoLayer() {
         currGrid: GridPoint[][],
         ctx: CanvasRenderingContext2D
         ) {
+        if (!isoGrid) return
         const dh = isoGrid.getHeightInterval();
         const dw = isoGrid.getWidthInterval();
         /** Points  */
@@ -87,8 +88,7 @@ function IsoLayer() {
                 break;
             case 1: //* bottom left corner */
             case 14:
-
-                console.log("CASE 1/14???")
+                // console.log("CASE 1/14???")
                 new Line(sideD.X, sideD.Y, sideC, strokeWidth, ctx)
                 .drawShape()
                 break;
@@ -137,14 +137,14 @@ function IsoLayer() {
     }
 
     const update = useCallback(() => {
-        console.log("regraw?")
         if (layerRef.current) {
             const ctx = layerRef.current.getCanvasContext()
             if (!ctx) return;
+            if (!isoGrid) return
 
-            ctx.clearRect(0,0,appWidth, appHeight);
             const currGrid = isoGrid.getGrid();
             console.log("curr grid dimensions: ", isoGrid.Width, isoGrid.Height)
+            ctx.clearRect(0,0,isoGrid.Width+5, isoGrid.Height+5);
 
             currGrid.forEach((row, rowNum) => {
                 row.forEach((point, colNum) => {
@@ -179,7 +179,6 @@ function IsoLayer() {
             
             isoGrid.setGrid(currGrid);
             setIsoGrid(isoGrid);
-            console.log("after?", isoGrid.Width, isoGrid.Height)
          }
         animFrameId.current = requestAnimationFrame(update);
     }, [appHeight, appWidth, isoGrid])
@@ -191,38 +190,9 @@ function IsoLayer() {
                 ctx.imageSmoothingEnabled = true;
                 ctx.imageSmoothingQuality = "high";
             }
-        }
-        
+        }   
         update();
     }, []);
-
-    // useEffect(() => {
-    //     const handleResize = () => {
-    //         // Update the canvas size and redraw the grid and contours
-    //         if (layerRef.current) {
-                
-    //             const ctx = layerRef.current.getCanvasContext();
-    //             if (ctx) {
-    //                 ctx.clearRect(0, 0, appWidth, appHeight);
-    //                 console.log("HO?", appWidth, appHeight);
-    //                 isoGrid.updateGridSize(appWidth,appHeight)
-    //                 setIsoGrid(isoGrid);
-    //                 update();
-    //             }
-    //         }
-    //     };
-
-    //     window.addEventListener("resize", handleResize);
-
-    //     return () => {
-    //         // Cleanup: Remove the event listener and cancel animation frame on unmount
-    //         window.removeEventListener("resize", handleResize);
-    //         if (animFrameId.current)
-    //             cancelAnimationFrame(animFrameId.current);
-    //     };
-    // }, [appWidth, appHeight]);
-
-    
 
     return (
         <CanvasLayer ref={layerRef}/>

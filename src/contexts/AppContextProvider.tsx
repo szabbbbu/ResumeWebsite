@@ -3,6 +3,7 @@ import { ReactNode, useEffect, useState } from "react";
 import { AppContext } from "./AppContext";
 import Grid from "../components/isosurface/Grid";
 import Circle from "@/components/ShapeSystem/Circle";
+import { metadata } from "@/app/layout";
 
 
 type Props = {
@@ -11,84 +12,38 @@ type Props = {
 
 export default function AppContextProvider({children}: Props) {
 
-    const [appWidth, setAppWidth] = useState<number>(typeof window == undefined? 0 : window.innerWidth );
-    const [appHeight, setAppHeight] = useState<number>(typeof window == undefined? 0 : window.innerHeight);
-    const [isoGrid, setIsoGrid] = useState<Grid>(new Grid(36, appWidth, appHeight));
+    const [appWidth, setAppWidth] = useState<number>(1470);
+    const [appHeight, setAppHeight] = useState<number>(751);
+    const [isoGrid, setIsoGrid] = useState<Grid>(new Grid(44, appWidth, appHeight));
     const [circles, setCircles] = useState<Circle[]>([])
 
-    useEffect(() => {
-        const handleResize = () => {
-            console.log("HANDLE RESIZE in app ctx");
-            setAppWidth(window.innerWidth);
-            setAppHeight(window.innerHeight);
-            setIsoGrid(new Grid(24, window.innerWidth, window.innerHeight));
-        };
-    
-        // Initialize with the current window size
-        handleResize();
-    
-        const resizeListener = () => {
-            // Delay the handleResize function to ensure that the state is updated first
-            setTimeout(() => {
-                handleResize();
-            }, 0);
-        };
-    
-        window.addEventListener('resize', resizeListener);
-    
-        return () => {
-            window.removeEventListener('resize', resizeListener);
-        };
-    }, []);  // OMG THIS WORKS
-
     // useEffect(() => {
-    //     // setAppWidth(window.innerWidth)
-    //     // setAppHeight(window.innerHeight)
-    //     // setIsoGrid(new Grid(24, window.innerWidth, window.innerHeight))
-    //     console.log(appHeight)
-    //         const handleResize = () => {
-    //             console.log("HANDLE RESIZE in app ctx")
-    //             setAppWidth(window.innerWidth);
-    //             setAppHeight(window.innerHeight);
-    //             setIsoGrid(new Grid(24, appWidth, appHeight))
-    //         }
-    //         import('react-dom').then(() => {
-    //             handleResize(); // Initialize with the current window size
-            
-    //             window.addEventListener('resize', handleResize);
-    //         }
-    //         );
-
-    //         return(() => {
-    //             window.removeEventListener("resize", handleResize);
-    //         });
-    //     }, [appWidth, appHeight]
-    // );
-
-    useEffect(() => {
-        const handleResize = () => {
-            console.log("HANDLE RESIZE in app ctx");
-            setAppWidth(window.innerWidth);
-            setAppHeight(window.innerHeight);
-            setIsoGrid(new Grid(24, window.innerWidth, window.innerHeight));
-        };
+    //     const handleResize = () => {
+    //         // console.log("HANDLE RESIZE in app ctx");
+    //         setAppWidth(window.innerWidth);
+    //         setAppHeight(window.innerHeight);
+    //         console.log("app width: ", appWidth)
+    //         isoGrid.updateGridSize(appWidth, appHeight);
+    //         setIsoGrid(isoGrid);
+    //         // console.log(isoGrid)
+    //     };
     
-        // Initialize with the current window size
-        handleResize();
+    //     // Initialize with the current window size
+    //     handleResize();
     
-        const resizeListener = () => {
-            // Delay the handleResize function to ensure that the state is updated first
-            setTimeout(() => {
-                handleResize();
-            }, 0);
-        };
+    //     const resizeListener = () => {
+    //         // Delay the handleResize function to ensure that the state is updated first
+    //         setTimeout(() => {
+    //             handleResize();
+    //         }, 1000);
+    //     };
     
-        window.addEventListener('resize', resizeListener);
+    //     window.addEventListener('resize', resizeListener);
     
-        return () => {
-            window.removeEventListener('resize', resizeListener);
-        };
-    }, []); 
+    //     return () => {
+    //         window.removeEventListener('resize', resizeListener);
+    //     };
+    // }, [appWidth, appHeight, isoGrid, setIsoGrid]);  // OMG THIS WORKS
 
     
     return(

@@ -12,7 +12,7 @@ interface I_CanvasLayer {
 //renders and animates the circles
 function Client() {
 
-    const {appWidth, appHeight, circles, setCircles} = useAppContext();
+    const {appWidth, appHeight, circles, setCircles, isoGrid} = useAppContext();
     const layerRef = useRef<I_CanvasLayer>(null);
     // console.log("WHAT")
 
@@ -45,10 +45,9 @@ function Client() {
         if (layerRef.current) {
             const ctx = layerRef.current.getCanvasContext();
             if (!ctx) return
-            // console.log("regen grid")
             generateCircles(ctx);
         }
-    }, [appWidth, appHeight]);
+    }, []);
 
     /** HANDLES ANIMATION */
     useEffect(() => {

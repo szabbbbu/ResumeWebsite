@@ -14,7 +14,7 @@ import Grid from "../isosurface/Grid";
 export default forwardRef(
     (_, ref) => {
         const innerRef = useRef<HTMLCanvasElement>(null);
-        const {appWidth, appHeight, setIsoGrid} = useAppContext();
+        const {appWidth, appHeight, setAppWidth, setAppHeight, isoGrid, setIsoGrid} = useAppContext();
         // const [w, setW] = useState(typeof window == undefined ? 0 : window.innerWidth)
         // const [h, setH] = useState(typeof window == undefined ? 0 : window.innerWidth)
         useEffect(() => {
@@ -22,17 +22,24 @@ export default forwardRef(
             const handleResize = () => {
                 // setW(window.innerWidth);
                 // setH(window.innerHeight);
+
+                
                 if (innerRef.current) {
+                    setAppWidth(window.innerWidth);
+                    setAppHeight(window.innerHeight);
+                    console.log("app width: ", appWidth)
+                    isoGrid.updateGridSize(appWidth, appHeight);
+                    setIsoGrid(isoGrid);
                     innerRef.current.width = appWidth;
                     innerRef.current.height = appHeight;
+                    // innerRef.current.getContext('2d')?.scale(appHeight, appWidth);
                     console.log(innerRef.current.width)
                 }
                 
             }
-            import('react-dom').then(() => {
+            
                 handleResize(); // Initialize with the current window size
                 window.addEventListener('resize', handleResize);
-              });
           
 
             return () => {

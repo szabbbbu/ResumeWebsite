@@ -61,6 +61,8 @@ class GridPoints {
     updateGridSize(newWidth: number, newHeight: number): void {
         this.Width = newWidth;
         this.Height = newHeight;
+        this.widthInterval = this.Width / this.Cols;
+        this.heightInterval = this.Height / this.Cols;
         this.GridPoints = this.assembleGridPoints();
     }
 
