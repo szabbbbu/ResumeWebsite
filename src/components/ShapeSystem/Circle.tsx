@@ -14,18 +14,15 @@ class Circle extends Shape {
     protected Direction: Pair; //the vector dictating direction of circle movement
     protected Speed: number;
 
-    protected EnvelopedPoints: Set<GridPoint>;
-
-    constructor(x: number, y: number, radius: number, ctx: CanvasRenderingContext2D | null) {
+    constructor(x: number, y: number, radius: number, ctx: CanvasRenderingContext2D | null,) {
         super(x, y, ctx);
-        this.radius = radius;
         this.calcHitboxBoundaries();
+        this.radius = radius;
         const randomVx = Math.floor((Math.random() * 80) - 40);
         const randomVy = Math.floor((Math.random() * 80) - 40);
         this.Direction = new Pair(randomVx, randomVy);
-        this.EnvelopedPoints = new Set<GridPoint>();
         this.Speed = (Math.random()*1.2 + .1);
-        // this.Speed = .25;
+    
     }
 
     getBoundaries() {
@@ -87,9 +84,10 @@ class Circle extends Shape {
         ctx.stroke();
     }
 
-    getEnvelopedPoints() {
-        return this.EnvelopedPoints;
+    decRadius(): void {
+        this.radius -= 1;
     }
+
 }
 
 

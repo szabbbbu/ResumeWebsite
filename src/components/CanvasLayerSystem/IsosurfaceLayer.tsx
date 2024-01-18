@@ -143,7 +143,7 @@ function IsoLayer() {
             if (!isoGrid) return
 
             const currGrid = isoGrid.getGrid();
-            console.log("curr grid dimensions: ", isoGrid.Width, isoGrid.Height)
+            // console.log("curr grid dimensions: ", isoGrid.Width, isoGrid.Height)
             ctx.clearRect(0,0,isoGrid.Width+5, isoGrid.Height+5);
 
             currGrid.forEach((row, rowNum) => {
@@ -171,9 +171,9 @@ function IsoLayer() {
                     if (colNum > 0 && rowNum > 0) {
                         determineContour(point, rowNum, colNum, currGrid, ctx);
                     }
-                    ctx.beginPath();
-                    ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
-                    ctx.fill();
+                    // ctx.beginPath();
+                    // ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
+                    // ctx.fill();
                 })
             })
             

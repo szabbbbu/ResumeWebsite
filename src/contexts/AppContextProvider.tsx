@@ -14,7 +14,7 @@ export default function AppContextProvider({children}: Props) {
 
     const [appWidth, setAppWidth] = useState<number>(1470);
     const [appHeight, setAppHeight] = useState<number>(751);
-    const [isoGrid, setIsoGrid] = useState<Grid>(new Grid(44, appWidth, appHeight));
+    const [isoGrid, setIsoGrid] = useState<Grid>(new Grid(36, appWidth, appHeight));
     const [circles, setCircles] = useState<Circle[]>([])
 
     // useEffect(() => {

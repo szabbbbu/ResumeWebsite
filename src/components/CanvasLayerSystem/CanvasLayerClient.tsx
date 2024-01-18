@@ -17,37 +17,38 @@ function Client() {
     // console.log("WHAT")
 
     const generateCircles = useCallback((ctx: CanvasRenderingContext2D) => {
-        if (circles.length == 0) {
+            console.log("GENERATING CIRCLES", appWidth, appHeight, circles)
+            const m = Math.min(window.innerWidth, window.innerHeight);
+            console.log("M", m/30)
             for (let i = 0; i < 7; i++) {
                 let randRadius: number;
                 if (i % 2 == 0) // big circle
-                    randRadius = Math.floor(Math.random() * 100 + 80);
+                    randRadius = Math.floor(Math.random() * (m/16) + m/12);
                 else // small circle
-                    randRadius = Math.floor(Math.random() * 60 + 40);
-                const randX = Math.floor(Math.random() * (appWidth - (2*(randRadius + 60))) + randRadius + 60);
-                const randY = Math.floor(Math.random() * (appHeight - (2*(randRadius + 60))) + randRadius + 60);
-                console.log("rand:",appHeight, randX, randY)
+                    randRadius = Math.floor((Math.random() * m/20) + m/16);
+                const randX = Math.floor(Math.random() * (window.innerWidth - (2*(randRadius + 60))) + randRadius + 60);
+                const randY = Math.floor(Math.random() * (window.innerHeight - (2*(randRadius + 60))) + randRadius + 60);
+                // console.log("rand:",appHeight, randX, randY)
                 const c = new Circle(randX, randY, randRadius, ctx);
                 c.drawShape();
                 circles.push(c);
             }
-        }
-        else {
-            if (Array.isArray(circles))
-            circles.forEach(circle => {
-                circle.drawShape()
-            })
-        }
-        setCircles({...circles});
-    }, [appWidth, appHeight, circles])
+        setCircles([...circles]);
+    }, [ circles]);
 
+
+    /** RUNS ON STARTUP */
     useEffect(() => {
         if (layerRef.current) {
             const ctx = layerRef.current.getCanvasContext();
             if (!ctx) return
-            generateCircles(ctx);
+            
+            if (circles.length === 0 && typeof window) {
+                console.log("circ?", window.innerHeight, appHeight)
+                generateCircles(ctx);
+            }
         }
-    }, []);
+    }, [appWidth, appHeight]);
 
     /** HANDLES ANIMATION */
     useEffect(() => {
@@ -58,12 +59,12 @@ function Client() {
                 if (!ctx) return;
                 ctx.clearRect(0,0, window.innerWidth, window.innerHeight);
             }
-            if (Array.isArray(circles))
             circles.forEach(circle => {
                 circle.moveCircle()
+                circle.drawShape()
                 // circle.getGridStatus();
             })
-            setCircles({...circles})
+            setCircles([...circles])
             requestAnimationFrame(animate);
         }
         animate();

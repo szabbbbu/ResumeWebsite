@@ -3,7 +3,6 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header'
 import CanvasLayerClient from '@/components/CanvasLayerSystem/CanvasLayerClient'
-import CanvasLayerClientDebug from '@/components/CanvasLayerSystem/CanvasLayerClientDebug'
 import AppContextProvider from '@/contexts/AppContextProvider'
 import IsosurfaceLayer from '@/components/CanvasLayerSystem/IsosurfaceLayer'
 const inter = Inter({ subsets: ['latin'] })

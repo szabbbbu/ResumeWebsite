@@ -27,13 +27,13 @@ export default forwardRef(
                 if (innerRef.current) {
                     setAppWidth(window.innerWidth);
                     setAppHeight(window.innerHeight);
-                    console.log("app width: ", appWidth)
+
                     isoGrid.updateGridSize(appWidth, appHeight);
                     setIsoGrid(isoGrid);
                     innerRef.current.width = appWidth;
                     innerRef.current.height = appHeight;
                     // innerRef.current.getContext('2d')?.scale(appHeight, appWidth);
-                    console.log(innerRef.current.width)
+
                 }
                 
             }
