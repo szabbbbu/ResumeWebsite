@@ -20,7 +20,9 @@ export default function RootLayout({
   console.log("rendering layout")
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body
+        className="flex"
+      >
         
         <Header />
 

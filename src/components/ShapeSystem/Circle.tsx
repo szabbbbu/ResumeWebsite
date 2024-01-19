@@ -79,7 +79,8 @@ class Circle extends Shape {
         ctx.arc(pos.X, pos.Y, this.radius, 0, 360)
         ctx.fillStyle = `rgba(0,0,0,0.5)`;
         ctx.lineWidth = 4;
-        ctx.strokeStyle = `rgba(${255 * 1-lerp(this.position.X, 0, 1470)},${255 * lerp(this.position.Y, 0, 1470)},${255 * lerp(this.position.X, 0, 1470)}, 0.9)`;
+        // hue limit (242, 277)
+        ctx.strokeStyle = `hsla(${183 + 94*lerp(pos.X, 0, ctx.canvas.width)}, 100%, 69%)`;
         ctx.fill();
         ctx.stroke();
     }

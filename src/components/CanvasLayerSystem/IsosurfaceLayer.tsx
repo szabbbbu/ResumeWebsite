@@ -62,20 +62,21 @@ function IsoLayer() {
 
         /** Square sides */
         const sideA: Pair = new Pair(
-            leftBound+dw*lerp(1, topLeft.getValue(), topRight.getValue()),
+            leftBound+dw*lerp(2, topLeft.getValue(), topRight.getValue()),
             upBound
             ); //top side
         const sideB: Pair = new Pair(
             rightBound,
-            upBound+dh*lerp(1, topRight.getValue(), btmRight.getValue())
+            upBound+dh*lerp(2, topRight.getValue(), btmRight.getValue())
         );
+        // console.log(lerp(1, topRight.getValue(), btmRight.getValue()), topRight.getValue(), topLeft.getValue())
         const sideC = new Pair( // btm side
-            leftBound+dw*lerp(1,btmLeft.getValue(),btmRight.getValue()),
+            leftBound+dw*lerp(2,btmLeft.getValue(),btmRight.getValue()),
             downBound
         );
         const sideD: Pair = new Pair( //left side
             leftBound,
-            upBound+dh*lerp(1, topLeft.getValue(), btmLeft.getValue()) 
+            upBound+dh*lerp(2, topLeft.getValue(), btmLeft.getValue()) 
         );
         
         const config = [topLeft.getOccupied(), topRight.getOccupied(), btmRight.getOccupied(), btmLeft.getOccupied()];
