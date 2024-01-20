@@ -73,6 +73,7 @@ class Circle extends Shape {
         const ctx = super.getContext();
         if (!ctx) return;
         // ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height);
+        const w = ctx.canvas.width;
         ctx.imageSmoothingEnabled = true;
         const pos = super.getPos();
         ctx.beginPath();
@@ -80,7 +81,7 @@ class Circle extends Shape {
         ctx.fillStyle = `rgba(0,0,0,0.5)`;
         ctx.lineWidth = 4;
         // hue limit (242, 277)
-        ctx.strokeStyle = `hsla(${183 + 94*lerp(pos.X, 0, ctx.canvas.width)}, 100%, 69%)`;
+        ctx.strokeStyle = `hsla(${400 - (220*lerp(pos.X, 0, w))}, 100%, ${44+ 34*lerp(pos.X, 0, w)}%)`;
         ctx.fill();
         ctx.stroke();
     }

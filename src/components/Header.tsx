@@ -1,36 +1,53 @@
 import Link from "next/link"
+import CustomLink from "./CustomLink"
+import EyeBall from "./EyeBall";
 
 export default function Header() {
     return(
+
         <>
             <nav
             className="flex flex-col justify-center w-[25vw] h-[100vh] bg-rgba"
             >
                <div
-                className="h-[50vh] w-full"
+                className="h-[50vh] w-full flex items-center justify-center"
                >
-                hello
+                <EyeBall />
+                <EyeBall />
                </div>
+               
                 
-            <ul className="flex flex-col  w-full h-full items-center justify-evenly z-10 text-bittersweet"
-            
+            <ul className="grid grid-cols-1 grid-rows-auto gap-4 w-full h-full z-10 text-bittersweet text-2xl uppercase" 
             >
-                    <Link href="/projects">
+                    <CustomLink to="/projects">
                         <li
-                        >Projects</li>
-                    </Link>
+                        className="h-full py-11 w-full flex items-center justify-center hover:transform hover:scale-110 transition"
+                        >
+                            Projects
+                        </li>
+                    </CustomLink>
+                       
+                    <CustomLink to="/services">
+                        <li
+                        className="h-fit py-11 w-full flex items-center justify-center hover:transform hover:scale-110 transition"
+                        >
+                            <p
+                            >
+                                Services
+                            </p>
+                            
+                        </li>
+                    </CustomLink>
                     
-                    <Link href="/services">
-                        <li>Services</li>
-                    </Link>
-                    
-                    <Link href="/contact">
-                        <li>Contact</li>
-                    </Link>
+                    <CustomLink to="/contact">
+                        <li
+                        className="bg-transparent h-fit py-11 w-full flex items-center justify-center  hover:transform hover:scale-110 transition">
+                            Contact
+                        </li>
+                    </CustomLink>
+
                     
                 </ul>
-            
-            
             </nav>
         </>
     );

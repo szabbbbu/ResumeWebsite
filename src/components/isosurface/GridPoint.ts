@@ -34,16 +34,7 @@ class GridPoint {
         this.Val = newVal;
     }
 
-    
-    
-    //calculates distance from another given point
-    // calcDistanceFromPoint(pointX: number, pointY: number, radius: number): void {
-    //     // this.Val = Number.MAX_VALUE;
-    //     const newDist = Math.sqrt(Math.pow(this.X - pointX, 2) + Math.pow(this.Y - pointY, 2)) - radius;
-    //     if (newDist < max)
 
-        
-    // }
 
     toString(): string {
         return `GRID POINT: X: ${this.X}, Y: ${this.Y}, VALUE: ${this.Val}`;
