@@ -1,38 +1,60 @@
 "use client"
-
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Pair from "./util/Pair";
+import { getDistance } from "./util/Distance";
+import { lerp } from "./util/LinearInterpolation";
+import { clamp } from "./util/Clamp";
+
+type Props = {
+    pos: "left" | "right";
+}
 
 export default function EyeBall() {
-    const [mousePos, setMousePos] = useState<Pair>(new Pair(0,0));
-    const [eyeBallY, setEyeBallY] = useState<number>(0);
-    const [eyeBallX, setEyeBallX] = useState<number>(0);
+    const [eyeBallY, setEyeBallY] = useState<number>(50);
+    const [eyeBallX, setEyeBallX] = useState<number>(50); // Initial X-coordinate
+    const innerRef = useRef<SVGSVGElement>(null);
 
     useEffect(() => {
+    
         const handleMouseMove = (e: MouseEvent) => {
-            mousePos.X = e.clientX;
-            mousePos.Y = e.clientY;
-            setMousePos(mousePos);
-            console.log("angle", Math.atan2(e.clientX - 50, e.clientY - 50))
-            console.log("newX", 50 + 28*Math.cos(Math.atan2(e.clientX - 50, e.clientY - 50)));
-            setEyeBallY(50 + 28*Math.cos(Math.atan2(e.clientX - 50, e.clientY - 50)))
-            setEyeBallX(50 + 28*Math.sin(Math.atan2(e.clientX - 50, e.clientY - 50)))
-        }
+            if (innerRef.current) {
+                const clientRect = innerRef.current.getBoundingClientRect();
         
-        addEventListener("mousemove", (event) => handleMouseMove(event));
+                const svgCenterX = clientRect.left + clientRect.width / 2;
+                const svgCenterY = clientRect.top + clientRect.height / 2;
+        
+                const angle = Math.atan2(e.clientY - svgCenterY, e.clientX - svgCenterX);
+                console.log("angle, ", angle)
+                // Adjust the radius and scaling factor as needed
+                const radius = 25;
+                const scalingFactor = lerp(getDistance(clientRect.x, clientRect.y, e.clientX, e.clientY), 0, 50);
+                console.log("SCALING FACTOR", scalingFactor)
+                const newX = 50 + (radius * Math.cos(angle) * scalingFactor);
+                const newY = 50 + (radius * Math.sin(angle) * scalingFactor);
+                console.log("y offset", radius * Math.sin(angle))
+                // const newY = svgCenterY + radius * Math.sin(angle);
+        
+                setEyeBallX(newX);
+                setEyeBallY(newY);
+            }
+        };
+
+        window.addEventListener("mousemove", handleMouseMove);
 
         return () => {
-            removeEventListener("mousemove", handleMouseMove)
+            window.removeEventListener("mousemove", handleMouseMove);
         }
-
-    }, [mousePos, setMousePos]);
+    }, []);
 
     return (
-        <svg 
-        className="mx-2"
-        viewBox="0 0 100 100" width={50} height={50}>
-            <circle cx="50" cy="50" r="46" fill="white" stroke="white" strokeWidth={4}>
-            </circle>
+        <svg
+            ref={innerRef}
+            className="mx-2"
+            viewBox="0 0 100 100"
+            width={50}
+            height={50}
+        >
+            <circle cx="50" cy="50" r="46" fill="white" stroke="white" strokeWidth={4}></circle>
             <circle cx={eyeBallX} cy={eyeBallY} r="18" stroke="white" strokeWidth={2}></circle>
         </svg>
     );

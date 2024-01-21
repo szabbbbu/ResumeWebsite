@@ -7,6 +7,7 @@ import GridPoint from "../isosurface/GridPoint";
 import Pair from "../util/Pair";
 import Line from "../ShapeSystem/Line";
 import Grid from "../isosurface/Grid"
+import { getDistance } from "../util/Distance";
 
 
 interface I_CanvasLayer {
@@ -154,7 +155,7 @@ function IsoLayer() {
                         circles.forEach(circle => {
                             const circlePos: Pair = circle.getPos();
                             const circleRadius: number = circle.radius + 60;
-                            const newDistance = Math.sqrt(Math.pow(point.getXPos() - circlePos.X, 2) + Math.pow(point.getYPos() - circlePos.Y, 2)) - circleRadius;
+                            const newDistance = getDistance(point.getXPos(), point.getYPos(), circlePos.X, circlePos.Y) - circleRadius;   
                             distValuesPerCircle.push(newDistance);
                             point.setValue(newDistance);
                         })
