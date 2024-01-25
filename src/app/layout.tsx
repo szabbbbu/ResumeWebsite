@@ -22,17 +22,14 @@ export default function RootLayout({
     <html lang="en">
       <body
         className="flex"
-      >
-        
+      > 
         <Header />
-
-          <AppContextProvider>
-            <CanvasLayerClient />
-            <IsosurfaceLayer />
-            {/* <CanvasLayerClientDebug /> */}
-          </AppContextProvider>
+        <AppContextProvider>
+          <CanvasLayerClient />
+          <IsosurfaceLayer />
+          {/* <CanvasLayerClientDebug /> */}
+        </AppContextProvider>
         {children}
-      
       </body>
     </html>
   )

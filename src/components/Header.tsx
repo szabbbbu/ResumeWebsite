@@ -1,5 +1,5 @@
 import Link from "next/link"
-import CustomLink from "./CustomLink"
+import CustomLink from "./CustomLink/CustomLink"
 import EyeBall from "./EyeBall";
 
 export default function Header() {

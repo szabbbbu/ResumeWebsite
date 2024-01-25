@@ -35,6 +35,10 @@
   background: transparent;
   backdrop-filter: blur(3px);
 }
+.add-blur {
+  background: transparent;
+  backdrop-filter: blur(3px);
+}
 
 .text-bittersweet {
   color: whitesmoke;
@@ -43,6 +47,17 @@
 .anim::after {
   content: "";
   background-color: blue;
+}
+
+.start-state {
+  opacity: 0;
+  transform: translateY(-50px);
+}
+
+.fade-in {
+  opacity: 1;
+  /* transform: translateY(0px); */
+  transition: 1s;
 }
 
 body {

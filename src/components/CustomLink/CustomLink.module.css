@@ -1,0 +1,13 @@
+
+#bar {
+    background-color: rgba(255, 255, 255, 0.9);
+    width: 0%;
+    height: 2%;
+    border-radius: 1px;
+    transition: width 333ms ease-in-out;
+}
+
+#container:hover ~ #bar {
+    width: 100%;
+    transition: width 333ms ease-in-out;
+}
