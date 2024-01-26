@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Pair from "./util/Pair";
 import { getDistance } from "./util/Distance";
 import { lerp } from "./util/LinearInterpolation";
-import { clamp } from "./util/ClampFunctions";
+import { normalize, clamp } from "./util/ClampFunctions";
 
 type Props = {
     pos: "left" | "right";
@@ -27,7 +27,7 @@ export default function EyeBall() {
                 console.log("angle, ", angle)
                 // Adjust the radius and scaling factor as needed
                 const radius = 25;
-                const scalingFactor = lerp(getDistance(clientRect.x, clientRect.y, e.clientX, e.clientY), 0, 50);
+                const scalingFactor = clamp(lerp(getDistance(svgCenterX, svgCenterY, e.clientX, e.clientY), 0, 28), 0, 1);
                 console.log("SCALING FACTOR", scalingFactor)
                 const newX = 50 + (radius * Math.cos(angle) * scalingFactor);
                 const newY = 50 + (radius * Math.sin(angle) * scalingFactor);

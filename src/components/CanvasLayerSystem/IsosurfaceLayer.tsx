@@ -179,9 +179,9 @@ function IsoLayer() {
                     if (colNum > 0 && rowNum > 0) {
                         determineContour(point, rowNum, colNum, currGrid, ctx);
                     }
-                    // ctx.beginPath();
-                    // ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
-                    // ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
+                    ctx.fill();
                 })
             })
             
