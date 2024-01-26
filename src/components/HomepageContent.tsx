@@ -14,7 +14,6 @@ export default function HomepageContent() {
             <h1 className="text-xl uppercase my-2">robert szabo</h1>
             <div>Software Engineer</div>
             <div>oo you like that transition?</div>
-            
         </div>
     );
 }

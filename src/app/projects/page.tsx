@@ -1,8 +1,11 @@
 
+
 export default function ProjectsPage() {
     return(
-        <div>
-            projects page
-        </div>
-    )
+        <main>
+            <div>
+                projects page
+            </div>
+        </main>
+    );
 }
