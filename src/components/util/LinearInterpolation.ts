@@ -1,4 +1,4 @@
-import { clamp } from "./Clamp";
+import { normalize } from "./ClampFunctions";
 
 export function lerp(
     value: number,
@@ -9,5 +9,5 @@ export function lerp(
   ): number {
     const newValue = newMin + ((value - originalMin) * (newMax - newMin)) / (originalMax - originalMin);
   
-    return clamp(newValue, 0, 1);
+    return newValue;
   }

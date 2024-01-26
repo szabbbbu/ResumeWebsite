@@ -1,4 +1,4 @@
-import { clamp } from "@/components/util/Clamp";
+import { clamp } from "@/components/util/ClampFunctions";
 
 describe("Clamp tests", () => {
     it("should return 0.5", () => {

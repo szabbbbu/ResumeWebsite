@@ -8,6 +8,7 @@ import Pair from "../util/Pair";
 import Line from "../ShapeSystem/Line";
 import Grid from "../isosurface/Grid"
 import { getDistance } from "../util/Distance";
+import {normalize} from "../util/ClampFunctions";
 
 
 interface I_CanvasLayer {
@@ -60,24 +61,29 @@ function IsoLayer() {
         const upBound = topLeft.getYPos();
         const downBound = btmLeft.getYPos();
         
+        const sideAScalingFactor = Math.abs(normalize(lerp(2, topLeft.getValue(), topRight.getValue()), 0,1));
+        const sideBScalingFactor = Math.abs(normalize(lerp(2, topRight.getValue(), btmRight.getValue()), 0, 1));
+        const sideCScalingFactor = Math.abs(normalize(lerp(2,btmLeft.getValue(),btmRight.getValue()), 0, 1));
+        const sideDScalingFactor = Math.abs(normalize(lerp(2, topLeft.getValue(), btmLeft.getValue()), 0, 1));
 
+        console.log(sideAScalingFactor, sideBScalingFactor)
         /** Square sides */
         const sideA: Pair = new Pair(
-            leftBound+dw*lerp(2, topLeft.getValue(), topRight.getValue()),
+            leftBound+dw*sideAScalingFactor,
             upBound
             ); //top side
         const sideB: Pair = new Pair(
             rightBound,
-            upBound+dh*lerp(2, topRight.getValue(), btmRight.getValue())
+            upBound+dh*sideBScalingFactor
         );
         // console.log(lerp(1, topRight.getValue(), btmRight.getValue()), topRight.getValue(), topLeft.getValue())
         const sideC = new Pair( // btm side
-            leftBound+dw*lerp(2,btmLeft.getValue(),btmRight.getValue()),
+            leftBound+dw*sideCScalingFactor,
             downBound
         );
         const sideD: Pair = new Pair( //left side
             leftBound,
-            upBound+dh*lerp(2, topLeft.getValue(), btmLeft.getValue()) 
+            upBound+dh*sideDScalingFactor
         );
         
         const config = [topLeft.getOccupied(), topRight.getOccupied(), btmRight.getOccupied(), btmLeft.getOccupied()];

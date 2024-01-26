@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import Pair from "./util/Pair";
 import { getDistance } from "./util/Distance";
 import { lerp } from "./util/LinearInterpolation";
-import { clamp } from "./util/Clamp";
+import { clamp } from "./util/ClampFunctions";
 
 type Props = {
     pos: "left" | "right";
