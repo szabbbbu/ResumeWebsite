@@ -122,7 +122,6 @@ function IsoLayer() {
             case 9:
                 new Line(sideA.X, sideA.Y, sideC, strokeWidth, ctx)
                 .drawShape()
-                if (sideA.Y > btmLeft.getYPos() || sideA.Y < topLeft.getYPos()) console.log("DANGER!")
                 break;
             case 7: /** top right, bottom right, bottom left */
             case 8:
@@ -145,7 +144,7 @@ function IsoLayer() {
         if (layerRef.current) {
             const ctx = layerRef.current.getCanvasContext()
             if (!ctx) return;
-            if (!isoGrid) return
+            if (!isoGrid) return;
 
             const currGrid = isoGrid.getGrid();
             // console.log("curr grid dimensions: ", isoGrid.Width, isoGrid.Height)

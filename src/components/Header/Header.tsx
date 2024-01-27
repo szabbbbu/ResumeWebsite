@@ -1,11 +1,22 @@
-import Link from "next/link"
-import CustomLink from "./CustomLink/CustomLink"
-import EyeBall from "./EyeBall";
+import CustomLink from "../CustomLink/CustomLink"
+import EyeBall from "../EyeBall";
+import { memo } from "react";
 
-export default function Header() {
+function HeaderComponent() {
     return(
-
+        /**TODO: make the header animate away with a button */
         <>
+            <svg
+
+                viewBox="0 0 100 100"
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-12 h-12 absolute z-10 left-[3%] top-[4.5%]"
+                >
+                <rect y="15" width="100" height="10" rx="5" fill="#fff" />
+                <rect y="45" width="100" height="10" rx="5" fill="#fff" />
+                <rect y="75" width="100" height="10" rx="5" fill="#fff" />
+            </svg>
+
             <nav
             className="flex flex-col justify-center lg:w-[25vw] xs:w-[100vw] sm:w-[100vw] h-full bg-rgba"
             >
@@ -59,3 +70,6 @@ export default function Header() {
         </>
     );
 }
+
+const Header = memo(HeaderComponent);
+export default Header;

@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Header from '@/components/Header'
+import Header from '@/components/Header/Header'
 import CanvasLayerClient from '@/components/CanvasLayerSystem/CanvasLayerClient'
 import AppContextProvider from '@/contexts/AppContextProvider'
 import IsosurfaceLayer from '@/components/CanvasLayerSystem/IsosurfaceLayer'
@@ -22,8 +22,8 @@ function RT({
   return (
     <html lang="en">
       <body
-        className="flex h-[100vh] w-[100vw]"
-      > 
+        className="grid grid-rows-1 grid-cols-2 h-[100vh] w-[100vw]"
+      >
         <Header />
         <AppContextProvider>
           <CanvasLayerClient />

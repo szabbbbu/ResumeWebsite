@@ -27,8 +27,8 @@ const CL = forwardRef(
                     setAppWidth(window.innerWidth);
                     setAppHeight(window.innerHeight);
 
-                    isoGrid.updateGridSize(appWidth, appHeight);
-                    setIsoGrid(isoGrid);
+                        isoGrid.updateGridSize(appWidth, appHeight);
+                        setIsoGrid(isoGrid);
                     innerRef.current.width = appWidth;
                     innerRef.current.height = appHeight;
                     // innerRef.current.getContext('2d')?.scale(appHeight, appWidth);
