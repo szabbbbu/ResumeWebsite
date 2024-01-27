@@ -1,31 +1,25 @@
-
-//TODO: change homepage content to "animated"
-
 import Animated from "@/components/Animated";
-import HomepageContent from "@/components/HomepageContent";
 
 export default function Home() {
 
   console.log("HOME RENDERED:")
   return (
-    <main className="h-[33%] justify-center lg:flex flex-col add-blur sm:hidden xs:hidden">
-      <div className="flex flex-col">
+    <div className="flex flex-col w-[100%] h-fit items-center my-[10%] bg-rgba">
       <Animated delay={0}>
         <p>ROBERT SZABO</p>
       </Animated>
       <Animated delay={1000} > 
-        <p>I'm a full stack engineer</p>
+        <p>Full stack engineer, specializing in web</p>
       </Animated>
-      <Animated delay={1500}>
-        <p>Specializing in web</p>
+      <Animated delay={1700}>
+        <p>Hungarian-American based in Budapest, Hungary</p>
       </Animated>
-      <Animated delay={2500}>
-        <p>Do you want a high-quality website?</p>
+      <Animated delay={2000}>
+        <p>Available for contract work</p>
       </Animated>
-      <Animated delay={3000}>
-        <p>See what I offer in the services page</p>
+      <Animated delay={3500}>
+        <p className="text-2xl">Looking for a high quality website? Contact me!</p>
       </Animated>
-      </div>
-    </main>
+    </div>
   );
 }

@@ -1,33 +1,27 @@
+"use client"
 import CustomLink from "../CustomLink/CustomLink"
 import EyeBall from "../EyeBall";
 import { memo } from "react";
+import HeaderControllerBtn from "./HeaderControllerBtn";
+import { useAppContext } from "@/contexts/useAppContext";
 
 function HeaderComponent() {
+    const {menuHidden} = useAppContext();
+
     return(
         /**TODO: make the header animate away with a button */
-        <>
-            <svg
-
-                viewBox="0 0 100 100"
-                xmlns="http://www.w3.org/2000/svg"
-                className="w-12 h-12 absolute z-10 left-[3%] top-[4.5%]"
-                >
-                <rect y="15" width="100" height="10" rx="5" fill="#fff" />
-                <rect y="45" width="100" height="10" rx="5" fill="#fff" />
-                <rect y="75" width="100" height="10" rx="5" fill="#fff" />
-            </svg>
-
+        <div className={`${menuHidden ? "w-0" : "md:w-[25vw] lg:w-[25vw] xl:w-[25vw] 2xl:w-[25vw] sm:w-[100vw] xs:w-[100vw] z-[1]"} transition-[width] flex flex-col items-start justify-start overflow-hidden`}>
+            <HeaderControllerBtn />
             <nav
-            className="flex flex-col justify-center lg:w-[25vw] xs:w-[100vw] sm:w-[100vw] h-full bg-rgba"
+            className={`w-full flex flex-col justify-start items-start h-full bg-rgba`}
             >
-              
                 
             <ul className="grid grid-cols-1 grid-rows-auto gap-4 w-full h-full z-10 text-bittersweet text-2xl uppercase" 
             >
 
                 <CustomLink to="/">
                     <li
-                    className="h-full py-11 w-full flex items-center justify-center hover:transform hover:scale-110 transition"
+                    className="h-full py-11 w-full flex items-start justify-center hover:transform hover:scale-110 transition"
                     >
                         Home
                     </li>
@@ -67,7 +61,7 @@ function HeaderComponent() {
                 </CustomLink>    
             </ul>
             </nav>
-        </>
+        </div>
     );
 }
 

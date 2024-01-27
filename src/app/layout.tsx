@@ -19,18 +19,24 @@ function RT({
   children: React.ReactNode
 }) {
   console.log("rendering layout")
+  // grid grid-rows-1 grid-cols-[0.8fr,2fr]
   return (
     <html lang="en">
       <body
-        className="grid grid-rows-1 grid-cols-2 h-[100vh] w-[100vw]"
+        className="flex h-[100vh] w-[100vw]"
       >
-        <Header />
         <AppContextProvider>
+          <Header />
           <CanvasLayerClient />
           <IsosurfaceLayer />
           {/* <CanvasLayerClientDebug /> */}
+        <main className="h-[100%] justify-start lg:w-[100%] md:w-[100%] md:flex lg:flex xl:flex 2xl:flex flex-col sm:hidden xs:hidden">
+          {children}
+        </main>
+        <main className="z-[0] xs:flex sm:flex md:hidden lg:hidden xl:hidden 2xl:hidden absolute inset-0 w-[100vw] h-[100vh] overflow-scroll">
+          {children}
+        </main>
         </AppContextProvider>
-        {children}
       </body>
     </html>
   )

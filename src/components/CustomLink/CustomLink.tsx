@@ -9,7 +9,7 @@ type Props = {
 function CustomLink_ToMemo({to, children}: Props) {
     return (
         <div>
-            <Link id={Styles.container} className="h-fit w-full flex flex-col anim" href={to}>
+            <Link id={Styles.container} className="h-fit w-full flex flex-col" href={to}>
                     {children}
             </Link>
             <div id={Styles.bar}> </div>

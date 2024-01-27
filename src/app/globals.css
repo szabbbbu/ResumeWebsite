@@ -60,6 +60,11 @@
   transition: 1s;
 }
 
+.grid-gap {
+  grid-row-gap: 10px;
+  grid-column-gap: 10px;
+}
+
 body {
   font-family: "Azaret Mono", monospace;
   /* color: rgb(var(--foreground-rgb));
