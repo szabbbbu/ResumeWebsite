@@ -6,7 +6,6 @@ import { lerp } from "../util/LinearInterpolation";
 import GridPoint from "../isosurface/GridPoint";
 import Pair from "../util/Pair";
 import Line from "../ShapeSystem/Line";
-import Grid from "../isosurface/Grid"
 import { getDistance } from "../util/Distance";
 import {normalize} from "../util/ClampFunctions";
 
@@ -35,10 +34,8 @@ enum ContourStates {
 }
 
 function IsoLayer() {
-
     const layerRef = useRef<I_CanvasLayer>(null);
     const {circles, isoGrid, setIsoGrid, appWidth, appHeight} = useAppContext();
-
     const animFrameId = useRef<number | null>(null)
 
     function determineContour(
@@ -66,7 +63,7 @@ function IsoLayer() {
         const sideCScalingFactor = Math.abs(normalize(lerp(2,btmLeft.getValue(),btmRight.getValue()), 0, 1));
         const sideDScalingFactor = Math.abs(normalize(lerp(2, topLeft.getValue(), btmLeft.getValue()), 0, 1));
 
-        console.log(sideAScalingFactor, sideBScalingFactor)
+        // console.log(sideAScalingFactor, sideBScalingFactor)
         /** Square sides */
         const sideA: Pair = new Pair(
             leftBound+dw*sideAScalingFactor,
@@ -179,9 +176,9 @@ function IsoLayer() {
                     if (colNum > 0 && rowNum > 0) {
                         determineContour(point, rowNum, colNum, currGrid, ctx);
                     }
-                    ctx.beginPath();
-                    ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
-                    ctx.fill();
+                    // ctx.beginPath();
+                    // ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
+                    // ctx.fill();
                 })
             })
             

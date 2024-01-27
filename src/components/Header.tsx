@@ -7,7 +7,7 @@ export default function Header() {
 
         <>
             <nav
-            className="flex flex-col justify-center w-[25vw] h-[100vh] bg-rgba"
+            className="flex flex-col justify-center lg:w-[25vw] xs:w-[100vw] sm:w-[100vw] h-full bg-rgba"
             >
               
                 

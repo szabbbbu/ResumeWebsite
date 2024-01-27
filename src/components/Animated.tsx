@@ -1,12 +1,12 @@
 "use client"
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 
 type Props = {
     children: React.ReactNode;
     delay: number; //milliseconds
 }
 
-export default function Animated({children, delay}: Props) {
+function AnimatedComponent({children, delay}: Props) {
     const [show, setShow] = useState(false);
 
     useEffect(() => {
@@ -23,3 +23,6 @@ export default function Animated({children, delay}: Props) {
         </div>
     );
 }
+
+const Animated = memo(AnimatedComponent);
+export default Animated;

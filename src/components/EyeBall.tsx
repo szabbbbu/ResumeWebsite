@@ -1,5 +1,5 @@
 "use client"
-import { useEffect, useRef, useState } from "react";
+import { memo, useEffect, useRef, useState } from "react";
 import Pair from "./util/Pair";
 import { getDistance } from "./util/Distance";
 import { lerp } from "./util/LinearInterpolation";
@@ -9,7 +9,7 @@ type Props = {
     pos: "left" | "right";
 }
 
-export default function EyeBall() {
+function Eye() {
     const [eyeBallY, setEyeBallY] = useState<number>(50);
     const [eyeBallX, setEyeBallX] = useState<number>(50); // Initial X-coordinate
     const innerRef = useRef<SVGSVGElement>(null);
@@ -19,19 +19,15 @@ export default function EyeBall() {
         const handleMouseMove = (e: MouseEvent) => {
             if (innerRef.current) {
                 const clientRect = innerRef.current.getBoundingClientRect();
-        
                 const svgCenterX = clientRect.left + clientRect.width / 2;
                 const svgCenterY = clientRect.top + clientRect.height / 2;
-        
+                
                 const angle = Math.atan2(e.clientY - svgCenterY, e.clientX - svgCenterX);
-                console.log("angle, ", angle)
                 // Adjust the radius and scaling factor as needed
                 const radius = 25;
                 const scalingFactor = clamp(lerp(getDistance(svgCenterX, svgCenterY, e.clientX, e.clientY), 0, 28), 0, 1);
-                console.log("SCALING FACTOR", scalingFactor)
                 const newX = 50 + (radius * Math.cos(angle) * scalingFactor);
                 const newY = 50 + (radius * Math.sin(angle) * scalingFactor);
-                console.log("y offset", radius * Math.sin(angle))
                 // const newY = svgCenterY + radius * Math.sin(angle);
         
                 setEyeBallX(newX);
@@ -59,3 +55,6 @@ export default function EyeBall() {
         </svg>
     );
 }
+
+const EyeBall = memo(Eye);
+export default EyeBall;

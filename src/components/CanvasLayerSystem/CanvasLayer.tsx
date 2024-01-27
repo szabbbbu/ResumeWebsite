@@ -1,8 +1,7 @@
 "use client"
 import { useAppContext } from "@/contexts/useAppContext";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { forwardRef, useRef, useImperativeHandle} from "react";
-import Grid from "../isosurface/Grid";
 
 /**
  * TODO: make the canvas layer the size of the browser window
@@ -11,7 +10,7 @@ import Grid from "../isosurface/Grid";
  * 
  */
 
-export default forwardRef(
+const CL = forwardRef(
     (_, ref) => {
         const innerRef = useRef<HTMLCanvasElement>(null);
         const {appWidth, appHeight, setAppWidth, setAppHeight, isoGrid, setIsoGrid} = useAppContext();
@@ -64,3 +63,6 @@ export default forwardRef(
         );
     }
 );
+
+const CanvasLayer = memo(CL);
+export default CanvasLayer;

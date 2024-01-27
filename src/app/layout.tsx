@@ -5,6 +5,7 @@ import Header from '@/components/Header'
 import CanvasLayerClient from '@/components/CanvasLayerSystem/CanvasLayerClient'
 import AppContextProvider from '@/contexts/AppContextProvider'
 import IsosurfaceLayer from '@/components/CanvasLayerSystem/IsosurfaceLayer'
+import { memo } from 'react'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
   description: 'web development services',
 }
 
-export default function RootLayout({
+function RT({
   children,
 }: {
   children: React.ReactNode
@@ -21,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className="flex"
+        className="flex h-[100vh] w-[100vw]"
       > 
         <Header />
         <AppContextProvider>
@@ -34,3 +35,6 @@ export default function RootLayout({
     </html>
   )
 }
+
+const RootLayout = memo(RT);
+export default RootLayout;

@@ -8,7 +8,7 @@ export default function Home() {
 
   console.log("HOME RENDERED:")
   return (
-    <main className="h-full my-16 flex flex-col items-center justify-center add-blur">
+    <main className="h-[33%] justify-center lg:flex flex-col add-blur sm:hidden xs:hidden">
       <div className="flex flex-col">
       <Animated delay={0}>
         <p>ROBERT SZABO</p>
