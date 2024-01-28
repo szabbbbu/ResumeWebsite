@@ -18,9 +18,9 @@ function Client() {
     // console.log("WHAT")
 
     const generateCircles = useCallback((ctx: CanvasRenderingContext2D) => {
-            console.log("GENERATING CIRCLES", appWidth, appHeight, circles)
+            // console.log("GENERATING CIRCLES", appWidth, appHeight, circles)
             const m = Math.min(window.innerWidth, window.innerHeight);
-            console.log("M", m/30)
+            // console.log("M", m/30)
             for (let i = 0; i < 7; i++) {
                 let randRadius: number;
                 if (i % 2 == 0) // big circle
