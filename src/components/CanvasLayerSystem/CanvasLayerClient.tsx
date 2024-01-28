@@ -7,12 +7,13 @@ import { useAppContext } from "@/contexts/useAppContext";
 
 interface I_CanvasLayer {
     getCanvasContext: () => CanvasRenderingContext2D | undefined;
+    resizeCanvas: (w:number, h:number) => void;
 }
 
 //renders and animates the circles
 function Client() {
 
-    const {appWidth, appHeight, circles, setCircles, isoGrid} = useAppContext();
+    const {appWidth, appHeight, circles, setCircles} = useAppContext();
     const layerRef = useRef<I_CanvasLayer>(null);
     // console.log("WHAT")
 
@@ -69,6 +70,20 @@ function Client() {
         }
         animate();
     }, [])
+
+    useEffect(() => {
+        function handleCanvasResize() {
+            if(layerRef.current) {
+                layerRef.current.resizeCanvas(window.innerWidth, window.innerHeight);
+            }
+        }
+
+        window.addEventListener("resize",handleCanvasResize);
+
+        return () => {
+            window.removeEventListener("resize", handleCanvasResize);
+        }
+    }, []);
 
     return (
         <>

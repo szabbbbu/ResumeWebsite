@@ -12,13 +12,13 @@ export default function Home() {
         <p>Full stack engineer, specializing in web</p>
       </Animated>
       <Animated delay={1700}>
-        <p>Hungarian-American based in Budapest, Hungary</p>
+        <p></p>
       </Animated>
       <Animated delay={2000}>
         <p>Available for contract work</p>
       </Animated>
       <Animated delay={3500}>
-        <p className="text-2xl">Looking for a high quality website? Contact me!</p>
+        <p className="text-2xl">Looking for a high quality website? See what I offer on the services page</p>
       </Animated>
     </div>
   );

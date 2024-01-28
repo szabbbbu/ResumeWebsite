@@ -1,6 +1,6 @@
 "use client"
 import { useAppContext } from "@/contexts/useAppContext";
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useEffect } from "react";
 import { forwardRef, useRef, useImperativeHandle} from "react";
 
 /**
@@ -13,38 +13,45 @@ import { forwardRef, useRef, useImperativeHandle} from "react";
 const CL = forwardRef(
     (_, ref) => {
         const innerRef = useRef<HTMLCanvasElement>(null);
-        const {appWidth, appHeight, setAppWidth, setAppHeight, isoGrid, setIsoGrid} = useAppContext();
+        // const {appWidth, appHeight, setAppWidth, setAppHeight, isoGrid, setIsoGrid} = useAppContext();
         // const [w, setW] = useState(typeof window == undefined ? 0 : window.innerWidth)
         // const [h, setH] = useState(typeof window == undefined ? 0 : window.innerWidth)
-        useEffect(() => {
+        // useEffect(() => {
             
-            const handleResize = () => {
-                // setW(window.innerWidth);
-                // setH(window.innerHeight);
+        //     const handleResize = () => {
+        //         // setW(window.innerWidth);
+        //         // setH(window.innerHeight);
 
                 
-                if (innerRef.current) {
-                    setAppWidth(window.innerWidth);
-                    setAppHeight(window.innerHeight);
+        //         if (innerRef.current) {
+        //             setAppWidth(window.innerWidth);
+        //             setAppHeight(window.innerHeight);
 
-                        isoGrid.updateGridSize(appWidth, appHeight);
-                        setIsoGrid(isoGrid);
-                    innerRef.current.width = appWidth;
-                    innerRef.current.height = appHeight;
-                    // innerRef.current.getContext('2d')?.scale(appHeight, appWidth);
+        //                 isoGrid.updateGridSize(appWidth, appHeight);
+        //                 setIsoGrid(isoGrid);
+        //             innerRef.current.width = appWidth;
+        //             innerRef.current.height = appHeight;
+        //             // innerRef.current.getContext('2d')?.scale(appHeight, appWidth);
 
-                }
+        //         }
                 
-            }
+        //     }
             
-                handleResize(); // Initialize with the current window size
-                window.addEventListener('resize', handleResize);
+        //         handleResize(); // Initialize with the current window size
+        //         window.addEventListener('resize', handleResize);
           
 
-            return () => {
-                window.removeEventListener("resize", handleResize);
+        //     return () => {
+        //         window.removeEventListener("resize", handleResize);
+        //     }
+        // }, [appWidth, appHeight])
+
+        useEffect(() => {
+            if (innerRef.current) {
+                innerRef.current.width = window.innerWidth;
+                innerRef.current.height = window.innerHeight;
             }
-        }, [appWidth, appHeight])
+        }, []);
 
         useImperativeHandle(ref, () => {
             return {
@@ -53,6 +60,12 @@ const CL = forwardRef(
                         return innerRef.current.getContext('2d');
                     }
                     else return null;
+                },
+                resizeCanvas: (w: number, h: number) => {
+                    if (innerRef.current) {
+                        innerRef.current.width = w;
+                        innerRef.current.height = h;
+                    }
                 }
             }
         })

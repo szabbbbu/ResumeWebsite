@@ -9,8 +9,8 @@ interface I_AppContext {
     setAppHeight: React.Dispatch<React.SetStateAction<number>>;
     menuHidden: boolean;
     setMenuHidden: React.Dispatch<React.SetStateAction<boolean>>
-    isoGrid: Grid;
-    setIsoGrid: React.Dispatch<React.SetStateAction<Grid>>;
+    // isoGrid: Grid;
+    // setIsoGrid: React.Dispatch<React.SetStateAction<Grid>>;
     circles: Circle[];
     setCircles: React.Dispatch<React.SetStateAction<Circle[]>>;
 }

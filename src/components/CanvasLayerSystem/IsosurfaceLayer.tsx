@@ -8,10 +8,12 @@ import Pair from "../util/Pair";
 import Line from "../ShapeSystem/Line";
 import { getDistance } from "../util/Distance";
 import {normalize} from "../util/ClampFunctions";
+import Grid from "../isosurface/Grid";
 
 
 interface I_CanvasLayer {
     getCanvasContext: () => CanvasRenderingContext2D | undefined;
+    resizeCanvas: (w:number, h:number) => void;
 }
 
 enum ContourStates {
@@ -35,8 +37,11 @@ enum ContourStates {
 
 function IsoLayer() {
     const layerRef = useRef<I_CanvasLayer>(null);
-    const {circles, isoGrid, setIsoGrid, appWidth, appHeight} = useAppContext();
+    const {circles, appWidth, appHeight} = useAppContext();
     const animFrameId = useRef<number | null>(null)
+
+    const isoGrid2 = useRef<Grid | null>(null);
+    
 
     function determineContour(
         btmRight: GridPoint,
@@ -45,9 +50,9 @@ function IsoLayer() {
         currGrid: GridPoint[][],
         ctx: CanvasRenderingContext2D
         ) {
-        if (!isoGrid) return
-        const dh = isoGrid.getHeightInterval();
-        const dw = isoGrid.getWidthInterval();
+        if (!isoGrid2.current) return
+        const dh = isoGrid2.current.getHeightInterval();
+        const dw = isoGrid2.current.getWidthInterval();
         /** Points  */
         const topLeft = currGrid[rowNum - 1][colNum - 1];
         const topRight = currGrid[rowNum - 1][colNum];
@@ -63,7 +68,6 @@ function IsoLayer() {
         const sideCScalingFactor = Math.abs(normalize(lerp(2,btmLeft.getValue(),btmRight.getValue()), 0, 1));
         const sideDScalingFactor = Math.abs(normalize(lerp(2, topLeft.getValue(), btmLeft.getValue()), 0, 1));
 
-        // console.log(sideAScalingFactor, sideBScalingFactor)
         /** Square sides */
         const sideA: Pair = new Pair(
             leftBound+dw*sideAScalingFactor,
@@ -73,7 +77,6 @@ function IsoLayer() {
             rightBound,
             upBound+dh*sideBScalingFactor
         );
-        // console.log(lerp(1, topRight.getValue(), btmRight.getValue()), topRight.getValue(), topLeft.getValue())
         const sideC = new Pair( // btm side
             leftBound+dw*sideCScalingFactor,
             downBound
@@ -136,7 +139,7 @@ function IsoLayer() {
                 break;
             default:
                 console.error("string generated that isn't defined in ContourStates enum")
-            //     break;
+                break;
         }
     }
 
@@ -144,11 +147,11 @@ function IsoLayer() {
         if (layerRef.current) {
             const ctx = layerRef.current.getCanvasContext()
             if (!ctx) return;
-            if (!isoGrid) return;
+            if (!isoGrid2.current) return;
 
-            const currGrid = isoGrid.getGrid();
+            const currGrid = isoGrid2.current.getGrid();
             // console.log("curr grid dimensions: ", isoGrid.Width, isoGrid.Height)
-            ctx.clearRect(0,0,isoGrid.Width+5, isoGrid.Height+5);
+            ctx.clearRect(0,0,isoGrid2.current.Width+5, isoGrid2.current.Height+5);
 
             currGrid.forEach((row, rowNum) => {
                 row.forEach((point, colNum) => {
@@ -175,20 +178,25 @@ function IsoLayer() {
                     if (colNum > 0 && rowNum > 0) {
                         determineContour(point, rowNum, colNum, currGrid, ctx);
                     }
-                    // ctx.beginPath();
-                    // ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
-                    // ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
+                    ctx.fill();
                 })
             })
-            
-            isoGrid.setGrid(currGrid);
-            setIsoGrid(isoGrid);
+            isoGrid2.current.setGrid(currGrid);
+            // isoGrid.setGrid(currGrid);
+            // setIsoGrid(isoGrid);
          }
         animFrameId.current = requestAnimationFrame(update);
-    }, [appHeight, appWidth, isoGrid])
+    }, [appHeight, appWidth, isoGrid2])
 
     useEffect(() => {
-        if (layerRef.current?.getCanvasContext()) {
+        const dim = 12;
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+        const gridInstance = new Grid(dim, w, h);
+        isoGrid2.current = gridInstance;
+        if (layerRef.current) {
             const ctx = layerRef.current.getCanvasContext();
             if (ctx) {
                 ctx.imageSmoothingEnabled = true;
@@ -196,6 +204,20 @@ function IsoLayer() {
             }
         }   
         update();
+    }, []);
+
+    useEffect(() => {
+        function handleCanvasResize() {
+            if (layerRef.current) {
+                isoGrid2.current?.updateGridSize(window.innerWidth, window.innerHeight);
+                layerRef.current.resizeCanvas(window.innerWidth, window.innerHeight);
+            }
+        }
+        window.addEventListener("resize", handleCanvasResize);
+
+        return () => {
+            window.removeEventListener("resize", handleCanvasResize);
+        }
     }, []);
 
     return (

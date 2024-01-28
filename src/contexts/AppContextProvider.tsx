@@ -13,7 +13,7 @@ function AppCtx({children}: Props) {
     console.log("app ctxt")
     const [appWidth, setAppWidth] = useState<number>(1470);
     const [appHeight, setAppHeight] = useState<number>(751);
-    const [isoGrid, setIsoGrid] = useState<Grid>(new Grid(12, appWidth, appHeight));
+    // const [isoGrid, setIsoGrid] = useState<Grid>(new Grid(12, appWidth, appHeight));
     const [menuHidden, setMenuHidden] = useState<boolean>(false)
     const [circles, setCircles] = useState<Circle[]>([])
 
@@ -26,8 +26,8 @@ function AppCtx({children}: Props) {
                     appWidth: appWidth,
                     setAppHeight:setAppHeight,
                     setAppWidth: setAppWidth,
-                    isoGrid: isoGrid,
-                    setIsoGrid: setIsoGrid,
+                    // isoGrid: isoGrid,
+                    // setIsoGrid: setIsoGrid,
                     menuHidden: menuHidden,
                     setMenuHidden: setMenuHidden,
                     circles: circles, 
