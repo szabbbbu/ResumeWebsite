@@ -1,7 +1,6 @@
 "use client"
 import { ReactNode, memo, useEffect, useState } from "react";
 import { AppContext } from "./AppContext";
-import Grid from "../components/isosurface/Grid";
 import Circle from "@/components/ShapeSystem/Circle";
 
 
