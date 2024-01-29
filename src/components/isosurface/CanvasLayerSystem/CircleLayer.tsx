@@ -2,7 +2,6 @@
 import {useEffect, useRef, memo, useCallback} from "react"
 import CanvasLayer from "./CanvasLayer"
 import Circle from "../ShapeSystem/Circle";
-import { useAppContext } from "@/contexts/useAppContext";
 import useIsoContext from "@/contexts/isosurface/useIsoContext";
 
 
@@ -93,5 +92,5 @@ function Client() {
     );
 }
 
-const CanvasLayerClient = memo(Client);
-export default CanvasLayerClient;
+const CircleLayer = memo(Client);
+export default CircleLayer;

@@ -1,4 +1,4 @@
-import Circle from "@/components/ShapeSystem/Circle";
+import Circle from "@/components/isosurface/ShapeSystem/Circle";
 import { createContext } from "react";
 
 interface IsoContext {

@@ -2,11 +2,12 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header/Header'
-import CanvasLayerClient from '@/components/CanvasLayerSystem/CanvasLayerClient'
+
 import AppContextProvider from '@/contexts/AppContextProvider'
-import IsosurfaceLayer from '@/components/CanvasLayerSystem/IsosurfaceLayer'
+import IsosurfaceLayer from '@/components/isosurface/CanvasLayerSystem/IsosurfaceLayer'
 import { memo } from 'react'
 import IsoContextProvider from '@/contexts/isosurface/IsoContextProvider'
+import CircleLayer from '@/components/isosurface/CanvasLayerSystem/CircleLayer'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -29,7 +30,7 @@ function RT({
         <AppContextProvider>
           <Header />
           <IsoContextProvider>
-            <CanvasLayerClient />
+            <CircleLayer />
             <IsosurfaceLayer />
           </IsoContextProvider>
           
@@ -37,7 +38,7 @@ function RT({
         <main className="h-[100%] justify-start lg:w-[75%] md:w-[75%] md:flex lg:flex xl:flex 2xl:flex flex-col sm:hidden xs:hidden">
           {children}
         </main>
-        <main className="z-[0] xs:flex sm:flex md:hidden lg:hidden xl:hidden 2xl:hidden absolute inset-0 w-[100vw] h-[100vh] overflow-scroll">
+        <main className="z-0 xs:flex sm:flex md:hidden lg:hidden xl:hidden 2xl:hidden absolute inset-0 w-[100vw] h-[100vh] overflow-scroll">
           {children}
         </main>
         </AppContextProvider>

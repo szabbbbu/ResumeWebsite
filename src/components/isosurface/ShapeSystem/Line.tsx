@@ -1,4 +1,4 @@
-import Pair from "../util/Pair";
+import Pair from "../../util/Pair";
 import Shape from "./Shape";
 
 

@@ -1,6 +1,6 @@
 "use client"
 import { ReactNode, useState } from "react";
-import Circle from "@/components/ShapeSystem/Circle";
+import Circle from "@/components/isosurface/ShapeSystem/Circle";
 import { IsoContext } from "./IsoContext";
 
 

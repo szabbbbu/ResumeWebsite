@@ -2,13 +2,13 @@
 import { memo, useCallback, useEffect, useRef } from "react";
 import CanvasLayer from "./CanvasLayer";
 import { useAppContext } from "@/contexts/useAppContext";
-import { lerp } from "../util/LinearInterpolation";
-import GridPoint from "../isosurface/GridPoint";
-import Pair from "../util/Pair";
+import { lerp } from "../../util/LinearInterpolation";
+import GridPoint from "../GridPoint";
+import Pair from "../../util/Pair";
 import Line from "../ShapeSystem/Line";
-import { getDistance } from "../util/Distance";
-import {normalize} from "../util/ClampFunctions";
-import Grid from "../isosurface/Grid";
+import { getDistance } from "../../util/Distance";
+import {normalize} from "../../util/ClampFunctions";
+import Grid from "../Grid";
 import useIsoContext from "@/contexts/isosurface/useIsoContext";
 
 

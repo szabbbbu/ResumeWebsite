@@ -1,8 +1,8 @@
 import Shape from "./Shape";
-import Pair from "../util/Pair";
-import GridPoint from "../isosurface/GridPoint";
-import Grid from "../isosurface/Grid";
-import { lerp } from "../util/LinearInterpolation";
+import Pair from "../../util/Pair";
+import GridPoint from "../GridPoint";
+import Grid from "../Grid";
+import { lerp } from "../../util/LinearInterpolation";
 
 class Circle extends Shape {
 

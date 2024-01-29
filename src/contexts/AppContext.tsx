@@ -1,4 +1,4 @@
-import Circle from "@/components/ShapeSystem/Circle";
+import Circle from "@/components/isosurface/ShapeSystem/Circle";
 import Grid from "@/components/isosurface/Grid";
 import {createContext} from "react";
 import React from "react"

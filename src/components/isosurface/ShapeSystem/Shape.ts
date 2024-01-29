@@ -1,4 +1,4 @@
-import Pair from "../util/Pair"
+import Pair from "../../util/Pair"
 
 interface I_Shape {
     drawShape: (...args: any[]) => void;

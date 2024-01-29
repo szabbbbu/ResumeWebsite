@@ -1,5 +1,5 @@
 import GridPoint from "./GridPoint";
-import Circle from "../ShapeSystem/Circle";
+import Circle from "./ShapeSystem/Circle";
 
 class GridPoints {
     private Rows: number;
