@@ -3,6 +3,7 @@ import {useEffect, useRef, memo, useCallback} from "react"
 import CanvasLayer from "./CanvasLayer"
 import Circle from "../ShapeSystem/Circle";
 import { useAppContext } from "@/contexts/useAppContext";
+import useIsoContext from "@/contexts/isosurface/useIsoContext";
 
 
 interface I_CanvasLayer {
@@ -13,7 +14,7 @@ interface I_CanvasLayer {
 //renders and animates the circles
 function Client() {
 
-    const {appWidth, appHeight, circles, setCircles} = useAppContext();
+    const {circles, setCircles} = useIsoContext();
     const layerRef = useRef<I_CanvasLayer>(null);
     // console.log("WHAT")
 
@@ -45,11 +46,11 @@ function Client() {
             if (!ctx) return
             
             if (circles.length === 0 && typeof window) {
-                console.log("circ?", window.innerHeight, appHeight)
+                // console.log("circ?", window.innerHeight, appHeight)
                 generateCircles(ctx);
             }
         }
-    }, [appWidth, appHeight]);
+    }, []);
 
     /** HANDLES ANIMATION */
     useEffect(() => {

@@ -9,6 +9,7 @@ import Line from "../ShapeSystem/Line";
 import { getDistance } from "../util/Distance";
 import {normalize} from "../util/ClampFunctions";
 import Grid from "../isosurface/Grid";
+import useIsoContext from "@/contexts/isosurface/useIsoContext";
 
 
 interface I_CanvasLayer {
@@ -37,7 +38,7 @@ enum ContourStates {
 
 function IsoLayer() {
     const layerRef = useRef<I_CanvasLayer>(null);
-    const {circles, appWidth, appHeight} = useAppContext();
+    const {circles} = useIsoContext();
     const animFrameId = useRef<number | null>(null)
 
     const isoGrid2 = useRef<Grid | null>(null);
@@ -188,7 +189,7 @@ function IsoLayer() {
             // setIsoGrid(isoGrid);
          }
         animFrameId.current = requestAnimationFrame(update);
-    }, [appHeight, appWidth, isoGrid2])
+    }, [isoGrid2])
 
     useEffect(() => {
         const dim = 12;

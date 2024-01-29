@@ -6,6 +6,7 @@ import CanvasLayerClient from '@/components/CanvasLayerSystem/CanvasLayerClient'
 import AppContextProvider from '@/contexts/AppContextProvider'
 import IsosurfaceLayer from '@/components/CanvasLayerSystem/IsosurfaceLayer'
 import { memo } from 'react'
+import IsoContextProvider from '@/contexts/isosurface/IsoContextProvider'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -27,8 +28,11 @@ function RT({
       >
         <AppContextProvider>
           <Header />
-          <CanvasLayerClient />
-          <IsosurfaceLayer />
+          <IsoContextProvider>
+            <CanvasLayerClient />
+            <IsosurfaceLayer />
+          </IsoContextProvider>
+          
           {/* <CanvasLayerClientDebug /> */}
         <main className="h-[100%] justify-start lg:w-[75%] md:w-[75%] md:flex lg:flex xl:flex 2xl:flex flex-col sm:hidden xs:hidden">
           {children}
