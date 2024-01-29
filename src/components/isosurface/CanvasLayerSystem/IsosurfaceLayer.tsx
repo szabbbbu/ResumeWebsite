@@ -1,11 +1,9 @@
 "use client"
 import { memo, useCallback, useEffect, useRef } from "react";
 import CanvasLayer from "./CanvasLayer";
-import { useAppContext } from "@/contexts/useAppContext";
 import { lerp } from "../../util/LinearInterpolation";
 import GridPoint from "../GridPoint";
 import Pair from "../../util/Pair";
-import Line from "../ShapeSystem/Line";
 import { getDistance } from "../../util/Distance";
 import {normalize} from "../../util/ClampFunctions";
 import Grid from "../Grid";
@@ -50,7 +48,7 @@ function IsoLayer() {
         colNum: number,
         currGrid: GridPoint[][],
         ctx: CanvasRenderingContext2D
-        ) {
+    ) {
         if (!isoGrid2.current) return
         const dh = isoGrid2.current.getHeightInterval();
         const dw = isoGrid2.current.getWidthInterval();
@@ -68,12 +66,12 @@ function IsoLayer() {
         const sideBScalingFactor = Math.abs(normalize(lerp(2, topRight.getValue(), btmRight.getValue()), 0, 1));
         const sideCScalingFactor = Math.abs(normalize(lerp(2,btmLeft.getValue(),btmRight.getValue()), 0, 1));
         const sideDScalingFactor = Math.abs(normalize(lerp(2, topLeft.getValue(), btmLeft.getValue()), 0, 1));
-
+    
         /** Square sides */
         const sideA: Pair = new Pair(
             leftBound+dw*sideAScalingFactor,
             upBound
-            ); //top side
+        ); //top side
         const sideB: Pair = new Pair(
             rightBound,
             upBound+dh*sideBScalingFactor
@@ -92,50 +90,59 @@ function IsoLayer() {
         // console.log(contourStates[s])
         const currState: number = ContourStates[s as keyof typeof ContourStates];
         const strokeWidth = 2;
-        
+    
+        // Create a path for the contour
+        ctx.strokeStyle ="white"
+        ctx.beginPath();
         switch(currState) {
             case 0:
                 break;
             case 1: //* bottom left corner */
             case 14:
                 // console.log("CASE 1/14???")
-                new Line(sideD.X, sideD.Y, sideC, strokeWidth, ctx)
-                .drawShape()
+                ctx.moveTo(sideD.X, sideD.Y);
+                ctx.lineTo(sideC.X, sideC.Y);
                 break;
             case 2: /** bottom right */
             case 13:
-                new Line(sideC.X, sideC.Y, sideB, strokeWidth, ctx)
-                .drawShape();
+                ctx.moveTo(sideC.X, sideC.Y);
+                ctx.lineTo(sideB.X, sideB.Y);
                 break;
             case 3: /** bottom left, bottom right */
             case 12:
-                new Line(sideD.X, sideD.Y, sideB, strokeWidth, ctx)
-                .drawShape()
+                ctx.moveTo(sideD.X, sideD.Y);
+                ctx.lineTo(sideB.X, sideB.Y);
                 break;
             case 4: /** top right */
             case 11:
-                new Line(sideA.X, sideA.Y, sideB, strokeWidth, ctx)
-                .drawShape();
+                ctx.moveTo(sideA.X, sideA.Y);
+                ctx.lineTo(sideB.X, sideB.Y);
                 break;
             case 5: /** top right, bottom left */
-                new Line(sideD.X, sideD.Y, sideA, strokeWidth, ctx)
-                .drawShape()
-                new Line(sideC.X, sideC.Y, sideB, strokeWidth, ctx)
-                .drawShape()
+                ctx.moveTo(sideD.X, sideD.Y);
+                ctx.lineTo(sideA.X, sideA.Y);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.lineTo(sideB.X, sideB.Y);
+                ctx.lineTo(sideC.X, sideC.Y);
                 break;
             case 6: /** top right, bottom right */
             case 9:
-                new Line(sideA.X, sideA.Y, sideC, strokeWidth, ctx)
-                .drawShape()
+                ctx.moveTo(sideA.X, sideA.Y);
+                ctx.lineTo(sideC.X, sideC.Y);
                 break;
             case 7: /** top right, bottom right, bottom left */
             case 8:
-                new Line(sideD.X, sideD.Y, sideA, strokeWidth, ctx)
-                .drawShape()
+                ctx.moveTo(sideD.X, sideD.Y);
+                ctx.lineTo(sideA.X, sideA.Y);
                 break;
             case 10:
-                new Line(sideA.X, sideA.Y, sideB, strokeWidth, ctx).drawShape();
-                new Line(sideD.X, sideD.Y, sideC, strokeWidth , ctx).drawShape();
+                ctx.moveTo(sideB.X, sideB.Y);
+                ctx.lineTo(sideA.X, sideA.Y);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(sideD.X, sideD.Y);
+                ctx.lineTo(sideC.X, sideC.Y);
                 break;
             case 15:
                 break;
@@ -143,7 +150,10 @@ function IsoLayer() {
                 console.error("string generated that isn't defined in ContourStates enum")
                 break;
         }
+        // Draw the contour
+        ctx.stroke();
     }
+    
 
     const update = useCallback(() => {
         if (layerRef.current) {
@@ -180,9 +190,9 @@ function IsoLayer() {
                     if (colNum > 0 && rowNum > 0) {
                         determineContour(point, rowNum, colNum, currGrid, ctx);
                     }
-                    // ctx.beginPath();
-                    // ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
-                    // ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
+                    ctx.fill();
                 })
             })
             isoGrid2.current.setGrid(currGrid);
@@ -192,7 +202,7 @@ function IsoLayer() {
 
     /** INITIALIZE GRID */
     useEffect(() => {
-        const dim = 12;
+        const dim = 16;
         const w = window.innerWidth;
         const h = window.innerHeight;
         const gridInstance = new Grid(dim, w, h);
