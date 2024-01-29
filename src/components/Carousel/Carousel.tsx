@@ -10,11 +10,13 @@ type Props = {
   images: StaticImageData[];
 }
  
+//TODO: GET CURRENT HOVERED IMAGE FROM THE APP CONTEXT (to enable consistency between wide and mobile views)
 export default function Carousel({images}: Props) {
   const {menuHidden} = useAppContext();
   const [currImg, setCurrImg] = useState<number>(0);
 
-  console.log("CURR IMG", currImg, images[currImg])
+  console.log("CURR IMG", currImg, images[currImg]);
+
 
   return (
     <div className={`${menuHidden ? "w-[100vw]" : "w-full"} h-full grid grid-rows-1 xs:grid-cols-[15%,70%,15%] sm:grid-cols-[15%,70%,15%] lg:grid-cols-[10%,80%,10%] md:grid-cols-[10%,80%,10%] bg-transparent`}>

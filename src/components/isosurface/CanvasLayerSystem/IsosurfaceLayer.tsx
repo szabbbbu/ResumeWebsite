@@ -92,6 +92,7 @@ function IsoLayer() {
         // console.log(contourStates[s])
         const currState: number = ContourStates[s as keyof typeof ContourStates];
         const strokeWidth = 2;
+        
         switch(currState) {
             case 0:
                 break;
@@ -179,9 +180,9 @@ function IsoLayer() {
                     if (colNum > 0 && rowNum > 0) {
                         determineContour(point, rowNum, colNum, currGrid, ctx);
                     }
-                    ctx.beginPath();
-                    ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
-                    ctx.fill();
+                    // ctx.beginPath();
+                    // ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
+                    // ctx.fill();
                 })
             })
             isoGrid2.current.setGrid(currGrid);
