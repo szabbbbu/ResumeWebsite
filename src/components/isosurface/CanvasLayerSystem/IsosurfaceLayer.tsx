@@ -119,12 +119,12 @@ function IsoLayer() {
                 ctx.lineTo(sideB.X, sideB.Y);
                 break;
             case 5: /** top right, bottom left */
-                ctx.moveTo(sideD.X, sideD.Y);
-                ctx.lineTo(sideA.X, sideA.Y);
+                ctx.moveTo(sideA.X, sideA.Y);
+                ctx.lineTo(sideD.X, sideD.Y);
                 ctx.stroke();
                 ctx.beginPath();
-                ctx.lineTo(sideB.X, sideB.Y);
                 ctx.lineTo(sideC.X, sideC.Y);
+                ctx.lineTo(sideB.X, sideB.Y);
                 break;
             case 6: /** top right, bottom right */
             case 9:
@@ -137,8 +137,8 @@ function IsoLayer() {
                 ctx.lineTo(sideA.X, sideA.Y);
                 break;
             case 10:
-                ctx.moveTo(sideB.X, sideB.Y);
-                ctx.lineTo(sideA.X, sideA.Y);
+                ctx.moveTo(sideA.X, sideA.Y);
+                ctx.lineTo(sideB.X, sideB.Y);
                 ctx.stroke();
                 ctx.beginPath();
                 ctx.moveTo(sideD.X, sideD.Y);
@@ -202,7 +202,7 @@ function IsoLayer() {
 
     /** INITIALIZE GRID */
     useEffect(() => {
-        const dim = 16;
+        const dim = 12;
         const w = window.innerWidth;
         const h = window.innerHeight;
         const gridInstance = new Grid(dim, w, h);
