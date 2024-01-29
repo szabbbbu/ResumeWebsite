@@ -15,6 +15,7 @@ function Client() {
 
     const {circles, setCircles} = useIsoContext();
     const layerRef = useRef<I_CanvasLayer>(null);
+    const animFrameId = useRef<number | null>(null);
     // console.log("WHAT")
 
     const generateCircles = useCallback((ctx: CanvasRenderingContext2D) => {
@@ -66,9 +67,14 @@ function Client() {
                 // circle.getGridStatus();
             })
             setCircles([...circles])
-            requestAnimationFrame(animate);
+            animFrameId.current = requestAnimationFrame(animate);
         }
         animate();
+        return () => {
+            if (animFrameId.current) {
+                cancelAnimationFrame(animFrameId.current);
+            }
+        }
     }, [])
 
     useEffect(() => {

@@ -2,21 +2,19 @@
 
 import { useAppContext } from "@/contexts/useAppContext";
 import Image, { StaticImageData } from "next/image";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { clamp } from "../util/ClampFunctions";
 
 
 type Props = {
-  images: StaticImageData[]
+  images: StaticImageData[];
 }
  
 export default function Carousel({images}: Props) {
   const {menuHidden} = useAppContext();
   const [currImg, setCurrImg] = useState<number>(0);
 
-  
-
-  console.log("CURR IMG", currImg)
+  console.log("CURR IMG", currImg, images[currImg])
 
   return (
     <div className={`${menuHidden ? "w-[100vw]" : "w-full"} h-full grid grid-rows-1 xs:grid-cols-[15%,70%,15%] sm:grid-cols-[15%,70%,15%] lg:grid-cols-[10%,80%,10%] md:grid-cols-[10%,80%,10%] bg-transparent`}>
@@ -39,7 +37,7 @@ export default function Carousel({images}: Props) {
       <div className=" w-full h-full grid grid-cols-1 grid-rows-[10%,60%,15%,15%] relative">
         {/** TITLES */}
         <div className="flex items-center overflow-x-hidden">
-          <div className={`w-full flex translate-x-[-${100*currImg}%] transition-transform`}>
+          <div style={{transform:`translateX(-${100 * currImg}%)`}} className={`w-full flex transition-transform`}>
           <div className=" w-full flex justify-center flex-shrink-0">
             <div className="add-blur text-xl rounded p-2">
               title 1
@@ -58,12 +56,11 @@ export default function Carousel({images}: Props) {
         </div>
         {/* IMAGE */}
         <div className="flex w-full h-full bg-slate-700 overflow-hidden">
-          <div className={`flex translate-x-[-${100*currImg}%] transition-transform`}>
+          <div style={{transform:`translateX(-${100 * currImg}%)`}} className={`flex transition-transform`}>
             {
               images.map((img) => {
                 return (
                     <Image className="rounded border" width={img.width} height={img.height} key={img.src} alt="carouselimg" src={img.src}/>
-                
                 )
               })
             }
@@ -71,19 +68,23 @@ export default function Carousel({images}: Props) {
         </div>
         {/** DESCS */}
         <div className=" flex items-center overflow-x-hidden">
-          <div className={`w-full flex translate-x-[-${100*currImg}%] transition-transform`}>
+          <div style={{transform:`translateX(-${100 * currImg}%)`}} className={`w-full flex transition-transform`}>
             <div className="w-full flex-shrink-0 flex justify-center py-2">
-              
+ 
               <div className="add-blur h-fit w-fit p-2 rounded">
-                dec1
+                desc1
               </div>
               
             </div>
+
             <div className="w-full flex-shrink-0 flex justify-center">
+
               <div className="add-blur h-fit w-fit p-2 rounded ">
-                  dec2
+                  desc2
               </div>
+
             </div>
+
           </div>
           
         </div>

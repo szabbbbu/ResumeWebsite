@@ -4,8 +4,7 @@ import './globals.css'
 import Header from '@/components/Header/Header'
 
 import AppContextProvider from '@/contexts/AppContextProvider'
-import IsosurfaceLayer from '@/components/isosurface/CanvasLayerSystem/IsosurfaceLayer'
-import { memo } from 'react'
+import IsosurfaceLayer from '@/components/isosurface/CanvasLayerSystem/IsosurfaceLayer';
 import IsoContextProvider from '@/contexts/isosurface/IsoContextProvider'
 import CircleLayer from '@/components/isosurface/CanvasLayerSystem/CircleLayer'
 const inter = Inter({ subsets: ['latin'] })
@@ -47,5 +46,5 @@ function RT({
   )
 }
 
-const RootLayout = memo(RT);
+const RootLayout = RT;
 export default RootLayout;

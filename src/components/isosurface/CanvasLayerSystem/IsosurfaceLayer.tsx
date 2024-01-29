@@ -185,12 +185,11 @@ function IsoLayer() {
                 })
             })
             isoGrid2.current.setGrid(currGrid);
-            // isoGrid.setGrid(currGrid);
-            // setIsoGrid(isoGrid);
          }
         animFrameId.current = requestAnimationFrame(update);
     }, [isoGrid2])
 
+    /** INITIALIZE GRID */
     useEffect(() => {
         const dim = 12;
         const w = window.innerWidth;
@@ -205,8 +204,14 @@ function IsoLayer() {
             }
         }   
         update();
+        return () => {
+            if (animFrameId.current) {
+                cancelAnimationFrame(animFrameId.current)
+            }
+        }
     }, []);
 
+    /** HANLDLE WINDOW RESIZE */
     useEffect(() => {
         function handleCanvasResize() {
             if (layerRef.current) {
