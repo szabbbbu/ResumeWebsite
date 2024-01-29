@@ -1,11 +1,13 @@
 "use client"
 
+import { useAppContext } from "@/contexts/useAppContext";
 import Image from "next/image";
 
  
 export default function Carousel() {
+  const {menuHidden} = useAppContext();
   return (
-    <div className="w-full h-full grid grid-rows-1 xs:grid-cols-[15%,70%,15%] sm:grid-cols-[15%,70%,15%] lg:grid-cols-[10%,80%,10%] md:grid-cols-[10%,80%,10%]  bg-rose-500">
+    <div className={`${menuHidden ? "w-[100vw]" : "w-full"} h-full grid grid-rows-1 xs:grid-cols-[15%,70%,15%] sm:grid-cols-[15%,70%,15%] lg:grid-cols-[10%,80%,10%] md:grid-cols-[10%,80%,10%]  bg-rose-500`}>
 
       <div className="w-fit h-fit p-1 self-center justify-self-center bg-[rgba(0,0,0,0.9)] border z-10">
       <svg width="50" height="50" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">

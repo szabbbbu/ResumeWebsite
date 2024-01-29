@@ -10,7 +10,7 @@ function HeaderComponent() {
 
     return(
         /**TODO: make the header animate away with a button */
-        <div className={`${menuHidden ? "w-0" : "md:w-[25vw] lg:w-[25vw] xl:w-[25vw] 2xl:w-[25vw] sm:w-[100vw] xs:w-[100vw] z-[1]"} transition-[width] flex flex-col items-start justify-start overflow-hidden`}>
+        <div className={`${menuHidden ? "w-0" : "md:w-[25%] lg:w-[25%] xl:w-[25%] 2xl:w-[25%] sm:w-[100%] xs:w-[100%] z-[1]"} transition-[width] flex flex-col items-start justify-start overflow-hidden`}>
             <HeaderControllerBtn />
             <nav
             className={`w-full flex flex-col justify-start items-start h-full bg-rgba`}
