@@ -42,7 +42,7 @@ export default function Carousel({images}: Props) {
           <div style={{transform:`translateX(-${100 * currImg}%)`}} className={`w-full flex transition-transform`}>
           <div className=" w-full flex justify-center flex-shrink-0">
             <div className="add-blur text-xl rounded p-2">
-              Reverse Engineered Nuphy Website
+              Reverse-Engineered Nuphy Website
             </div>
           </div>
           <div className=" w-full flex justify-center flex-shrink-0">
@@ -50,7 +50,6 @@ export default function Carousel({images}: Props) {
               <div className="add-blur text-xl rounded p-2">
                Mamontov Productions
               </div>
-
           </div>
           </div>
         </div>
@@ -113,20 +112,23 @@ export default function Carousel({images}: Props) {
             <p className="m-0 h-fit">source </p>
             <p className="m-0 h-fit">live demo</p>
 
+            <a href="https://gitlab.com/rlszabo966/nuphy-clone-2" target="_blank">
               <svg 
               className="hover:scale-105 transition-transform"
               width="64px" height="64px" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect width="48" height="48" fill="white" fillOpacity="0.01"/>
                 <path d="M23.9627 42L42 27.4152L36.9957 6L30.9661 18.9935H17.9932L11.0151 6L6 27.4152L23.9627 42Z" fill="#2F88FF" stroke="#000000" strokeWidth="4" strokeLinejoin="round"/>
               </svg>
-
-
+            </a>
+              
+            <a className="w-fit h-fit" href="https://nuphy-storefront-clone-2.vercel.app" target="_blank">
               <svg 
-              className="hover:scale-105 transition-transform"
-              width={64} height={64} viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                <path d="M320 1013.76a310.4 310.4 0 0 1-219.52-529.92L192 392.96a33.28 33.28 0 1 1 47.36 47.36L148.48 531.2a241.92 241.92 0 0 0 0 343.68 248.32 248.32 0 0 0 343.68 0l87.04-87.04a34.56 34.56 0 0 1 48 0 33.92 33.92 0 0 1 0 47.36l-87.68 87.68A309.12 309.12 0 0 1 320 1013.76zM809.6 640a33.28 33.28 0 0 1-24.32-10.24 33.92 33.92 0 0 1 0-47.36l90.88-90.24A243.2 243.2 0 0 0 531.84 147.2L448 234.24a33.28 33.28 0 0 1-47.36-47.36l83.84-87.04a310.4 310.4 0 0 1 439.04 439.04L832 629.12a33.28 33.28 0 0 1-22.4 10.88z" fill="#2F88FF" /><path d="M328.96 768a69.12 69.12 0 0 1-47.36-19.2 67.84 67.84 0 0 1 0-95.36l371.2-371.2a67.2 67.2 0 1 1 95.36 95.36l-371.2 371.2a69.12 69.12 0 0 1-48 19.2z" fill="#2F88FF" /></svg>
+              className="hover:scale-105 transition-transform mt-2"
+              width={54} height={54} viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                <path d="M320 1013.76a310.4 310.4 0 0 1-219.52-529.92L192 392.96a33.28 33.28 0 1 1 47.36 47.36L148.48 531.2a241.92 241.92 0 0 0 0 343.68 248.32 248.32 0 0 0 343.68 0l87.04-87.04a34.56 34.56 0 0 1 48 0 33.92 33.92 0 0 1 0 47.36l-87.68 87.68A309.12 309.12 0 0 1 320 1013.76zM809.6 640a33.28 33.28 0 0 1-24.32-10.24 33.92 33.92 0 0 1 0-47.36l90.88-90.24A243.2 243.2 0 0 0 531.84 147.2L448 234.24a33.28 33.28 0 0 1-47.36-47.36l83.84-87.04a310.4 310.4 0 0 1 439.04 439.04L832 629.12a33.28 33.28 0 0 1-22.4 10.88z" fill="#2F88FF" /><path d="M328.96 768a69.12 69.12 0 0 1-47.36-19.2 67.84 67.84 0 0 1 0-95.36l371.2-371.2a67.2 67.2 0 1 1 95.36 95.36l-371.2 371.2a69.12 69.12 0 0 1-48 19.2z" fill="#2F88FF" />
+              </svg>
             
-            
+            </a>
             
           </div>
         </div>
