@@ -56,7 +56,7 @@ export default function Carousel({images}: Props) {
         
         </div>
         {/* IMAGE */}
-        <div className="flex w-full h-full add-blur overflow-hidden">
+        <div className="flex max-w-[1000px] justify-self-center h-full add-blur overflow-hidden">
           <div style={{transform:`translateX(-${100 * currImg}%)`}} className={`flex transition-transform`}>
             {
               images.map((img) => {
