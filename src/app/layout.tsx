@@ -34,7 +34,7 @@ function RT({
           </IsoContextProvider>
           
           {/* <CanvasLayerClientDebug /> */}
-        <main className="h-[100%] justify-start lg:w-[75%] md:w-[75%] md:flex lg:flex xl:flex 2xl:flex flex-col sm:hidden xs:hidden">
+        <main className="h-[100%] justify-start lg:w-[100%] md:w-[100%] md:flex lg:flex xl:flex 2xl:flex flex-col sm:hidden xs:hidden overflow-hidden">
           {children}
         </main>
         <main className="z-0 xs:flex sm:flex md:hidden lg:hidden xl:hidden 2xl:hidden absolute inset-0 w-[100vw] h-[100vh] overflow-scroll">
