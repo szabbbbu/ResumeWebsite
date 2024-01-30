@@ -90,6 +90,7 @@ function IsoLayer() {
         // console.log(contourStates[s])
         const currState: number = ContourStates[s as keyof typeof ContourStates];
         const strokeWidth = 2;
+        ctx.lineWidth=strokeWidth;
     
         // Create a path for the contour
         ctx.strokeStyle ="white"
@@ -119,8 +120,8 @@ function IsoLayer() {
                 ctx.lineTo(sideB.X, sideB.Y);
                 break;
             case 5: /** top right, bottom left */
-                ctx.moveTo(sideA.X, sideA.Y);
-                ctx.lineTo(sideD.X, sideD.Y);
+                ctx.moveTo(sideD.X, sideD.Y);
+                ctx.lineTo(sideA.X, sideA.Y);
                 ctx.stroke();
                 ctx.beginPath();
                 ctx.lineTo(sideC.X, sideC.Y);
@@ -202,7 +203,7 @@ function IsoLayer() {
 
     /** INITIALIZE GRID */
     useEffect(() => {
-        const dim = 12;
+        const dim = 16;
         const w = window.innerWidth;
         const h = window.innerHeight;
         const gridInstance = new Grid(dim, w, h);

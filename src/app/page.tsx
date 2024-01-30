@@ -4,7 +4,7 @@ export default function Home() {
 
   console.log("HOME RENDERED:")
   return (
-    <div className="flex flex-col w-[100%] h-fit items-center my-[10%] bg-rgba">
+    <div className="flex flex-col sm:w-[100%] h-fit items-center my-[10%] bg-rgba">
       <Animated delay={0}>
         <p>ROBERT SZABO</p>
       </Animated>
@@ -18,7 +18,7 @@ export default function Home() {
         <p>Available for contract work</p>
       </Animated>
       <Animated delay={3500}>
-        <p className="text-2xl">Looking for a high quality website? See what I offer on the services page</p>
+        <p className="text-xl flex flex-wrap text-center">Looking for a high quality website? See what I offer on the services page</p>
       </Animated>
     </div>
   );

@@ -1,7 +1,8 @@
 import Carousel from "@/components/Carousel/Carousel";
 import { memo } from "react";
-import a from "@/../public/cat.png";
+import a from "@/../public/cloned_nuphy_site.png";
 import b from "@/../public/2.png";
+
 const images = [a,b];
 
 function Page() {
