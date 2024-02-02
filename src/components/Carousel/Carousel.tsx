@@ -4,8 +4,8 @@ import { useAppContext } from "@/contexts/useAppContext";
 import Image, { StaticImageData } from "next/image";
 import { useState } from "react";
 import { clamp } from "../util/ClampFunctions";
-import GithubIcon from "./Icons/GithubIcon";
-import GitlabIcon from "./Icons/GitlabIcon";
+import GithubIcon from "../Icons/GithubIcon";
+import GitlabIcon from "../Icons/GitlabIcon";
 
 
 type Props = {
@@ -158,11 +158,10 @@ export default function Carousel({images}: Props) {
         }}
       >
         <div className="w-fit h-fit hover:scale-105 transition-transform">
-
         <svg
-      width="50px" height="50px" viewBox="0 0 15 15" fill="black">
-        <path d="M6.18194 4.18185C6.35767 4.00611 6.6426 4.00611 6.81833 4.18185L9.81833 7.18185C9.90272 7.26624 9.95013 7.3807 9.95013 7.50005C9.95013 7.6194 9.90272 7.73386 9.81833 7.81825L6.81833 10.8182C6.6426 10.994 6.35767 10.994 6.18194 10.8182C6.0062 10.6425 6.0062 10.3576 6.18194 10.1819L8.86374 7.50005L6.18194 4.81825C6.0062 4.64251 6.0062 4.35759 6.18194 4.18185Z" fill="white" />
-      </svg>
+          width="50px" height="50px" viewBox="0 0 15 15" fill="black">
+          <path d="M6.18194 4.18185C6.35767 4.00611 6.6426 4.00611 6.81833 4.18185L9.81833 7.18185C9.90272 7.26624 9.95013 7.3807 9.95013 7.50005C9.95013 7.6194 9.90272 7.73386 9.81833 7.81825L6.81833 10.8182C6.6426 10.994 6.35767 10.994 6.18194 10.8182C6.0062 10.6425 6.0062 10.3576 6.18194 10.1819L8.86374 7.50005L6.18194 4.81825C6.0062 4.64251 6.0062 4.35759 6.18194 4.18185Z" fill="white" />
+        </svg>
         </div>
       
         </div> {/** right btn */}

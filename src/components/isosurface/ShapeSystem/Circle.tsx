@@ -30,7 +30,7 @@ class Circle extends Shape {
     }
 
     calcHitboxBoundaries() {
-        this.BoundaryTop = this.position.Y - this.radius  - 50;
+        this.BoundaryTop = this.position.Y - this.radius - 50;
         this.BoundaryBtm = this.position.Y + this.radius + 50;
         this.BoundaryLeft = this.position.X - this.radius - 50;
         this.BoundaryRight = this.position.X + this.radius + 50;
