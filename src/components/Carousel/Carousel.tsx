@@ -4,17 +4,32 @@ import { useAppContext } from "@/contexts/useAppContext";
 import Image, { StaticImageData } from "next/image";
 import { useState } from "react";
 import { clamp } from "../util/ClampFunctions";
+import GithubIcon from "./Icons/GithubIcon";
+import GitlabIcon from "./Icons/GitlabIcon";
 
 
 type Props = {
   images: StaticImageData[];
 }
- 
+
+const gitIcons = [
+  <GitlabIcon/>, <GithubIcon/>
+]
+
+const gitLinks = [
+  "https://gitlab.com/rlszabo966/nuphy-clone-2", 
+  "https://github.com/szabbbbu/MVX_WEBSITE/"
+];
+
+const demoLinks = [
+  "https://nuphy-storefront-clone-2.vercel.app",
+  "https://mamont.us"
+];
+
 //TODO: GET CURRENT HOVERED IMAGE FROM THE APP CONTEXT (to enable consistency between wide and mobile views)
 export default function Carousel({images}: Props) {
   const {menuHidden} = useAppContext();
   const [currImg, setCurrImg] = useState<number>(0);
-
   console.log("CURR IMG", currImg, images[currImg]);
 
 
@@ -81,7 +96,15 @@ export default function Carousel({images}: Props) {
             <div className="w-full flex-shrink-0 flex justify-center">
 
               <div className="add-blur h-fit w-fit p-2 rounded ">
-                  desc2
+                  Mamontov Productions NYC ordered a minimalist website inspired by <span>
+                    <a 
+                      className="text-purple-400"
+                      href="https://danieldaniel.us"
+                      target="_blank"
+                      >
+                      danieldaniel.us
+                    </a>
+                  </span>. The version I made has significant improvements to the mobile look and feel. 
               </div>
 
             </div>
@@ -112,16 +135,11 @@ export default function Carousel({images}: Props) {
             <p className="m-0 h-fit">source </p>
             <p className="m-0 h-fit">live demo</p>
 
-            <a href="https://gitlab.com/rlszabo966/nuphy-clone-2" target="_blank">
-              <svg 
-              className="hover:scale-105 transition-transform"
-              width="64px" height="64px" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <rect width="48" height="48" fill="white" fillOpacity="0.01"/>
-                <path d="M23.9627 42L42 27.4152L36.9957 6L30.9661 18.9935H17.9932L11.0151 6L6 27.4152L23.9627 42Z" fill="#2F88FF" stroke="#000000" strokeWidth="4" strokeLinejoin="round"/>
-              </svg>
+            <a href={`${gitLinks[currImg]}`} target="_blank">
+              {gitIcons[currImg]}
             </a>
               
-            <a className="w-fit h-fit" href="https://nuphy-storefront-clone-2.vercel.app" target="_blank">
+            <a className="w-fit h-fit" href={`${demoLinks[currImg]}`} target="_blank">
               <svg 
               className="hover:scale-105 transition-transform mt-2"
               width={54} height={54} viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">

@@ -1,7 +1,7 @@
 import Carousel from "@/components/Carousel/Carousel";
 import { memo } from "react";
 import a from "@/../public/cloned_nuphy_site.png";
-import b from "@/../public/2.png";
+import b from "@/../public/MamontovProductions.png";
 
 const images = [a,b];
 
