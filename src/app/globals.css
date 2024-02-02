@@ -41,7 +41,10 @@
   background: transparent;
   backdrop-filter: blur(3px);
 }
-
+.white-blur {
+  background: rgba(255,255,255, 0.85);
+  backdrop-filter: blur(3px);
+}
 .text-bittersweet {
   color: whitesmoke;
 }

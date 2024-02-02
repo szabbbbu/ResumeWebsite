@@ -1,8 +1,8 @@
 
 export default function ContactPage() {
     return (
-        <div>
-            Contact page
+        <div className="w-full h-full bg-rose-600">
+            
         </div>
     );
 }
