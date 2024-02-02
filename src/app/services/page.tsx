@@ -1,10 +1,12 @@
 
 export default function ServicesPage() {
     return (
-        <main>
-            <div>
-                ?website design & development
-            </div>
-        </main>
+        <div>
+            <h1>
+                Frontend development 
+            </h1>
+
+
+        </div>
     );
 }

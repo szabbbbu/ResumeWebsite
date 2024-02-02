@@ -34,6 +34,8 @@ enum ContourStates {
     "true,true,true,true" = 15 // 1111
 }
 
+const threshold = 25
+
 function IsoLayer() {
     const layerRef = useRef<I_CanvasLayer>(null);
     const {circles} = useIsoContext();
@@ -62,10 +64,10 @@ function IsoLayer() {
         const upBound = topLeft.getYPos();
         const downBound = btmLeft.getYPos();
         
-        const sideAScalingFactor = Math.abs(normalize(lerp(2, topLeft.getValue(), topRight.getValue()), 0,1));
-        const sideBScalingFactor = Math.abs(normalize(lerp(2, topRight.getValue(), btmRight.getValue()), 0, 1));
-        const sideCScalingFactor = Math.abs(normalize(lerp(2,btmLeft.getValue(),btmRight.getValue()), 0, 1));
-        const sideDScalingFactor = Math.abs(normalize(lerp(2, topLeft.getValue(), btmLeft.getValue()), 0, 1));
+        const sideAScalingFactor = Math.abs(normalize(lerp(threshold, topLeft.getValue(), topRight.getValue()), 0,1));
+        const sideBScalingFactor = Math.abs(normalize(lerp(threshold, topRight.getValue(), btmRight.getValue()), 0, 1));
+        const sideCScalingFactor = Math.abs(normalize(lerp(threshold,btmLeft.getValue(),btmRight.getValue()), 0, 1));
+        const sideDScalingFactor = Math.abs(normalize(lerp(threshold, topLeft.getValue(), btmLeft.getValue()), 0, 1));
     
         /** Square sides */
         const sideA: Pair = new Pair(
@@ -172,7 +174,7 @@ function IsoLayer() {
                         if (Array.isArray(circles))
                         circles.forEach(circle => {
                             const circlePos: Pair = circle.getPos();
-                            const circleRadius: number = circle.radius + 60;
+                            const circleRadius: number = circle.radius + threshold;
                             const newDistance = getDistance(point.getXPos(), point.getYPos(), circlePos.X, circlePos.Y) - circleRadius;   
                             distValuesPerCircle.push(newDistance);
                             point.setValue(newDistance);
@@ -180,7 +182,7 @@ function IsoLayer() {
                     let isOccupied = false;
                     ctx.fillStyle = "#cab456"
                     distValuesPerCircle.forEach(val => {
-                        if (val <= 2) {
+                        if (val <= threshold) {
                             ctx.fillStyle = "blue";
                             isOccupied = true;
                         }
