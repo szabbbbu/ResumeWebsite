@@ -32,7 +32,7 @@ function Client() {
                 const randY = Math.floor(Math.random() * (window.innerHeight - (2*(randRadius + 60))) + randRadius + 60);
                 // console.log("rand:",appHeight, randX, randY)
                 const c = new Circle(randX, randY, randRadius, ctx);
-                c.drawShape();
+                // c.drawShape();
                 circles.push(c);
             }
         setCircles([...circles]);

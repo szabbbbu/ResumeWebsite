@@ -29,8 +29,8 @@ function RT({
         <AppContextProvider>
           <Header />
           <IsoContextProvider>
-            <CircleLayer />
             <IsosurfaceLayer />
+            <CircleLayer />
           </IsoContextProvider>
           
           {/* <CanvasLayerClientDebug /> */}

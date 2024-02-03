@@ -69,68 +69,67 @@ function IsoLayer() {
         const sideCScalingFactor = lerp(threshold, btmLeft.getValue(),btmRight.getValue());
         const sideDScalingFactor = lerp(threshold, topLeft.getValue(), btmLeft.getValue());
         // console.log(sideDScalingFactor);
-    
+        const f = 5
         /** Square sides */
         const sideA: Pair = new Pair(
-            leftBound+dw*sideAScalingFactor,
-            upBound
+            clamp(leftBound+dw*sideAScalingFactor, f, window.innerWidth-f),
+            clamp(upBound, f, window.innerHeight-f)
         ); //top side
-        if (upBound <= 0) {
-            console.log("BOUNCE!")
-            
-        }
         const sideB: Pair = new Pair(
-            rightBound,
-            upBound+dh*sideBScalingFactor
+            clamp(rightBound,f, window.innerWidth-f),
+            clamp(upBound+dh*sideBScalingFactor, f, window.innerHeight-f)
         );
         const sideC = new Pair( // btm side
-            leftBound+dw*sideCScalingFactor,
-            downBound
+            clamp(leftBound+dw*sideCScalingFactor,f, window.innerWidth-f),
+            clamp(downBound, f, window.innerHeight-f)
         );
         const sideD: Pair = new Pair( //left side
-            leftBound,
-            upBound+dh*sideDScalingFactor
+            clamp(leftBound, f, window.innerWidth-f),
+            clamp(upBound+dh*sideDScalingFactor, f, window.innerHeight-f)
         );
         
         const config = [topLeft.getOccupied(), topRight.getOccupied(), btmRight.getOccupied(), btmLeft.getOccupied()];
         const s: string = config.toString();
         // console.log(contourStates[s])
         const currState: number = ContourStates[s as keyof typeof ContourStates];
-        const strokeWidth = 2;
+        const strokeWidth = 3;
         ctx.lineWidth=strokeWidth;
         // console.log("config", config)
         // Create a path for the contour
-        ctx.strokeStyle ="white"
+        
         ctx.beginPath();
-        let x = 0;
-        let y = 0;
         switch(currState) {
             case 0:
                 break;
             case 1: //* bottom left corner */
             case 14:
-                ctx.moveTo(clamp(sideD.X, 0, window.innerWidth-10), clamp(sideD.Y, 0, window.innerHeight-10));
-                ctx.lineTo(clamp(sideC.X, 0, window.innerWidth-10), clamp(sideC.Y, 0, window.innerHeight-10));
+                ctx.strokeStyle =`hsla(${400 - (220*lerp(sideD.X, 0, window.innerWidth))}, 100%, ${44+ 34*lerp(sideD.X, 0, window.innerWidth)}%)`
+                ctx.moveTo(sideD.X, sideD.Y);
+                ctx.lineTo(sideC.X, sideC.Y);
                 break;
             case 2: /** bottom right */
             case 13:
-                ctx.moveTo(clamp(sideC.X, 0, window.innerWidth-10), clamp(sideC.Y, 0, window.innerHeight-10));
-                ctx.lineTo(clamp(sideB.X, 0, window.innerWidth-10), clamp(sideB.Y, 0, window.innerHeight-10));
+                ctx.strokeStyle =`hsla(${400 - (220*lerp(sideC.X, 0, window.innerWidth))}, 100%, ${44+ 34*lerp(sideC.X, 0, window.innerWidth)}%)`
+                ctx.moveTo(sideC.X, sideC.Y);
+                ctx.lineTo(sideB.X, sideB.Y);
                 break;
             case 3: /** bottom left, bottom right */
             case 12:
-                ctx.moveTo(clamp(sideD.X, 0, window.innerWidth-10), clamp(sideD.Y, 0, window.innerHeight-10));
+                ctx.strokeStyle =`hsla(${400 - (220*lerp(sideD.X, 0, window.innerWidth))}, 100%, ${44+ 34*lerp(sideD.X, 0, window.innerWidth)}%)`
+                ctx.moveTo(sideD.X, sideD.Y);
 
-                ctx.lineTo(clamp(sideB.X, 0, window.innerWidth-10), clamp(sideB.Y, 0, window.innerHeight-10));
+                ctx.lineTo(sideB.X, sideB.Y);
 
                 break;
             case 4: /** top right */
             case 11:
-                ctx.moveTo(clamp(sideA.X, 0, window.innerWidth-10), clamp(sideA.Y, 0, window.innerHeight-10));
+                ctx.strokeStyle =`hsla(${400 - (220*lerp(sideA.X, 0, window.innerWidth))}, 100%, ${44+ 34*lerp(sideA.X, 0, window.innerWidth)}%)`
+                ctx.moveTo(sideA.X, sideA.Y);
 
-                ctx.lineTo(clamp(sideB.X, 0, window.innerWidth-10), clamp(sideB.Y, 0, window.innerHeight-10));
+                ctx.lineTo(sideB.X, sideB.Y);
                 break;
             case 5: /** top right, bottom left */
+            ctx.strokeStyle =`hsla(${400 - (220*lerp(sideA.X, 0, window.innerWidth))}, 100%, ${44+ 34*lerp(sideA.X, 0, window.innerWidth)}%)`
                 ctx.moveTo(sideD.X, sideD.Y);
                 ctx.lineTo(sideA.X, sideA.Y);
                 ctx.stroke();
@@ -140,18 +139,21 @@ function IsoLayer() {
                 break;
             case 6: /** top right, bottom right */
             case 9:
-                ctx.moveTo(clamp(sideA.X, 0, window.innerWidth - 10), clamp(sideA.Y, 0, window.innerHeight-10));
+                ctx.strokeStyle =`hsla(${400 - (220*lerp(sideA.X, 0, window.innerWidth))}, 100%, ${44+ 34*lerp(sideA.X, 0, window.innerWidth)}%)`
+                ctx.moveTo(sideA.X,sideA.Y);
                 // ctx.moveTo(sideA.X, sideA.Y);
                 // ctx.lineTo(sideC.X, sideC.Y);
-                ctx.lineTo(clamp(sideC.X, 0, window.innerWidth -10), clamp(sideC.Y, 0, window.innerHeight-10));
+                ctx.lineTo(sideC.X, sideC.Y);
 
                 break;
             case 7: /** top right, bottom right, bottom left */
             case 8:
+                ctx.strokeStyle =`hsla(${400 - (220*lerp(sideD.X, 0, window.innerWidth))}, 100%, ${44+ 34*lerp(sideD.X, 0, window.innerWidth)}%)`
                 ctx.moveTo(sideD.X, sideD.Y);
                 ctx.lineTo(sideA.X, sideA.Y);
                 break;
             case 10:
+                ctx.strokeStyle =`hsla(${400 - (220*lerp(sideA.X, 0, window.innerWidth))}, 100%, ${44+ 34*lerp(sideA.X, 0, window.innerWidth)}%)`
                 ctx.moveTo(sideA.X, sideA.Y);
                 ctx.lineTo(sideB.X, sideB.Y);
                 ctx.stroke();
@@ -200,15 +202,16 @@ function IsoLayer() {
                         ctx.fillStyle = "#cab456"
                         point.setOccupied(false);
                     }
+
                     point.setValue(normVal);
-            
+                   
                     if (colNum > 0 && rowNum > 0) {
                         determineContour(point, rowNum, colNum, currGrid, ctx);
                     }
-                    ctx.beginPath();
-                    ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
-                    ctx.fill();
-                    ctx.fillText(`${point.getValue().toFixed(2)}`, point.getXPos() + 10, point.getYPos() + 10)
+                    // ctx.beginPath();
+                    // ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
+                    // ctx.fill();
+                    // ctx.fillText(`${point.getValue().toFixed(2)}`, point.getXPos() + 10, point.getYPos() + 10)
                 })
             })
             isoGrid2.current.setGrid(currGrid);
@@ -218,7 +221,7 @@ function IsoLayer() {
 
     /** INITIALIZE GRID */
     useEffect(() => {
-        const dim = 28;
+        const dim = 24;
         const w = window.innerWidth;
         const h = window.innerHeight;
         const gridInstance = new Grid(dim, w, h);

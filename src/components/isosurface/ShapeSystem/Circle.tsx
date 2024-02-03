@@ -70,7 +70,6 @@ class Circle extends Shape {
         const newPos = new Pair(this.position.X + displacement[0], this.position.Y + displacement[1]);
         this.setPos(newPos);
         this.calcHitboxBoundaries();
-        this.drawShape();
     }
 
     drawShape(fill: string="transparent", stroke: string="white") {
@@ -83,9 +82,10 @@ class Circle extends Shape {
         ctx.beginPath();
         ctx.arc(pos.X, pos.Y, this.radius, 0, 360)
         ctx.fillStyle = `rgba(0,0,0,0.5)`;
-        ctx.lineWidth = 4;
+        ctx.lineWidth = 3;
         // hue limit (242, 277)
-        ctx.strokeStyle = `hsla(${400 - (220*lerp(pos.X, 0, w))}, 100%, ${44+ 34*lerp(pos.X, 0, w)}%)`;
+        // ctx.strokeStyle = `hsla(${400 - (220*lerp(pos.X, 0, w))}, 100%, ${44+ 34*lerp(pos.X, 0, w)}%)`;
+        ctx.strokeStyle="white"
         ctx.fill();
         ctx.stroke();
     }
