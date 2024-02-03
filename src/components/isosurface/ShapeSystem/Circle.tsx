@@ -30,15 +30,13 @@ class Circle extends Shape {
     }
 
     calcHitboxBoundaries() {
-        this.BoundaryTop = this.position.Y - this.radius - 50;
-        this.BoundaryBtm = this.position.Y + this.radius + 50;
-        this.BoundaryLeft = this.position.X - this.radius - 50;
-        this.BoundaryRight = this.position.X + this.radius + 50;
+        this.BoundaryTop = this.position.Y - this.radius;
+        this.BoundaryBtm = this.position.Y + this.radius;
+        this.BoundaryLeft = this.position.X - this.radius;
+        this.BoundaryRight = this.position.X + this.radius;
     }
 
-    moveCircle(): void {
-        //calculate vector magnitude
-        /** track boundaries, ensure items aren't stuck */
+    bounceCircle(): void {
         if (this.BoundaryLeft <= 0) {
             this.Direction.X = Math.abs(this.Direction.X);
             this.Speed = Math.random() *1.2 + .1
@@ -58,6 +56,12 @@ class Circle extends Shape {
             this.Speed = Math.random()*1.2 + .1
 
         }
+    }
+
+    moveCircle(): void {
+        //calculate vector magnitude
+        /** track boundaries, ensure items aren't stuck */
+        this.bounceCircle()
         const magnitude: number = Math.sqrt(Math.pow(this.Direction.X, 2) + Math.pow(this.Direction.Y, 2));
 
         // create the "normalized" vector
@@ -84,10 +88,6 @@ class Circle extends Shape {
         ctx.strokeStyle = `hsla(${400 - (220*lerp(pos.X, 0, w))}, 100%, ${44+ 34*lerp(pos.X, 0, w)}%)`;
         ctx.fill();
         ctx.stroke();
-    }
-
-    decRadius(): void {
-        this.radius -= 1;
     }
 
 }

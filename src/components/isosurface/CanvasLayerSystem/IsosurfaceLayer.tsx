@@ -5,7 +5,7 @@ import { lerp } from "../../util/LinearInterpolation";
 import GridPoint from "../GridPoint";
 import Pair from "../../util/Pair";
 import { getDistance } from "../../util/Distance";
-import {normalize} from "../../util/ClampFunctions";
+import {clamp, normalize} from "../../util/ClampFunctions";
 import Grid from "../Grid";
 import useIsoContext from "@/contexts/isosurface/useIsoContext";
 
@@ -34,7 +34,7 @@ enum ContourStates {
     "true,true,true,true" = 15 // 1111
 }
 
-const threshold = 25
+const threshold = .7
 
 function IsoLayer() {
     const layerRef = useRef<I_CanvasLayer>(null);
@@ -64,16 +64,21 @@ function IsoLayer() {
         const upBound = topLeft.getYPos();
         const downBound = btmLeft.getYPos();
         
-        const sideAScalingFactor = Math.abs(normalize(lerp(threshold, topLeft.getValue(), topRight.getValue()), 0,1));
-        const sideBScalingFactor = Math.abs(normalize(lerp(threshold, topRight.getValue(), btmRight.getValue()), 0, 1));
-        const sideCScalingFactor = Math.abs(normalize(lerp(threshold,btmLeft.getValue(),btmRight.getValue()), 0, 1));
-        const sideDScalingFactor = Math.abs(normalize(lerp(threshold, topLeft.getValue(), btmLeft.getValue()), 0, 1));
+        const sideAScalingFactor = lerp(threshold, topLeft.getValue(), topRight.getValue());
+        const sideBScalingFactor = lerp(threshold, topRight.getValue(), btmRight.getValue());
+        const sideCScalingFactor = lerp(threshold, btmLeft.getValue(),btmRight.getValue());
+        const sideDScalingFactor = lerp(threshold, topLeft.getValue(), btmLeft.getValue());
+        // console.log(sideDScalingFactor);
     
         /** Square sides */
         const sideA: Pair = new Pair(
             leftBound+dw*sideAScalingFactor,
             upBound
         ); //top side
+        if (upBound <= 0) {
+            console.log("BOUNCE!")
+            
+        }
         const sideB: Pair = new Pair(
             rightBound,
             upBound+dh*sideBScalingFactor
@@ -93,33 +98,37 @@ function IsoLayer() {
         const currState: number = ContourStates[s as keyof typeof ContourStates];
         const strokeWidth = 2;
         ctx.lineWidth=strokeWidth;
-    
+        // console.log("config", config)
         // Create a path for the contour
         ctx.strokeStyle ="white"
         ctx.beginPath();
+        let x = 0;
+        let y = 0;
         switch(currState) {
             case 0:
                 break;
             case 1: //* bottom left corner */
             case 14:
-                // console.log("CASE 1/14???")
-                ctx.moveTo(sideD.X, sideD.Y);
-                ctx.lineTo(sideC.X, sideC.Y);
+                ctx.moveTo(clamp(sideD.X, 0, window.innerWidth-10), clamp(sideD.Y, 0, window.innerHeight-10));
+                ctx.lineTo(clamp(sideC.X, 0, window.innerWidth-10), clamp(sideC.Y, 0, window.innerHeight-10));
                 break;
             case 2: /** bottom right */
             case 13:
-                ctx.moveTo(sideC.X, sideC.Y);
-                ctx.lineTo(sideB.X, sideB.Y);
+                ctx.moveTo(clamp(sideC.X, 0, window.innerWidth-10), clamp(sideC.Y, 0, window.innerHeight-10));
+                ctx.lineTo(clamp(sideB.X, 0, window.innerWidth-10), clamp(sideB.Y, 0, window.innerHeight-10));
                 break;
             case 3: /** bottom left, bottom right */
             case 12:
-                ctx.moveTo(sideD.X, sideD.Y);
-                ctx.lineTo(sideB.X, sideB.Y);
+                ctx.moveTo(clamp(sideD.X, 0, window.innerWidth-10), clamp(sideD.Y, 0, window.innerHeight-10));
+
+                ctx.lineTo(clamp(sideB.X, 0, window.innerWidth-10), clamp(sideB.Y, 0, window.innerHeight-10));
+
                 break;
             case 4: /** top right */
             case 11:
-                ctx.moveTo(sideA.X, sideA.Y);
-                ctx.lineTo(sideB.X, sideB.Y);
+                ctx.moveTo(clamp(sideA.X, 0, window.innerWidth-10), clamp(sideA.Y, 0, window.innerHeight-10));
+
+                ctx.lineTo(clamp(sideB.X, 0, window.innerWidth-10), clamp(sideB.Y, 0, window.innerHeight-10));
                 break;
             case 5: /** top right, bottom left */
                 ctx.moveTo(sideD.X, sideD.Y);
@@ -131,8 +140,11 @@ function IsoLayer() {
                 break;
             case 6: /** top right, bottom right */
             case 9:
-                ctx.moveTo(sideA.X, sideA.Y);
-                ctx.lineTo(sideC.X, sideC.Y);
+                ctx.moveTo(clamp(sideA.X, 0, window.innerWidth - 10), clamp(sideA.Y, 0, window.innerHeight-10));
+                // ctx.moveTo(sideA.X, sideA.Y);
+                // ctx.lineTo(sideC.X, sideC.Y);
+                ctx.lineTo(clamp(sideC.X, 0, window.innerWidth -10), clamp(sideC.Y, 0, window.innerHeight-10));
+
                 break;
             case 7: /** top right, bottom right, bottom left */
             case 8:
@@ -171,31 +183,32 @@ function IsoLayer() {
             currGrid.forEach((row, rowNum) => {
                 row.forEach((point, colNum) => {
                         const distValuesPerCircle: number[] = []
-                        if (Array.isArray(circles))
+                        let inverseSum = 0
                         circles.forEach(circle => {
                             const circlePos: Pair = circle.getPos();
-                            const circleRadius: number = circle.radius + threshold;
-                            const newDistance = getDistance(point.getXPos(), point.getYPos(), circlePos.X, circlePos.Y) - circleRadius;   
-                            distValuesPerCircle.push(newDistance);
-                            point.setValue(newDistance);
+                            const newDistance = getDistance(point.getXPos(), point.getYPos(), circlePos.X, circlePos.Y, circle.radius);
+                            inverseSum += 1/newDistance
+                            // distValuesPerCircle.push(newDistance);
+                            // point.setValue(newDistance);
                         })
-                    let isOccupied = false;
-                    ctx.fillStyle = "#cab456"
-                    distValuesPerCircle.forEach(val => {
-                        if (val <= threshold) {
-                            ctx.fillStyle = "blue";
-                            isOccupied = true;
-                        }
-                        point.setValue(Math.min(point.getValue(), val));
-                    });
-
-                    point.setOccupied(isOccupied);
+                    const normVal = normalize(inverseSum*100, 0, 3)
+                    if (normVal >= threshold) {
+                        ctx.fillStyle = "blue"
+                        point.setOccupied(true)
+                    }
+                    else {
+                        ctx.fillStyle = "#cab456"
+                        point.setOccupied(false);
+                    }
+                    point.setValue(normVal);
+            
                     if (colNum > 0 && rowNum > 0) {
                         determineContour(point, rowNum, colNum, currGrid, ctx);
                     }
                     ctx.beginPath();
                     ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
                     ctx.fill();
+                    ctx.fillText(`${point.getValue().toFixed(2)}`, point.getXPos() + 10, point.getYPos() + 10)
                 })
             })
             isoGrid2.current.setGrid(currGrid);
@@ -205,7 +218,7 @@ function IsoLayer() {
 
     /** INITIALIZE GRID */
     useEffect(() => {
-        const dim = 16;
+        const dim = 28;
         const w = window.innerWidth;
         const h = window.innerHeight;
         const gridInstance = new Grid(dim, w, h);
