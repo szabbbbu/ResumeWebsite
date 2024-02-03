@@ -1,8 +1,5 @@
 import Shape from "./Shape";
 import Pair from "../../util/Pair";
-import GridPoint from "../GridPoint";
-import Grid from "../Grid";
-import { lerp } from "../../util/LinearInterpolation";
 
 class Circle extends Shape {
 
@@ -30,13 +27,13 @@ class Circle extends Shape {
     }
 
     calcHitboxBoundaries() {
-        this.BoundaryTop = this.position.Y - this.radius;
-        this.BoundaryBtm = this.position.Y + this.radius;
-        this.BoundaryLeft = this.position.X - this.radius;
-        this.BoundaryRight = this.position.X + this.radius;
+        this.BoundaryTop = this.position.Y - this.radius - 20;
+        this.BoundaryBtm = this.position.Y + this.radius-20;
+        this.BoundaryLeft = this.position.X - this.radius-20;
+        this.BoundaryRight = this.position.X + this.radius-20;
     }
 
-    bounceCircle(): void {
+    private bounceCircle(): void {
         if (this.BoundaryLeft <= 0) {
             this.Direction.X = Math.abs(this.Direction.X);
             this.Speed = Math.random() *1.2 + .1
@@ -63,7 +60,6 @@ class Circle extends Shape {
         /** track boundaries, ensure items aren't stuck */
         this.bounceCircle()
         const magnitude: number = Math.sqrt(Math.pow(this.Direction.X, 2) + Math.pow(this.Direction.Y, 2));
-
         // create the "normalized" vector
         const normalizedVec: Pair = new Pair(this.Direction.X / magnitude, this.Direction.Y / magnitude);
         const displacement = [this.Speed * normalizedVec.X, this.Speed * normalizedVec.Y];
@@ -76,11 +72,10 @@ class Circle extends Shape {
         const ctx = super.getContext();
         if (!ctx) return;
         // ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height);
-        const w = ctx.canvas.width;
         ctx.imageSmoothingEnabled = true;
         const pos = super.getPos();
         ctx.beginPath();
-        ctx.arc(pos.X, pos.Y, this.radius, 0, 360)
+        ctx.arc(pos.X, pos.Y, this.radius-20, 0, 360)
         ctx.fillStyle = `rgba(0,0,0,0.5)`;
         ctx.lineWidth = 3;
         // hue limit (242, 277)

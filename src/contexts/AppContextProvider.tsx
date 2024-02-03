@@ -13,6 +13,17 @@ function AppCtx({children}: Props) {
     const [appWidth, setAppWidth] = useState<number>(1470);
     const [appHeight, setAppHeight] = useState<number>(751);
     const [menuHidden, setMenuHidden] = useState<boolean>(false);
+
+    useEffect(() => {
+        function handleResize() {
+            setAppWidth(window.innerWidth);
+        }
+        handleResize();
+        window.addEventListener("resize", handleResize);
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        }
+    }, [appWidth])
     //TODO: REMOVE APP WIDTH & HEIGHT?
     return(
         <AppContext.Provider
