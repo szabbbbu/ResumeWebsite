@@ -20,7 +20,8 @@ const config: Config = {
     extend: {
 
       colors: {
-        "siteBlue": "#675FFF"
+        "siteBlue": "#675FFF",
+        "mauve": "#E1BOFF"
       }
     },
 

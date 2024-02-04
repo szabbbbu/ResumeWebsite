@@ -8,7 +8,6 @@ type Props = {
 
 function AnimatedComponent({children, delay}: Props) {
     const [show, setShow] = useState(false);
-
     useEffect(() => {
         setTimeout(() => {
             setShow(true);
