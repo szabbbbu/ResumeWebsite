@@ -17,6 +17,8 @@ class Circle extends Shape {
         this.radius = radius;
         const randomVx = Math.floor((Math.random() * 80) - 40);
         const randomVy = Math.floor((Math.random() * 80) - 40);
+        // const randomVx =40
+        // const randomVy = 0
         this.Direction = new Pair(randomVx, randomVy);
         this.Speed = (Math.random()*1.2 + .1);
         // this.Speed = 1

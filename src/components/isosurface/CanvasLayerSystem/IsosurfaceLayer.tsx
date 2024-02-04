@@ -135,8 +135,11 @@ function IsoLayer() {
                 ctx.strokeStyle =`hsla(${400 - (220*lerp(sideC.X, 0, window.innerWidth))}, 100%, ${44+ 34*lerp(sideC.X, 0, window.innerWidth)}%)`
                 ctx.moveTo(sideC.X, sideC.Y);
                 ctx.lineTo(sideB.X, sideB.Y);
-                if (colNum == currGrid[0].length-1 && currState == 2) {
-                    drawEdgeCase(window.innerWidth, sideB.Y, window.innerWidth, upBound, ctx);
+                if (colNum == currGrid[0].length-1) {
+                    if (currState == 13)
+                        drawEdgeCase(window.innerWidth, sideB.Y, window.innerWidth, upBound, ctx);
+                    // if (currState == 13)
+                    //     drawEdgeCase(window.innerWidth, sideB.Y, window.innerWidth, )
                 }
                 if (rowNum == currGrid.length - 1 && currState == 13) {
                     drawEdgeCase(sideC.X, window.innerHeight, leftBound, window.innerHeight, ctx);
@@ -157,14 +160,21 @@ function IsoLayer() {
                         drawEdgeCase(0, sideD.Y, 0, downBound, ctx);
                     }
                 }
+                if (colNum == currGrid[0].length - 1) {
+                    if (currState == 12) {
+                        drawEdgeCase(window.innerWidth, sideB.Y, window.innerWidth, upBound, ctx);
+                    }
+                }
                 break;
             case 4: /** top right */
             case 11:
                 ctx.strokeStyle =`hsla(${400 - (220*lerp(sideA.X, 0, window.innerWidth))}, 100%, ${44+ 34*lerp(sideA.X, 0, window.innerWidth)}%)`
                 ctx.moveTo(sideA.X, sideA.Y);
                 ctx.lineTo(sideB.X, sideB.Y);
-                if (colNum == currGrid[0].length-1 && currState == 4) {
-                    drawEdgeCase(window.innerWidth, sideB.Y, window.innerWidth, downBound, ctx);
+                if (colNum == currGrid[0].length - 1) {
+                    if (currState == 11)
+                        drawEdgeCase(window.innerWidth, sideB.Y, window.innerWidth, downBound, ctx);
+                    // else if (currState == 11)
                 }
                 if (rowNum == 1 && currState == 11) {
                     drawEdgeCase(sideA.X, 0, leftBound, 0, ctx);
@@ -296,9 +306,9 @@ function IsoLayer() {
                         if (colNum > 0 && rowNum > 0) {
                             determineContour(point, rowNum, colNum, currGrid, ctx);
                         }
-                        // ctx.beginPath();
-                        // ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
-                        // ctx.fill();
+                        ctx.beginPath();
+                        ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
+                        ctx.fill();
                         // ctx.fillText(`${point.getValue().toFixed(2)}`, point.getXPos() + 10, point.getYPos() + 10)
                 })
             })
