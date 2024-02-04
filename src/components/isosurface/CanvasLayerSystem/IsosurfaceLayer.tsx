@@ -5,7 +5,7 @@ import { lerp } from "../../util/LinearInterpolation";
 import GridPoint from "../GridPoint";
 import Pair from "../../util/Pair";
 import { getDistance } from "../../util/Distance";
-import {clamp, normalize} from "../../util/ClampFunctions";
+import {clamp} from "../../util/ClampFunctions";
 import Grid from "../Grid";
 import useIsoContext from "@/contexts/isosurface/useIsoContext";
 import { useAppContext } from "@/contexts/useAppContext";
@@ -52,7 +52,7 @@ ctx: CanvasRenderingContext2D) {
 
 function IsoLayer() {
     const {appWidth} = useAppContext();
-    const [threshold, setThreshold] = useState<number>(2.4);
+    const [threshold, setThreshold] = useState<number>(2.4);//TODO: why isnt this working wtf
     const layerRef = useRef<I_CanvasLayer>(null);
     const {circles} = useIsoContext();
     const animFrameId = useRef<number | null>(null)
@@ -266,7 +266,6 @@ function IsoLayer() {
         // Draw the contour
         ctx.stroke();
     }
-    
 
     const update = useCallback(() => {
         if (layerRef.current) {
@@ -331,6 +330,7 @@ function IsoLayer() {
                 ctx.imageSmoothingQuality = "high";
             }
         }   
+        //start marching squares
         update();
         return () => {
             if (animFrameId.current) {
