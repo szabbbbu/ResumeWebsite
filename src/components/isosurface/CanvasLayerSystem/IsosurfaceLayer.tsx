@@ -37,6 +37,19 @@ enum ContourStates {
 
 //TODO: determine to initialize threshold to 0.75(wide) or 1.2(narrow) bases on screen width on mount
 
+function drawEdgeCase(
+fromX: number,
+fromY: number,
+toX: number,
+toY:number,
+ctx: CanvasRenderingContext2D) {
+    ctx.stroke();
+    ctx.strokeStyle = `hsla(${400 - (220*lerp(fromX, 0, window.innerWidth))}, 100%, ${44+ 34*lerp(fromX, 0, window.innerWidth)}%)`;
+    ctx.beginPath();
+    ctx.moveTo(fromX, fromY);
+    ctx.lineTo(toX, toY);
+}   
+
 function IsoLayer() {
     const {appWidth} = useAppContext();
     const [threshold, setThreshold] = useState<number>(2.4);
@@ -45,7 +58,6 @@ function IsoLayer() {
     const animFrameId = useRef<number | null>(null)
 
     const isoGrid2 = useRef<Grid | null>(null);
-    console.log("threshold!!!", threshold, appWidth)
 
     function determineContour(
         btmRight: GridPoint,
@@ -109,17 +121,25 @@ function IsoLayer() {
                 ctx.strokeStyle =`hsla(${400 - (220*lerp(sideD.X, 0, window.innerWidth))}, 100%, ${44+ 34*lerp(sideD.X, 0, window.innerWidth)}%)`
                 ctx.moveTo(sideD.X, sideD.Y);
                 ctx.lineTo(sideC.X, sideC.Y);
+
+                if (colNum == 1 && currState == 14) {
+                    drawEdgeCase(0, sideD.Y, 0, upBound, ctx);
+                }
+                if (rowNum == currGrid.length - 1 && currState == 14) {
+                    drawEdgeCase(sideC.X, window.innerHeight, rightBound, window.innerHeight, ctx);
+                }
+                
                 break;
             case 2: /** bottom right */
             case 13:
                 ctx.strokeStyle =`hsla(${400 - (220*lerp(sideC.X, 0, window.innerWidth))}, 100%, ${44+ 34*lerp(sideC.X, 0, window.innerWidth)}%)`
                 ctx.moveTo(sideC.X, sideC.Y);
                 ctx.lineTo(sideB.X, sideB.Y);
-                if (colNum == currGrid[0].length-1) {
-                    ctx.stroke();
-                    ctx.strokeStyle = `hsla(${400 - (220*lerp(window.innerWidth, 0, window.innerWidth))}, 100%, ${44+ 34*lerp(window.innerWidth, 0, window.innerWidth)}%)`;
-                    ctx.moveTo(window.innerWidth, sideB.Y);
-                    ctx.lineTo(window.innerWidth, upBound);
+                if (colNum == currGrid[0].length-1 && currState == 2) {
+                    drawEdgeCase(window.innerWidth, sideB.Y, window.innerWidth, upBound, ctx);
+                }
+                if (rowNum == currGrid.length - 1 && currState == 13) {
+                    drawEdgeCase(sideC.X, window.innerHeight, leftBound, window.innerHeight, ctx);
                 }
                 break;
             case 3: /** bottom left, bottom right */
@@ -129,17 +149,25 @@ function IsoLayer() {
 
                 ctx.lineTo(sideB.X, sideB.Y);
 
+                if (colNum == 1) {
+                    if (currState == 12) {
+                        drawEdgeCase(0, sideD.Y, 0, upBound, ctx);
+                    }
+                    if (currState == 3) {
+                        drawEdgeCase(0, sideD.Y, 0, downBound, ctx);
+                    }
+                }
                 break;
             case 4: /** top right */
             case 11:
                 ctx.strokeStyle =`hsla(${400 - (220*lerp(sideA.X, 0, window.innerWidth))}, 100%, ${44+ 34*lerp(sideA.X, 0, window.innerWidth)}%)`
                 ctx.moveTo(sideA.X, sideA.Y);
                 ctx.lineTo(sideB.X, sideB.Y);
-                if (colNum == currGrid[0].length-1) {
-                    ctx.stroke()
-                    ctx.beginPath()
-                    ctx.moveTo(window.innerWidth, sideB.Y)
-                    ctx.lineTo(window.innerWidth, downBound)
+                if (colNum == currGrid[0].length-1 && currState == 4) {
+                    drawEdgeCase(window.innerWidth, sideB.Y, window.innerWidth, downBound, ctx);
+                }
+                if (rowNum == 1 && currState == 11) {
+                    drawEdgeCase(sideA.X, 0, leftBound, 0, ctx);
                 }
                 break;
             case 5: /** top right, bottom left */
@@ -159,12 +187,34 @@ function IsoLayer() {
                 // ctx.lineTo(sideC.X, sideC.Y);
                 ctx.lineTo(sideC.X, sideC.Y);
 
+                if (rowNum == 1) {
+                    if (currState == 9) {
+                        drawEdgeCase(sideA.X, 0, leftBound, 0, ctx);
+                    }
+                    else if (currState == 6) {
+                        drawEdgeCase(sideA.X, 0, rightBound, 0, ctx);
+                    }
+                }
+                if (rowNum == currGrid.length - 1) {
+                    if (currState == 9) {
+                        drawEdgeCase(sideC.X, window.innerHeight, leftBound, window.innerHeight, ctx);
+                    }
+                    else if (currState == 6) {
+                        drawEdgeCase(sideC.X, window.innerHeight, rightBound, window.innerHeight, ctx);
+                    }
+                }
                 break;
             case 7: /** top right, bottom right, bottom left */
             case 8:
                 ctx.strokeStyle =`hsla(${400 - (220*lerp(sideD.X, 0, window.innerWidth))}, 100%, ${44+ 34*lerp(sideD.X, 0, window.innerWidth)}%)`
                 ctx.moveTo(sideD.X, sideD.Y);
                 ctx.lineTo(sideA.X, sideA.Y);
+                if (rowNum == 1 && currState == 7) {
+                    drawEdgeCase(sideA.X, 0, rightBound, 0, ctx);
+                }
+                if (colNum == 1 && currState == 7) {
+                    drawEdgeCase(0, sideD.Y, 0, downBound, ctx);
+                }
                 break;
             case 10:
                 ctx.strokeStyle =`hsla(${400 - (220*lerp(sideA.X, 0, window.innerWidth))}, 100%, ${44+ 34*lerp(sideA.X, 0, window.innerWidth)}%)`;
@@ -226,7 +276,7 @@ function IsoLayer() {
                         //ADD INVERSE SUM OF DISTANCES PER CIRCLE
                         circles.forEach(circle => {
                             const circlePos: Pair = circle.getPos();
-                            const newDistance = getDistance(point.getXPos(), point.getYPos(), circlePos.X, circlePos.Y, circle.radius);
+                            const newDistance = getDistance(point.getXPos(), point.getYPos(), circlePos.X, circlePos.Y);
                             inverseSum += 1/newDistance
                             distValuesPerCircle.push(newDistance);
                             // point.setValue(newDistance);
@@ -246,9 +296,9 @@ function IsoLayer() {
                         if (colNum > 0 && rowNum > 0) {
                             determineContour(point, rowNum, colNum, currGrid, ctx);
                         }
-                        ctx.beginPath();
-                        ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
-                        ctx.fill();
+                        // ctx.beginPath();
+                        // ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
+                        // ctx.fill();
                         // ctx.fillText(`${point.getValue().toFixed(2)}`, point.getXPos() + 10, point.getYPos() + 10)
                 })
             })
@@ -259,7 +309,7 @@ function IsoLayer() {
 
     /** INITIALIZE GRID */
     useEffect(() => {
-        const dim = 24;
+        const dim = 64;
         const w = window.innerWidth;
         const h = window.innerHeight;
         const gridInstance = new Grid(dim, w, h);
