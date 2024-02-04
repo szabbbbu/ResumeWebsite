@@ -21,7 +21,7 @@ export default memo(function AccordionItem({title, body, cta}: Props) {
             }}
             className="h-fit"
             >
-                <h2 className="white-blur text-black h-[44px] w-full flex items-center capitalize cursor-pointer">
+                <h2 className="white-blur text-[#000] h-[44px] w-full flex items-center capitalize cursor-pointer hover:text-lg transition-[font-size]">
                     <span className="mx-2">{title}</span>
                     <ChevronRight rot={(!itemOpen) ? 180 : 270}/>
                 </h2>

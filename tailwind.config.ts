@@ -6,6 +6,7 @@ const config: Config = {
     './src/components/**/*.{js,ts,jsx,tsx,mdx}',
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
+
   theme: {
     screens: {
       'xs': '360px',      // Extra small screens (phones, less than 360px)
@@ -16,7 +17,12 @@ const config: Config = {
       '2xl': '1536px',    // 2 extra large screens (larger laptops/desktops, 1536px and up)
       // Add more custom screen sizes if needed
     },
-    // colors: { },
+    extend: {
+
+      colors: {
+        "siteBlue": "#675FFF"
+      }
+    },
 
     // extend: {
 

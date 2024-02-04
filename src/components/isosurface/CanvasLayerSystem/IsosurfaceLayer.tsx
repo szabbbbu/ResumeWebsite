@@ -279,36 +279,36 @@ function IsoLayer() {
 
             currGrid.forEach((row, rowNum) => {
                 row.forEach((point, colNum) => {
-                        const distValuesPerCircle: number[] = []
-                        let inverseSum = 0
+                    const distValuesPerCircle: number[] = []
+                    let inverseSum = 0
 
-                        //ADD INVERSE SUM OF DISTANCES PER CIRCLE
-                        circles.forEach(circle => {
-                            const circlePos: Pair = circle.getPos();
-                            const newDistance = getDistance(point.getXPos(), point.getYPos(), circlePos.X, circlePos.Y);
-                            inverseSum += 1/newDistance
-                            distValuesPerCircle.push(newDistance);
-                            // point.setValue(newDistance);
-                        });
-                        // const normVal = normalize(inverseSum*100, 0, 3); 
-                        const normVal = inverseSum*100
-                        if (normVal >= threshold) {
-                            ctx.fillStyle = "blue";
-                            point.setOccupied(true);
-                        }
-                        else {
-                            ctx.fillStyle = "#cab456"
-                            point.setOccupied(false);
-                        }
-                        point.setValue(normVal);
-                    
-                        if (colNum > 0 && rowNum > 0) {
-                            determineContour(point, rowNum, colNum, currGrid, ctx);
-                        }
-                        ctx.beginPath();
-                        ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
-                        ctx.fill();
-                        // ctx.fillText(`${point.getValue().toFixed(2)}`, point.getXPos() + 10, point.getYPos() + 10)
+                    //ADD INVERSE SUM OF DISTANCES PER CIRCLE
+                    circles.forEach(circle => {
+                        const circlePos: Pair = circle.getPos();
+                        const newDistance = getDistance(point.getXPos(), point.getYPos(), circlePos.X, circlePos.Y);
+                        inverseSum += 1/newDistance
+                        distValuesPerCircle.push(newDistance);
+                        // point.setValue(newDistance);
+                    });
+                    // const normVal = normalize(inverseSum*100, 0, 3); 
+                    const normVal = inverseSum*100
+                    if (normVal >= threshold) {
+                        ctx.fillStyle = "blue";
+                        point.setOccupied(true);
+                    }
+                    else {
+                        ctx.fillStyle = "#cab456"
+                        point.setOccupied(false);
+                    }
+                    point.setValue(normVal);
+                
+                    if (colNum > 0 && rowNum > 0) {
+                        determineContour(point, rowNum, colNum, currGrid, ctx);
+                    }
+                    // ctx.beginPath();
+                    // ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
+                    // ctx.fill();
+                    // ctx.fillText(`${point.getValue().toFixed(2)}`, point.getXPos() + 10, point.getYPos() + 10)
                 })
             })
             isoGrid2.current.setGrid(currGrid);

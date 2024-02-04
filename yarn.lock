@@ -280,6 +280,13 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
+"@babel/runtime@^7.17.9":
+  version "7.23.9"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.23.9.tgz#47791a15e4603bb5f905bc0753801cf21d6345f7"
+  integrity sha512-0CX6F+BI2s9dkUqr08KFrAIZgNFj75rdBU/DjCyYLIaV/quFjkk6T+EJ2LkZHyZTbEV4L5p97mNkUsHl2wLFAw==
+  dependencies:
+    regenerator-runtime "^0.14.0"
+
 "@babel/template@^7.22.15", "@babel/template@^7.3.3":
   version "7.22.15"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.22.15.tgz#09576efc3830f0430f4548ef971dde1350ef2f38"
@@ -350,6 +357,19 @@
   version "8.56.0"
   resolved "https://registry.yarnpkg.com/@eslint/js/-/js-8.56.0.tgz#ef20350fec605a7f7035a01764731b2de0f3782b"
   integrity sha512-gMsVel9D7f2HLkBma9VbtzZRehRogVRfbr++f06nL2vnCGCNlzOD+/MUov/F4p8myyAHspEhVobgjpX64q5m6A==
+
+"@hcaptcha/loader@^1.0.10":
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/@hcaptcha/loader/-/loader-1.1.3.tgz#bd8d41ebf73cd584a7c5ff8cbfdd8af64d67ebee"
+  integrity sha512-8rfydnMWQqNyz+6c1/8Wt3ktoc0JKVXGJdQ61FqcRJxkoBMxbkphoG3SGKXZelFwnhI9DeFvIHkT6YJhtcADIQ==
+
+"@hcaptcha/react-hcaptcha@^1.9.3":
+  version "1.9.3"
+  resolved "https://registry.yarnpkg.com/@hcaptcha/react-hcaptcha/-/react-hcaptcha-1.9.3.tgz#26892c2b8a16a56d41629d085dda609e8038cb45"
+  integrity sha512-3aaXKT2tEXr317eWYNXm7JGC9z6FkhuDX46uLSFAevtVB3grxgwVxcVQuZy/Y5p6+TeQ6iDTAD0Ca2xwe4Muvw==
+  dependencies:
+    "@babel/runtime" "^7.17.9"
+    "@hcaptcha/loader" "^1.0.10"
 
 "@humanwhocodes/config-array@^0.11.13":
   version "0.11.14"
