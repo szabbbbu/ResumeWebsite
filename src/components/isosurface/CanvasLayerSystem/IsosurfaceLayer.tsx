@@ -56,8 +56,10 @@ function IsoLayer() {
     const layerRef = useRef<I_CanvasLayer>(null);
     const {circles} = useIsoContext();
     const animFrameId = useRef<number | null>(null)
-    const threshold = useRef<number>(2)
+    const threshold = useRef<number>(2.3);
+    const dim = useRef<number>(64);
     const isoGrid2 = useRef<Grid | null>(null);
+    const mobLim = 768;
 
     function determineContour(
         btmRight: GridPoint,
@@ -318,10 +320,11 @@ function IsoLayer() {
 
     /** INITIALIZE GRID */
     useEffect(() => {
-        const dim = (window.innerWidth < 580) ? 8 : 64;
+        threshold.current = (window.innerWidth < mobLim) ? 2.6 : 2;
+        dim.current = (window.innerWidth < mobLim) ? 8 : 64;
         const w = window.innerWidth;
         const h = window.innerHeight;
-        const gridInstance = new Grid(dim, w, h);
+        const gridInstance = new Grid(dim.current, w, h);
         isoGrid2.current = gridInstance;
         if (layerRef.current) {
             const ctx = layerRef.current.getCanvasContext();
@@ -343,6 +346,18 @@ function IsoLayer() {
     useEffect(() => {
         function handleCanvasResize() {
             if (layerRef.current) {
+                if (window.innerWidth > mobLim && dim.current == 8) {
+                    console.log("reinit grid", dim.current)
+                    dim.current = 64;
+                    const gridInstance = new Grid(64, window.innerWidth, window.innerHeight);
+                    isoGrid2.current = gridInstance;
+                }
+                else if (window.innerWidth <= mobLim && dim.current == 64) {
+                    console.log("reinit grid", dim.current)
+                    dim.current = 8;
+                    const gridInstance = new Grid(8, window.innerWidth, window.innerHeight);
+                    isoGrid2.current = gridInstance;
+                }
                 isoGrid2.current?.updateGridSize(window.innerWidth, window.innerHeight);
                 layerRef.current.resizeCanvas(window.innerWidth, window.innerHeight);
                 threshold.current = lerp(window.innerWidth, 300, 2100, 2.6, 2.0);
