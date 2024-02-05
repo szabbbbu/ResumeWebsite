@@ -8,7 +8,7 @@ export default function ContactPage() {
     const [captchaSolved, setCaptchaSolved] = useState<boolean>(false);
     const [activateCaptcha, setActivateCaptcha] = useState<boolean>(false);
     const captchaRef = useRef(null);
-  
+    console.log("contact page reload")
     return (
         <HideIfMobile>
             <div className="w-full h-full flex flex-col items-center justify-center">
@@ -34,7 +34,7 @@ export default function ContactPage() {
                                 className="add-blur rounded justify-self-center border w-[100px] h-[32px]">
                                     {!emailCopied ? "copy": "copied!"}
                                 </button>  
-                                <a className="justify-self-center" href="https://github.com/szabbbbu" target="_blank">
+                                <a className={`justify-self-center xs:hidden md:block`} href="https://github.com/szabbbbu" target="_blank">
                                     <GithubIcon/>
                                 </a>
                                 
@@ -70,11 +70,7 @@ export default function ContactPage() {
 
                     </div>
                 </div>
-                </div>
-                    
-                
-                
-                
+                </div>    
             </div> 
         </HideIfMobile>
     );
