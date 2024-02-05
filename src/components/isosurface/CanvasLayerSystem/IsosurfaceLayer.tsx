@@ -8,7 +8,7 @@ import { getDistance } from "../../util/Distance";
 import {clamp} from "../../util/ClampFunctions";
 import Grid from "../Grid";
 import useIsoContext from "@/contexts/isosurface/useIsoContext";
-import { useAppContext } from "@/contexts/useAppContext";
+// import { useAppContext } from "@/contexts/useAppContext";
 
 
 interface I_CanvasLayer {
@@ -51,7 +51,7 @@ ctx: CanvasRenderingContext2D) {
 }   
 
 function IsoLayer() {
-    const {appWidth} = useAppContext();
+    // const {appWidth} = useAppContext();
 
     const layerRef = useRef<I_CanvasLayer>(null);
     const {circles} = useIsoContext();
@@ -316,7 +316,7 @@ function IsoLayer() {
             isoGrid2.current.setGrid(currGrid);
          }
         animFrameId.current = requestAnimationFrame(update);
-    }, [isoGrid2, threshold.current, appWidth])
+    }, [isoGrid2, threshold.current])
 
     /** INITIALIZE GRID */
     useEffect(() => {

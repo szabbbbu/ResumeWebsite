@@ -65,5 +65,5 @@ function HeaderComponent() {
     );
 }
 
-const Header = memo(HeaderComponent);
+const Header = HeaderComponent;
 export default Header;

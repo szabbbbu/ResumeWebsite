@@ -25,12 +25,12 @@ function RT({
       <body
         className="flex h-[100vh] w-[100vw]"
       >
-        <AppContextProvider>
-          <Header />
           <IsoContextProvider>
             <IsosurfaceLayer />
             <CircleLayer />
           </IsoContextProvider>
+        <AppContextProvider>
+          <Header />
           
         <main className="z-0 xs:flex sm:flex md:flex xs:absolute md:static inset-0 w-[100vw] h-[100vh] xs:overflow-scroll md:overflow-hidden">
           {children}

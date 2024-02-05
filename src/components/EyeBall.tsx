@@ -1,13 +1,8 @@
 "use client"
 import { memo, useEffect, useRef, useState } from "react";
-import Pair from "./util/Pair";
 import { getDistance } from "./util/Distance";
 import { lerp } from "./util/LinearInterpolation";
-import { normalize, clamp } from "./util/ClampFunctions";
-
-type Props = {
-    pos: "left" | "right";
-}
+import { clamp } from "./util/ClampFunctions";
 
 function Eye() {
     const [eyeBallY, setEyeBallY] = useState<number>(50);
