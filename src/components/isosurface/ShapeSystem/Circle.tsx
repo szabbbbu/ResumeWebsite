@@ -67,24 +67,25 @@ class Circle extends Shape {
         this.setPos(newPos);
         this.calcHitboxBoundaries();
     }
-
-    drawShape(fill: string="rgba(0,0,0,0.5)", stroke: string="white"): void {
-        const ctx = super.getContext();
-        if (!ctx) return;
-        // ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height);
-        ctx.imageSmoothingEnabled = true;
-        const pos = super.getPos();
-        ctx.beginPath();
-        ctx.arc(pos.X, pos.Y, this.radius-20, 0, 360)
-        ctx.fillStyle = fill;
-        ctx.lineWidth = 3;
-        //UNCOMMENT BELOW FOR COLORED CIRCLES
-        // hue limit (242, 277)
-        // ctx.strokeStyle = `hsla(${400 - (220*lerp(pos.X, 0, w))}, 100%, ${44+ 34*lerp(pos.X, 0, w)}%)`;
-        ctx.strokeStyle=stroke
-        ctx.fill();
-        ctx.stroke();
-    }
+    //NOTE: not needed for now, was causing weird bug
+    // drawShape(fill: string="rgba(0,0,0,0.5)", stroke: string="white"): void {
+    //     console.log("drawing at pos: ", this.position.X, this.position.Y)
+    //     const ctx = super.getContext();
+    //     if (!ctx) return;
+    //     // ctx.clearRect(0,0, ctx.canvas.width, ctx.canvas.height);
+    //     ctx.imageSmoothingEnabled = true;
+    //     const pos = super.getPos();
+    //     ctx.beginPath();
+    //     ctx.arc(pos.X, pos.Y, this.radius-20, 0, 360)
+    //     ctx.fillStyle = fill;
+    //     ctx.lineWidth = 3;
+    //     //UNCOMMENT BELOW FOR COLORED CIRCLES
+    //     // hue limit (242, 277)
+    //     // ctx.strokeStyle = `hsla(${400 - (220*lerp(pos.X, 0, w))}, 100%, ${44+ 34*lerp(pos.X, 0, w)}%)`;
+    //     ctx.strokeStyle=stroke
+    //     ctx.fill();
+    //     ctx.stroke();
+    // }
 
 }
 

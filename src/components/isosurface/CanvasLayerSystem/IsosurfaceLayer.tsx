@@ -54,7 +54,7 @@ function IsoLayer() {
     // const {appWidth} = useAppContext();
 
     const layerRef = useRef<I_CanvasLayer>(null);
-    const {circles} = useIsoContext();
+    const {circles, circles2} = useIsoContext();
     const animFrameId = useRef<number | null>(null)
     const threshold = useRef<number>(2.3);
     const dim = useRef<number>(64);
@@ -285,7 +285,7 @@ function IsoLayer() {
                     let inverseSum = 0
 
                     //ADD INVERSE SUM OF DISTANCES PER CIRCLE
-                    circles.forEach(circle => {
+                    circles2.current.forEach(circle => {
                         const circlePos: Pair = circle.getPos();
                         const newDistance = getDistance(point.getXPos(), point.getYPos(), circlePos.X, circlePos.Y);
                         inverseSum += 1/newDistance

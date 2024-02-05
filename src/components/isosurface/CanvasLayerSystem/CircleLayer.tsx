@@ -13,12 +13,13 @@ interface I_CanvasLayer {
 //renders and animates the circles
 function Client() {
 
-    const {circles, setCircles} = useIsoContext();
+    const { circles2} = useIsoContext();
     const layerRef = useRef<I_CanvasLayer>(null);
     const animFrameId = useRef<number | null>(null);
     // console.log("WHAT")
 
     const generateCircles = useCallback((ctx: CanvasRenderingContext2D) => {
+            const circles: Circle[] = []
             // console.log("GENERATING CIRCLES", appWidth, appHeight, circles)
             const m = Math.min(window.innerWidth, window.innerHeight);
             // console.log("M", m/30)
@@ -35,8 +36,9 @@ function Client() {
                 // c.drawShape();
                 circles.push(c);
             }
-        setCircles([...circles]);
-    }, [ circles]);
+        // setCircles([...circles]);
+        circles2.current = circles
+    }, [circles2.current]);
 
 
     /** RUNS ON STARTUP */
@@ -45,7 +47,7 @@ function Client() {
             const ctx = layerRef.current.getCanvasContext();
             if (!ctx) return
             
-            if (circles.length === 0 && typeof window) {
+            if (circles2.current.length === 0 && typeof window) {
                 // console.log("circ?", window.innerHeight, appHeight)
                 generateCircles(ctx);
             }
@@ -61,12 +63,23 @@ function Client() {
                 if (!ctx) return;
                 ctx.clearRect(0,0, window.innerWidth, window.innerHeight);
             }
-            circles.forEach(circle => {
+            circles2.current.forEach(circle => {
                 circle.moveCircle()
-                circle.drawShape()
+                if (layerRef.current) {
+                    const ctx = layerRef.current.getCanvasContext();
+                    if (!ctx ) return
+                    const cPos = circle.getPos();
+                    ctx.fillStyle = "rgba(0,0,0,0.5)";
+                    ctx.strokeStyle = "white"
+                    ctx.lineWidth = 2
+                    ctx.beginPath();
+                    ctx.arc(cPos.X, cPos.Y, circle.radius, 0, 360);
+                    ctx.fill();
+                    ctx.stroke();
+                }
+                // circle.drawShape()
                 // circle.getGridStatus();
             })
-            setCircles([...circles])
             animFrameId.current = requestAnimationFrame(animate);
         }
         animate();

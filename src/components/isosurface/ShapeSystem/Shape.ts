@@ -1,7 +1,7 @@
 import Pair from "../../util/Pair"
 
 interface I_Shape {
-    drawShape: (...args: any[]) => void;
+    // drawShape: (...args: any[]) => void;
     clearShape: () => void;
     getContext: () => CanvasRenderingContext2D | null;
     getPos: () => Pair;
@@ -16,7 +16,7 @@ abstract class Shape implements I_Shape {
         this.CanvasContext = ctx;
     }
 
-    abstract drawShape(...args: any[]): void;
+    // abstract drawShape(...args: any[]): void;
     // abstract moveShape(dx: number, dy: number);
 
     getPos(): Pair {
