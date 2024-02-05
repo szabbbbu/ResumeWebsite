@@ -1,7 +1,6 @@
 "use client"
 import HideIfMobile from "@/components/HideIfMobile";
 import GithubIcon from "@/components/Icons/GithubIcon";
-
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { useRef, useState } from "react";
 export default function ContactPage() {
@@ -25,7 +24,6 @@ export default function ContactPage() {
                                 </div>
                                 
                                 <div style={{color: "#E1BOFF"}} className="text-2xl mr-6 text-center">
-                                    
                                     talkto@bobby.global
                                 </div>
                                 <button 

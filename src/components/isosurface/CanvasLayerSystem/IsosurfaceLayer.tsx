@@ -52,11 +52,11 @@ ctx: CanvasRenderingContext2D) {
 
 function IsoLayer() {
     const {appWidth} = useAppContext();
-    const [threshold, setThreshold] = useState<number>(2.4);//TODO: why isnt this working wtf
+
     const layerRef = useRef<I_CanvasLayer>(null);
     const {circles} = useIsoContext();
     const animFrameId = useRef<number | null>(null)
-
+    const threshold = useRef<number>(2)
     const isoGrid2 = useRef<Grid | null>(null);
 
     function determineContour(
@@ -79,10 +79,10 @@ function IsoLayer() {
         const upBound = topLeft.getYPos();
         const downBound = btmLeft.getYPos();
         
-        const sideAScalingFactor = lerp(threshold, topLeft.getValue(), topRight.getValue());
-        const sideBScalingFactor = lerp(threshold, topRight.getValue(), btmRight.getValue());
-        const sideCScalingFactor = lerp(threshold, btmLeft.getValue(),btmRight.getValue());
-        const sideDScalingFactor = lerp(threshold, topLeft.getValue(), btmLeft.getValue());
+        const sideAScalingFactor = lerp(threshold.current, topLeft.getValue(), topRight.getValue());
+        const sideBScalingFactor = lerp(threshold.current, topRight.getValue(), btmRight.getValue());
+        const sideCScalingFactor = lerp(threshold.current, btmLeft.getValue(),btmRight.getValue());
+        const sideDScalingFactor = lerp(threshold.current, topLeft.getValue(), btmLeft.getValue());
         // console.log(sideDScalingFactor);
         const f = 0
         /** Square sides */
@@ -292,7 +292,7 @@ function IsoLayer() {
                     });
                     // const normVal = normalize(inverseSum*100, 0, 3); 
                     const normVal = inverseSum*100
-                    if (normVal >= threshold) {
+                    if (normVal >= threshold.current) {
                         ctx.fillStyle = "blue";
                         point.setOccupied(true);
                     }
@@ -314,7 +314,7 @@ function IsoLayer() {
             isoGrid2.current.setGrid(currGrid);
          }
         animFrameId.current = requestAnimationFrame(update);
-    }, [isoGrid2, threshold, appWidth])
+    }, [isoGrid2, threshold.current, appWidth])
 
     /** INITIALIZE GRID */
     useEffect(() => {
@@ -345,10 +345,11 @@ function IsoLayer() {
             if (layerRef.current) {
                 isoGrid2.current?.updateGridSize(window.innerWidth, window.innerHeight);
                 layerRef.current.resizeCanvas(window.innerWidth, window.innerHeight);
-                // setThreshold(lerp(window.innerWidth, 0, 1270, 1.2, .75))
-                // console.log("THRESHOLD RESET:::", threshold)
+                threshold.current = lerp(window.innerWidth, 300, 2100, 2.4, 1.8)
+                console.log("!!!",threshold.current)
             }
         }
+        handleCanvasResize();
         window.addEventListener("resize", handleCanvasResize);
 
         return () => {
