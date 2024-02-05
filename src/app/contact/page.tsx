@@ -1,13 +1,12 @@
 "use client"
-import Animated from "@/components/Animated";
 import HideIfMobile from "@/components/HideIfMobile";
 import GithubIcon from "@/components/Icons/GithubIcon";
-import GitlabIcon from "@/components/Icons/GitlabIcon";
+
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import { useRef, useState } from "react";
 export default function ContactPage() {
     const [emailCopied, setEmailCopied] = useState<boolean>(false);
-    const [captchaSolved, setCaptchaSolved] = useState<boolean>(true);
+    const [captchaSolved, setCaptchaSolved] = useState<boolean>(false);
     const [activateCaptcha, setActivateCaptcha] = useState<boolean>(false);
     const captchaRef = useRef(null);
   
@@ -15,78 +14,70 @@ export default function ContactPage() {
         <HideIfMobile>
             <div className="w-full h-full flex flex-col items-center justify-center">
                 <h1
-                className="p-4 rounded add-blur border text-xl"
+                className="p-4 rounded add-blur border text-xl text-center"
                 >Want to commission me for your next project?</h1>
-                <div className=" w-full h-[40%] grid grid-cols-1 grid-rows-4 justify-center items-center">
-                    <div className={`w-[60%] h-[80%] justify-self-center flex flex-wrap items-center justify-evenly ${captchaSolved? "add-blur border rounded": undefined}`}>
-                    {(captchaSolved) ?
-                    <Animated delay={800}>
-                        {/* TODO: LOOKS TRASH ON MOBILE, FIX IT BITCH */}
-                        <div className="flex items-center flex-wrap justify-evenly add-blur fade-in">
-                        
-                          
-                                <span style={{color: "#E1BOFF"}} className="text-2xl mr-6">
-                                    <span className="text-xl mr-4">ok, heres my email:</span>
+                <div  className=" w-full h-[40%] grid grid-cols-1 grid-rows-[1fr,2fr,2fr] justify-center items-center">
+                    <div className={`xs:w-full md:w-[80%] h-fit p-4 mt-3 justify-self-center flex flex-wrap items-center justify-evenly add-blur border rounded ${captchaSolved ? "fade-in" : "start-state"}`}>
+                    
+                        <div className={`grid grid-rows-1 xs:grid-cols-[2fr,1fr] md:grid-cols-[1fr,2fr,1fr,1fr] justify-center items-center add-blur `}>
+                                <div className="text-lg text-center xs:hidden md:block">
+                                    <p>ok, here's my email!</p>
+                                </div>
+                                
+                                <div style={{color: "#E1BOFF"}} className="text-2xl mr-6 text-center">
+                                    
                                     talkto@bobby.global
-                                    </span>
+                                </div>
                                 <button 
                                 onClick={async () => {
                                     await navigator.clipboard.writeText("talkto@bobby.global")
                                     setEmailCopied(true);
                                 }}
-                                className="add-blur rounded border w-[100px] h-[32px]">
-                                    {!emailCopied ? "copy": "copied"}
+                                className="add-blur rounded justify-self-center border w-[100px] h-[32px]">
+                                    {!emailCopied ? "copy": "copied!"}
                                 </button>  
-                            
+                                <a className="justify-self-center" href="https://github.com/szabbbbu" target="_blank">
+                                    <GithubIcon/>
+                                </a>
+                                
                         </div>
-                        </Animated>
-                        :
-                        null
-                    }
+                        
                     </div>
-                    <button 
+
+                 
+                <div className={`h-fit cursor-pointer w-full grid grid-cols-1 grid-rows-[1fr,2fr] rounded p-4`}>
+                    <button
                     onClick={() => {
-                        setActivateCaptcha(true);
+                        console.log("CLICKED!")
+                        setActivateCaptcha(true)
                     }}
-                    className="text-white add-blur w-fit p-4 rounded border  justify-self-center">
-                        Get in touch
+                    className=" w-[60%] justify-self-center rounded border add-blur uppercase active:bg-[rgba(50,50,50,0.5)] hover:bg-[rgba(50,50,50,0.3)]"
+                        >
+                            get in touch
                     </button>
-                    {(activateCaptcha) ?
-                        <div className={`h-[50%] w-fit ${"flex flex-col items-center justify-self-center"}`}>
-                            <Animated delay={10}>
-                            <p>But Wait! Are you Human???</p>
-                            <HCaptcha
-                                theme="dark"
-                                ref={captchaRef}
-                                sitekey="63cec785-a99d-4a00-b81f-207caccae4b3"
-                                onVerify={(token, ekey) => {
-                                    setCaptchaSolved(true);
-                                }}
-                            />
-                            </Animated>
-                        </div>
-                    :
-                    null
-                    }
-                    
-                </div>
-                
-                <div className="flex flex-col items-center">
-                    <p>You can also message me on:</p>
-                    <div className="flex justify-between w-[80%]">
-                        <div className="p-4">
-                            <p>github</p>
-                            <GithubIcon />
-                        </div>
-                        <div className="p-4">
-                            <p>gitlab</p>
-                        <GitlabIcon />
-                        </div>
+                    <div className={`w-full h-[200px] add-blur flex flex-col items-center jus ${activateCaptcha? "fade-in z-0" : "start-state -z-10"} `}>
+                    <p className="text-lg my-2">But Wait! Are you Human???</p>
+                    <HCaptcha
+                        ref={captchaRef}
+                        
+                        // TODO: use getServerSideProps to get this env variable
+                        sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY as string}
+                        // sitekey="63cec785-a99d-4a00-b81f-207caccae4b3"
+                        theme="dark"
+                        onLoad={() => console.log("loaded")}
+                        onVerify={(token, ekey) => {
+                            setCaptchaSolved(true);
+                        }}
+                    />
+
                     </div>
                 </div>
+                </div>
+                    
                 
-            </div>
-            
+                
+                
+            </div> 
         </HideIfMobile>
     );
 }

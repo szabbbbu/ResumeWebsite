@@ -8,7 +8,7 @@ type Props = {
 
 export default function HideIfMobile({children}: Props) {
   const {menuHidden, appWidth} = useAppContext();
-    if (menuHidden || !(appWidth < 680)) {
+    if (menuHidden || !(appWidth < 768)) {
         return <>{children}</>;
     }
     return null;
