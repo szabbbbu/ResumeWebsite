@@ -59,8 +59,8 @@ export default function ContactPage() {
                         ref={captchaRef}
                         
                         // TODO: use getServerSideProps to get this env variable
-                        sitekey={process.env.NEXT_PUBLIC_HCAPTCHA_SITE_KEY as string}
-                        // sitekey="63cec785-a99d-4a00-b81f-207caccae4b3"
+                        // sitekey={}
+                        sitekey="63cec785-a99d-4a00-b81f-207caccae4b3"
                         theme="dark"
                         onLoad={() => console.log("loaded")}
                         onVerify={(token, ekey) => {
