@@ -318,7 +318,7 @@ function IsoLayer() {
 
     /** INITIALIZE GRID */
     useEffect(() => {
-        const dim = 64;
+        const dim = 24;
         const w = window.innerWidth;
         const h = window.innerHeight;
         const gridInstance = new Grid(dim, w, h);
