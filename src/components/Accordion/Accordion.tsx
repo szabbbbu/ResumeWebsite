@@ -3,7 +3,7 @@ import AccordionItem from "@/components/Accordion/AccordionItem";
 
 const AccordionData = [
     {
-        title: "Frontend website creation with a unique design",
+        title: "Frontend website dev",
         body:"I can take any design document and turn it into a fast-loading & responsive web application. Don't have a design? I have my own people we can work with to get something going!",
         cta: "Contact me for a free discussion & quote."
     },

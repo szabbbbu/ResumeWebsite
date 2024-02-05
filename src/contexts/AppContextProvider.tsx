@@ -9,7 +9,7 @@ type Props = {
 }
 
 function AppCtx({children}: Props) {
-    // console.log("app ctxt")
+    console.log("app ctxt")
     const [appWidth, setAppWidth] = useState<number>(751);
     const [appHeight, setAppHeight] = useState<number>(751);
     const [menuHidden, setMenuHidden] = useState<boolean>(false);
