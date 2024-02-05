@@ -7,7 +7,6 @@ import AppContextProvider from '@/contexts/AppContextProvider'
 import IsosurfaceLayer from '@/components/isosurface/CanvasLayerSystem/IsosurfaceLayer';
 import IsoContextProvider from '@/contexts/isosurface/IsoContextProvider'
 import CircleLayer from '@/components/isosurface/CanvasLayerSystem/CircleLayer'
-const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Robert Szabo | Web Developer',

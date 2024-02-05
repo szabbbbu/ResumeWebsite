@@ -43,7 +43,7 @@ export default function ContactPage() {
                     </div>
 
                  
-                <div className={`h-fit cursor-pointer w-full grid grid-cols-1 grid-rows-[1fr,2fr] rounded p-4`}>
+                <div className={`h-fit w-full grid grid-cols-1 grid-rows-[1fr,2fr] rounded p-4`}>
                     <button
                     onClick={() => {
                         console.log("CLICKED!")
@@ -53,7 +53,7 @@ export default function ContactPage() {
                         >
                             get in touch
                     </button>
-                    <div className={`w-full h-[200px] add-blur flex flex-col items-center jus ${activateCaptcha? "fade-in z-0" : "start-state -z-10"} `}>
+                    <div className={`w-full h-[200px] add-blur flex flex-col items-center ${activateCaptcha? "fade-in z-0" : "start-state -z-10"} `}>
                     <p className="text-lg my-2">But Wait! Are you Human???</p>
                     <HCaptcha
                         ref={captchaRef}

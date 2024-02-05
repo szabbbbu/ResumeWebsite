@@ -9,14 +9,19 @@ const AccordionData = [
     },
     {
         title: "Backend web server/API creation",
-        body: "I can make fast web servers and APIs for your site too.",
-        cta: "Need a web professional to host your site? Get in touch via the contact page."
+        body: "I can build the web server that powers your site as well. I write networking code in golang.",
+        cta: "Commission me for your networking needs"
     },
     {
         title: "Tech I use",
-        body: "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Laudantium laboriosam corrupti inventore maxime quia, necessitatibus natus id quod laborum dolores beatae iusto dolorem repellendus, animi odio dolor minus possimus nesciunt, non doloribus nisi magnam. Quidem mollitia molestiae alias earum quae porro nobis, ea quasi inventore explicabo eius sint vel voluptatibus adipisci repudiandae iure ipsam natus quisquam veritatis nostrum architecto accusantium deserunt hic non! Deleniti officiis pariatur libero, quisquam perspiciatis sit doloremque et itaque quas harum labore nesciunt dolor illo vero quibusdam odit adipisci placeat fuga reprehenderit minima quia, ipsa exercitationem quaerat? Voluptate corrupti tenetur alias officiis accusamus quos ratione ut!",
-        // body: "Get your business on the front page of Google with my help. Find local clients and grow your business with professional help & a hands-off approach to your online presence. Want to get on Google's front page and stay there? Contact me!",
-        cta: "Want to get on Google's front page? Contact me!" 
+        body: "I am currently using Next JS and React with Typescript to create frontend interfaces for web applications. When creating servers I prefer to use Golang or Express JS framework. For databases, I use an SQL variant befitting the project.",
+        
+        cta: "" 
+    },
+    {
+        title: "My Background",
+        body: "I have a computer science degree from Florida International University (2021). I worked as a computer science tutor from that point until late 2023. Now, I focus on selling my skills as a developer. I'm in my late 20s and I'm Hungarian-American.",
+        cta: ""
     }
 ]
 

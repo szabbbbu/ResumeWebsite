@@ -345,7 +345,7 @@ function IsoLayer() {
             if (layerRef.current) {
                 isoGrid2.current?.updateGridSize(window.innerWidth, window.innerHeight);
                 layerRef.current.resizeCanvas(window.innerWidth, window.innerHeight);
-                threshold.current = lerp(window.innerWidth, 300, 2100, 2.6, 2.0)
+                threshold.current = lerp(window.innerWidth, 300, 2100, 2.6, 2.0);
             }
         }
         handleCanvasResize();
