@@ -88,7 +88,7 @@ export default function Carousel({images}: Props) {
             <div className="w-full h-fit flex-shrink-0 flex justify-center py-2">
  
               <div className="add-blur sm:h-full w-fit p-2 rounded">
-                Coming out of university, I wanted to focus on frontend development. To start, I reverse-engineered the NuPhy brand's Shopify store as an exercise to get more familiar with React Typescript. The site has a working shopping cart system with item and variant filtering.
+                As an exercise to better learn React TS, I reverse-engineered the NuPhy brand's Shopify store as an exercise. The site has a working shopping cart system with item and variant filtering.
               </div>
               
             </div>
