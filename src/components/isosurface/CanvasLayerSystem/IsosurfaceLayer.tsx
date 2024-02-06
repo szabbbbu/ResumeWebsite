@@ -56,7 +56,7 @@ function IsoLayer() {
     const layerRef = useRef<I_CanvasLayer>(null);
     const {circles, circles2} = useIsoContext();
     const animFrameId = useRef<number | null>(null)
-    const threshold = useRef<number>(2.3);
+    const threshold = useRef<number>(3);
     const dim = useRef<number>(64);
     const isoGrid2 = useRef<Grid | null>(null);
     const mobLim = 768;
@@ -360,7 +360,7 @@ function IsoLayer() {
                 }
                 isoGrid2.current?.updateGridSize(window.innerWidth, window.innerHeight);
                 layerRef.current.resizeCanvas(window.innerWidth, window.innerHeight);
-                threshold.current = lerp(window.innerWidth, 300, 2100, 2.6, 2.0);
+                threshold.current = lerp(window.innerWidth, 300, 2100, 3, 2.3);
             }
         }
         handleCanvasResize();

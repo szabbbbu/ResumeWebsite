@@ -73,7 +73,7 @@ function Client() {
                     ctx.strokeStyle = "white"
                     ctx.lineWidth = 2
                     ctx.beginPath();
-                    ctx.arc(cPos.X, cPos.Y, circle.radius, 0, 360);
+                    ctx.arc(cPos.X, cPos.Y, circle.radius-21, 0, 360);
                     ctx.fill();
                     ctx.stroke();
                 }
