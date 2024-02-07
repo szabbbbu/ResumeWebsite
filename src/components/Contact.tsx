@@ -1,14 +1,15 @@
 "use client"
 import HideIfMobile from "./HideIfMobile";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import HCaptcha from "@hcaptcha/react-hcaptcha";
 import GithubIcon from "./Icons/GithubIcon";
 
-export default function Contact ({captchaKey}: {captchaKey: string}) {
+export default function Contact () {
         const [emailCopied, setEmailCopied] = useState<boolean>(false);
         const [captchaSolved, setCaptchaSolved] = useState<boolean>(false);
         const [activateCaptcha, setActivateCaptcha] = useState<boolean>(false);
         const captchaRef = useRef(null);
+
         console.log("contact page reload")
         return (
             <HideIfMobile>
@@ -61,7 +62,7 @@ export default function Contact ({captchaKey}: {captchaKey: string}) {
                             
                             // TODO: use getServerSideProps to get this env variable
                             // sitekey={}
-                            sitekey={captchaKey}
+                            sitekey="63cec785-a99d-4a00-b81f-207caccae4b3"
                             theme="dark"
                             onLoad={() => console.log("loaded")}
                             onVerify={(token, ekey) => {
