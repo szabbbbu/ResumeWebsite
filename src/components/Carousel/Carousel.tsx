@@ -6,6 +6,9 @@ import { useState } from "react";
 import { clamp } from "../util/ClampFunctions";
 import GithubIcon from "../Icons/GithubIcon";
 import GitlabIcon from "../Icons/GitlabIcon";
+import LinkIcon from "../Icons/LinkIcon";
+import ReactIcon from "../Icons/ReactIcon";
+import NextJsIcon from "../Icons/NextJSIcon";
 
 
 type Props = {
@@ -14,6 +17,11 @@ type Props = {
 
 const gitIcons = [
   <GitlabIcon/>, <GithubIcon/>
+]
+
+const techIcons = [
+  [<ReactIcon />],
+  [<ReactIcon/>, <NextJsIcon/>]
 ]
 
 const gitLinks = [
@@ -112,42 +120,52 @@ export default function Carousel({images}: Props) {
         </div>
 
         {/** LINKS */}
-        <div className=" flex items-center justify-center">
-          <div className="w-full grid grid-rows-[10%,90%] justify-items-center">
-            
-            <p>tech used</p>
-              <svg 
-              className="hover:scale-105 transition-transform"
-              xmlns="http://www.w3.org/2000/svg" width={54} height={54} fill="none" viewBox="-11 -10.13 22 20.27">
-                  <circle r="2" fill="#2F88FF"/>
-                  <g stroke="#2F88FF">
-                    <ellipse rx="10" ry="4.5"/>
-                    <ellipse rx="10" ry="4.5" transform="rotate(60)"/>
-                    <ellipse rx="10" ry="4.5" transform="rotate(120)"/>
-                  </g>
-              </svg>
+        <table className="border text-center xs:min-w-[90%] md:min-w-[60%] h-fit">
+          <thead>
+            <tr>
+              <th>
+                Tech used
+              </th>
+              <th>
+                source
+              </th>
+              <th>
+                live demo
+              </th>
+            </tr>
+          </thead>
 
-          </div>
-          <div className="w-full grid grid-rows-[10%,90%] grid-cols-[1fr,1fr] justify-items-center">
+          <tbody className="">
+            <tr className="table-row">
+              <td className="">
+                <div className="flex justify-evenly hover:scale-105 transition-transform">
+                  {
+                  techIcons[currImg].map((icon) => {
+                    return <>{icon}</>
+                  })
+                  }
+                </div>
+              </td>
+              <td   className="">
+                <div className="flex justify-evenly hover:scale-105 transition-transform">
+                  <a href={gitLinks[currImg]} target="_blank">
+                    {gitIcons[currImg]}
+                  </a>
+                </div>
+              </td>
 
-            <p className="m-0 h-fit">source </p>
-            <p className="m-0 h-fit">live demo</p>
-
-            <a href={`${gitLinks[currImg]}`} target="_blank">
-              {gitIcons[currImg]}
-            </a>
-              
-            <a className="w-fit h-fit" href={`${demoLinks[currImg]}`} target="_blank">
-              <svg 
-              className="hover:scale-105 transition-transform mt-2"
-              width={54} height={54} viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
-                <path d="M320 1013.76a310.4 310.4 0 0 1-219.52-529.92L192 392.96a33.28 33.28 0 1 1 47.36 47.36L148.48 531.2a241.92 241.92 0 0 0 0 343.68 248.32 248.32 0 0 0 343.68 0l87.04-87.04a34.56 34.56 0 0 1 48 0 33.92 33.92 0 0 1 0 47.36l-87.68 87.68A309.12 309.12 0 0 1 320 1013.76zM809.6 640a33.28 33.28 0 0 1-24.32-10.24 33.92 33.92 0 0 1 0-47.36l90.88-90.24A243.2 243.2 0 0 0 531.84 147.2L448 234.24a33.28 33.28 0 0 1-47.36-47.36l83.84-87.04a310.4 310.4 0 0 1 439.04 439.04L832 629.12a33.28 33.28 0 0 1-22.4 10.88z" fill="#2F88FF" /><path d="M328.96 768a69.12 69.12 0 0 1-47.36-19.2 67.84 67.84 0 0 1 0-95.36l371.2-371.2a67.2 67.2 0 1 1 95.36 95.36l-371.2 371.2a69.12 69.12 0 0 1-48 19.2z" fill="#2F88FF" />
-              </svg>
-            
-            </a>
-            
-          </div>
-        </div>
+              <td >
+                <div className="flex justify-evenly hover:scale-105 transition-transform">
+                  <a href={demoLinks[currImg]} target="_blank">
+                    <LinkIcon/>
+                  </a>
+                </div>
+              </td>
+            </tr>
+            <tr>
+            </tr>
+          </tbody>
+        </table>
       </div> {/** content */}
 
       <div className="w-fit h-fit p-1 self-center justify-self-center add-blur bg-transparent border z-10 hover:scale-105 transition-transform"
@@ -156,10 +174,10 @@ export default function Carousel({images}: Props) {
         }}
       >
         <div className="w-fit h-fit hover:scale-105 transition-transform">
-        <svg
-          width="50px" height="50px" viewBox="0 0 15 15" fill="black">
-          <path d="M6.18194 4.18185C6.35767 4.00611 6.6426 4.00611 6.81833 4.18185L9.81833 7.18185C9.90272 7.26624 9.95013 7.3807 9.95013 7.50005C9.95013 7.6194 9.90272 7.73386 9.81833 7.81825L6.81833 10.8182C6.6426 10.994 6.35767 10.994 6.18194 10.8182C6.0062 10.6425 6.0062 10.3576 6.18194 10.1819L8.86374 7.50005L6.18194 4.81825C6.0062 4.64251 6.0062 4.35759 6.18194 4.18185Z" fill="white" />
-        </svg>
+          <svg
+            width="50px" height="50px" viewBox="0 0 15 15" fill="black">
+            <path d="M6.18194 4.18185C6.35767 4.00611 6.6426 4.00611 6.81833 4.18185L9.81833 7.18185C9.90272 7.26624 9.95013 7.3807 9.95013 7.50005C9.95013 7.6194 9.90272 7.73386 9.81833 7.81825L6.81833 10.8182C6.6426 10.994 6.35767 10.994 6.18194 10.8182C6.0062 10.6425 6.0062 10.3576 6.18194 10.1819L8.86374 7.50005L6.18194 4.81825C6.0062 4.64251 6.0062 4.35759 6.18194 4.18185Z" fill="white" />
+          </svg>
         </div>
       
         </div> {/** right btn */}

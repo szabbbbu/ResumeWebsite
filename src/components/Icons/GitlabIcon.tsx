@@ -1,11 +1,17 @@
 
 export default function GitlabIcon() {
     return (
-        <svg 
-            className="hover:scale-105 transition-transform"
-            width="64px" height="64px" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="48" height="48" fill="white" fillOpacity="0.01"/>
-            <path d="M23.9627 42L42 27.4152L36.9957 6L30.9661 18.9935H17.9932L11.0151 6L6 27.4152L23.9627 42Z" fill="#2F88FF" stroke="#000000" strokeWidth="4" strokeLinejoin="round"/>
-        </svg>
+        <svg
+      fill="#675FFF"
+      stroke="#675FFF"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth={2}
+      viewBox="0 0 24 24"
+      height="3em"
+      width="3em"
+    >
+      <path d="M22.65 14.39L12 22.13 1.35 14.39a.84.84 0 01-.3-.94l1.22-3.78 2.44-7.51A.42.42 0 014.82 2a.43.43 0 01.58 0 .42.42 0 01.11.18l2.44 7.49h8.1l2.44-7.51A.42.42 0 0118.6 2a.43.43 0 01.58 0 .42.42 0 01.11.18l2.44 7.51L23 13.45a.84.84 0 01-.35.94z" />
+    </svg>
     );
 }
