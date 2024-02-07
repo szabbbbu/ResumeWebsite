@@ -14,8 +14,8 @@ function CustomLink_ToMemo({to, children}: Props) {
     const {appWidth, setMenuHidden} = useAppContext();
 
     function handleMobClick() {
-        if (appWidth < 768) {
-            setMenuHidden(true)
+        if (appWidth <= 768) {
+            setTimeout(() => setMenuHidden(true), 400)
         }
     }
 
