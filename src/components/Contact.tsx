@@ -55,8 +55,8 @@ export default function Contact () {
                         >
                             get in touch
                     </button>
-                    <div className={`w-full h-[200px] add-blur flex flex-col items-center ${activateCaptcha? "fade-in z-0" : "start-state -z-10"} `}>
-                    <p className="text-lg my-2">But Wait! Are you Human???</p>
+                    <div className={`w-full h-[200px] flex flex-col items-center ${activateCaptcha? "fade-in z-0" : "start-state -z-10"} `}>
+                    <p className="text-lg my-2 add-blur">But Wait! Are you Human???</p>
                     <HCaptcha
                         ref={captchaRef}
                         

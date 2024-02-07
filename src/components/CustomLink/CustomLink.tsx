@@ -18,20 +18,18 @@ function CustomLink_ToMemo({to, children}: Props) {
             console.log("!!!")
             setTimeout(() => {
                 setMenuHidden(true)
-            }, 444)
-            
-
+            }, 444);
         }
     }
+
 
     return (
         <div>
             <Link id={Styles.container} className={`h-fit w-full flex flex-col ${currPath === to ? "text-siteBlue": undefined}`} href={to}
-
             onClick={handleMobClick}
-            
+            onTouchStart={handleMobClick}
             >
-                    {children}
+                {children}
             </Link>
             <div id={Styles.bar}> </div>
         </div>
