@@ -1,7 +1,9 @@
 import Link from "next/link";
-import { ReactNode, memo } from "react";
+import { ReactNode, memo, useEffect } from "react";
 import Styles from "./CustomLink.module.css";
 import { usePathname } from "next/navigation";
+import { useAppContext } from "@/contexts/useAppContext";
+
 
 type Props = {
     to: string;
@@ -9,9 +11,26 @@ type Props = {
 }
 function CustomLink_ToMemo({to, children}: Props) {
     const currPath = usePathname();
+    const {appWidth, setMenuHidden} = useAppContext();
+
+    function handleMobClick() {
+        if (appWidth < 768) {
+            console.log("!!!")
+            setTimeout(() => {
+                setMenuHidden(true)
+            }, 444)
+            
+
+        }
+    }
+
     return (
         <div>
-            <Link id={Styles.container} className={`h-fit w-full flex flex-col ${currPath === to ? "text-siteBlue": undefined}`} href={to}>
+            <Link id={Styles.container} className={`h-fit w-full flex flex-col ${currPath === to ? "text-siteBlue": undefined}`} href={to}
+
+            onClick={handleMobClick}
+            
+            >
                     {children}
             </Link>
             <div id={Styles.bar}> </div>
