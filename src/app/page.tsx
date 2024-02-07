@@ -12,7 +12,7 @@ export default function Home() {
           <p>ROBERT SZABO</p>
         </Animated>
         <Animated delay={1000} > 
-          <p>Full stack engineer, specializing in web</p>
+          <p>Full stack engineer</p>
         </Animated>
         <Animated delay={1700}>
           <p></p>
@@ -23,8 +23,7 @@ export default function Home() {
         <Animated delay={3500}>
           <p className="text-xl flex flex-wrap text-center">Looking for a high quality website? See what I offer on the services page</p>
         </Animated>
-      </HideIfMobile>
-      
+      </HideIfMobile>   
     </div>
   );
 }
