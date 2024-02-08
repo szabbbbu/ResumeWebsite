@@ -43,7 +43,7 @@ export default function Carousel({images}: Props) {
   // console.log("CURR IMG", currImg, images[currImg]);
   if (showContent)
   return (
-    <div className={`${menuHidden ? "w-[100vw]" : "w-full"} h-full grid grid-rows-1 xs:grid-cols-[15%,70%,15%] sm:grid-cols-[15%,70%,15%] lg:grid-cols-[10%,80%,10%] md:grid-cols-[10%,80%,10%] bg-transparent mb-1 transition-[width]`}>
+    <div className={`w-[100%] h-full grid grid-rows-1 xs:grid-cols-[15%,70%,15%] sm:grid-cols-[15%,70%,15%] lg:grid-cols-[10%,80%,10%] md:grid-cols-[10%,80%,10%] bg-transparent mb-1 transition-[width] place-items-center`}>
 
       
       <div className="w-fit h-fit p-1 self-center justify-self-center add-blur border z-10 hover:scale-105 transition-transform">
@@ -60,18 +60,18 @@ export default function Carousel({images}: Props) {
         </div> {/** left btn */}
 
 
-      <div className=" w-full h-full grid grid-cols-1 md:grid-rows-[10%,60%,15%,15%] grid-rows-auto relative">
+      <div className=" w-full h-full grid grid-cols-1 md:grid-rows-[10%,60%,15%,15%] grid-rows-auto relative self-center justify-self-center">
         {/** TITLES */}
         <div className="flex items-center overflow-x-hidden">
           <div style={{transform:`translateX(-${100 * currImg}%)`}} className={`w-full flex transition-transform`}>
           <div className=" w-full flex justify-center flex-shrink-0">
-            <div className="add-blur text-xl rounded p-2">
+            <div className="add-blur text-xl rounded p-2 text-center">
               Reverse-Engineered Nuphy Website
             </div>
           </div>
           <div className=" w-full flex justify-center flex-shrink-0">
             <div className=" w-full flex justify-center flex-shrink-0">
-              <div className="add-blur text-xl rounded p-2">
+              <div className="add-blur text-xl rounded p-2 text-center">
                Mamontov Productions
               </div>
           </div>
@@ -80,12 +80,13 @@ export default function Carousel({images}: Props) {
         
         </div>
         {/* IMAGE */}
-        <div className="flex max-w-[1000px] justify-self-center h-full add-blur overflow-hidden">
-          <div style={{transform:`translateX(-${100 * currImg}%)`}} className={`flex transition-transform`}>
+        <div className="flex max-w-[1000px] self-center justify-self-center h-full add-blur overflow-hidden">
+          <div style={{transform:`translateX(-${100 * currImg}%)`}} className={`transition-transform grid grid-rows-1 grid-cols-[100%,100%]`}>
             {
               images.map((img) => {
                 return (
-                    <Image className="rounded border p-2" layout="" width={img.width} height={img.height} key={img.src} alt="carouselimg" src={img.src}/>
+                    // <img className="object-cover" src={img.src}/>
+                    <Image className="rounded border p-2 h-full" layout="" width={img.width} height={img.height} key={img.src} alt="carouselimg" src={img.src}/>
                 )
               })
             }
@@ -94,7 +95,7 @@ export default function Carousel({images}: Props) {
         {/** DESCS */}
         <div className=" flex items-center overflow-x-hidden">
           <div style={{transform:`translateX(-${100 * currImg}%)`}} className={`w-full flex transition-transform`}>
-            <div className="w-full h-fit flex-shrink-0 flex justify-center py-2">
+            <div className="w-full h-fit flex-shrink-0 flex justify-center">
  
               <div className="add-blur sm:h-full w-fit p-2 rounded">
                 As an exercise to better learn React TS, I reverse-engineered the NuPhy brand's Shopify store as an exercise. The site has a working shopping cart system with item and variant filtering.
@@ -138,8 +139,8 @@ export default function Carousel({images}: Props) {
             </tr>
           </thead>
 
-          <tbody className="">
-            <tr className="table-row">
+          <tbody className="max-h-[30px]">
+            <tr className="">
               <td className="">
                 <div className="flex justify-evenly hover:scale-105 transition-transform">
                   {

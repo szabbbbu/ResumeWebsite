@@ -3,6 +3,7 @@ import {useEffect, useRef, memo, useCallback} from "react"
 import CanvasLayer from "./CanvasLayer"
 import Circle from "../ShapeSystem/Circle";
 import useIsoContext from "@/contexts/isosurface/useIsoContext";
+import { clamp } from "@/components/util/ClampFunctions";
 
 
 interface I_CanvasLayer {
@@ -73,7 +74,7 @@ function Client() {
                     ctx.strokeStyle = "white"
                     ctx.lineWidth = 2
                     ctx.beginPath();
-                    ctx.arc(cPos.X, cPos.Y, circle.radius-21, 0, 360);
+                    ctx.arc(cPos.X, cPos.Y, clamp(circle.radius-21, 4, 50), 0, 360);
                     ctx.fill();
                     ctx.stroke();
                 }

@@ -29,7 +29,7 @@ const AccordionData = [
 export default function Accordion() {
   return (
     <div
-    className="w-full h-auto grid grid-cols-1 grid-rows-auto mt-12 p-9 border rounded overflow-scroll add-blur"
+    className="w-[92%] h-auto grid grid-cols-1 grid-rows-auto mt-12 p-9 border rounded overflow-scroll add-blur"
     style={{rowGap: "24px"}}
     >
         {
