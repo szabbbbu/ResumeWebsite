@@ -15,21 +15,17 @@ function CustomLink_ToMemo({to, children}: Props) {
     const router = useRouter();
     const {appWidth, setMenuHidden} = useAppContext();
 
-    const mobileLink = (
-        <div id={Styles.container} className={`cursor-pointer h-fit w-full flex flex-col ${currPath === to ? "text-siteBlue": undefined}`}
-        onClick={() => {
-            setTimeout(() => {
-                router.push(to);
-                setMenuHidden(true)
-            }, 444)
-        }}>{children}</div>
-    );
+  
 
-    const desktopLink = (
+    const link = (
         <Link
         id={Styles.container}
         className={`h-fit w-full flex flex-col ${currPath === to ? "text-siteBlue": undefined}`}
         href={to}
+        onClick={() => {
+            if (appWidth < 768)
+                setMenuHidden(true);
+        }}
         >
             {children}
         </Link>
@@ -38,8 +34,8 @@ function CustomLink_ToMemo({to, children}: Props) {
 
     return (
         <div>
-            {appWidth < 768 ? mobileLink : desktopLink}
-            {/* {desktopLink} */}
+            
+            {link}
             <div id={Styles.bar}> </div>
         </div>
     );

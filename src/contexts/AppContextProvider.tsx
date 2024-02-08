@@ -12,12 +12,17 @@ function AppCtx({children}: Props) {
     // console.log("app ctxt")
     const [appWidth, setAppWidth] = useState<number>(751);
     const [appHeight, setAppHeight] = useState<number>(751);
-    const [menuHidden, setMenuHidden] = useState<boolean>(false);
-    const [hideBody, setHideBody] = useState<boolean>(false);
+    const [menuHidden, setMenuHidden] = useState<boolean>(true);
 
     useEffect(() => {
         function handleResize() {
             setAppWidth(window.innerWidth);
+            if (window.innerWidth < 768) {
+                setMenuHidden(true);
+            }
+            else {
+                setMenuHidden(false);
+            }
         }
         handleResize();
         window.addEventListener("resize", handleResize);
@@ -25,7 +30,6 @@ function AppCtx({children}: Props) {
             window.removeEventListener("resize", handleResize);
         }
     }, [appWidth])
-    //TODO: REMOVE APP WIDTH & HEIGHT?
     return(
         <AppContext.Provider
             value={
