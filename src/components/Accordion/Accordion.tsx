@@ -28,15 +28,17 @@ const AccordionData = [
 
 export default function Accordion() {
   return (
-    <div
-    className="w-[92%] h-auto grid grid-cols-1 grid-rows-auto mt-12 p-9 border rounded overflow-scroll add-blur"
-    style={{rowGap: "24px"}}
-    >
-        {
-            AccordionData.map((data) => {
-                return <AccordionItem key={data.title} title={data.title} body ={data.body} cta={data.cta} />
-            })
-        }
+    <div className="flex justify-center">
+        <div
+        className="  w-[90%] h-auto grid grid-cols-1 grid-rows-auto p-9 border rounded overflow-scroll add-blur"
+        style={{rowGap: "24px"}}
+        >
+            {
+                AccordionData.map((data) => {
+                    return <AccordionItem key={data.title} title={data.title} body ={data.body} cta={data.cta} />
+                })
+            }
+        </div>
     </div>
   );
 }

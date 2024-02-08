@@ -11,7 +11,7 @@ export default function ServicesPage() {
 
             <div className="w-full h-full flex flex-col items-center">
                 <Animated delay={500}>
-                    <h1 style={{marginTop: "24px"}} className=" w-full h-full uppercase add-blur rounded text-xl">
+                    <h1 style={{marginTop: "24px"}} className=" w-full h-fit p-2 uppercase add-blur rounded text-xl">
                         What I Offer
                     </h1>
                 </Animated>

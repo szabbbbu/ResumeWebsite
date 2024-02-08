@@ -43,7 +43,8 @@ export default function Carousel({images}: Props) {
   // console.log("CURR IMG", currImg, images[currImg]);
   if (showContent)
   return (
-    <div className={`w-[100%] h-full grid grid-rows-1 xs:grid-cols-[15%,70%,15%] sm:grid-cols-[15%,70%,15%] lg:grid-cols-[10%,80%,10%] md:grid-cols-[10%,80%,10%] bg-transparent mb-1 transition-[width] place-items-center`}>
+<div className=" flex items-center justify-center">
+    <div className={`w-[95%] h-full grid grid-rows-1 xs:grid-cols-[15%,70%,15%] sm:grid-cols-[15%,70%,15%] lg:grid-cols-[10%,80%,10%] md:grid-cols-[10%,80%,10%] bg-transparent mb-1 transition-[width]`}>
 
       
       <div className="w-fit h-fit p-1 self-center justify-self-center add-blur border z-10 hover:scale-105 transition-transform">
@@ -144,8 +145,8 @@ export default function Carousel({images}: Props) {
               <td className="">
                 <div className="flex justify-evenly hover:scale-105 transition-transform">
                   {
-                  techIcons[currImg].map((icon) => {
-                    return <>{icon}</>
+                  techIcons[currImg].map((icon, i) => {
+                    return <div key={i}>{icon}</div>
                   })
                   }
                 </div>
@@ -185,6 +186,7 @@ export default function Carousel({images}: Props) {
         </div>
       
         </div> {/** right btn */}
+    </div>
     </div>
   );
   return null;
