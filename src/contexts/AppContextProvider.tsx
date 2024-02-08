@@ -13,7 +13,7 @@ function AppCtx({children}: Props) {
     const [appWidth, setAppWidth] = useState<number>(751);
     const [appHeight, setAppHeight] = useState<number>(751);
     const [menuHidden, setMenuHidden] = useState<boolean>(true);
-
+    const [activateMenu, setActivateMenu] = useState<boolean>(false);
     useEffect(() => {
         function handleResize() {
             setAppWidth(window.innerWidth);
@@ -23,7 +23,9 @@ function AppCtx({children}: Props) {
             else {
                 setMenuHidden(false);
             }
+            setActivateMenu(true);
         }
+
         handleResize();
         window.addEventListener("resize", handleResize);
         return () => {
@@ -40,6 +42,8 @@ function AppCtx({children}: Props) {
                     setAppWidth: setAppWidth,
                     menuHidden: menuHidden,
                     setMenuHidden: setMenuHidden,
+                    activateMenu: activateMenu,
+                    setActivateMenu: setActivateMenu
                 }
             }
         >

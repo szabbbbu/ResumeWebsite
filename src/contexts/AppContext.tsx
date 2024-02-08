@@ -7,6 +7,8 @@ interface I_AppContext {
     setAppHeight: React.Dispatch<React.SetStateAction<number>>;
     menuHidden: boolean;
     setMenuHidden: React.Dispatch<React.SetStateAction<boolean>>;
+    activateMenu: boolean;
+    setActivateMenu: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export const AppContext = createContext<I_AppContext | undefined>(undefined);
