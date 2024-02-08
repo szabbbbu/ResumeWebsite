@@ -7,11 +7,9 @@ import { showContentIfMobileMenuHidden } from "./util/HideIfMobile";
 
 export default function Contact () {
     const [emailCopied, setEmailCopied] = useState<boolean>(false);
-    const [captchaSolved, setCaptchaSolved] = useState<boolean>(true);
+    const [captchaSolved, setCaptchaSolved] = useState<boolean>(false);
     const [activateCaptcha, setActivateCaptcha] = useState<boolean>(false);
     const captchaRef = useRef(null);
-
-    // console.log("contact page reload")
     const showContent = showContentIfMobileMenuHidden();
     if (showContent)
         return (
