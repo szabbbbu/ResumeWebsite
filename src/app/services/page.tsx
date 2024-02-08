@@ -1,12 +1,15 @@
-
+"use client"
 import Accordion from "@/components/Accordion/Accordion";
 import Animated from "@/components/Animated";
-import HideIfMobile from "@/components/HideIfMobile";
+import { showContentIfMobileMenuHidden } from "@/components/util/HideIfMobile";
+
 
 export default function ServicesPage() {
+    const showContent = showContentIfMobileMenuHidden();
+    if (showContent)
     return (
-        <HideIfMobile>
-            <div className=" w-full h-full flex flex-col items-center">
+
+            <div className="w-full h-full flex flex-col items-center">
                 <Animated delay={500}>
                     <h1 style={{marginTop: "12px"}} className=" w-full h-full uppercase add-blur rounded">
                         What I Offer
@@ -16,6 +19,7 @@ export default function ServicesPage() {
                 <Accordion />
 
             </div>
-        </HideIfMobile>
+
     );
+    return null
 }

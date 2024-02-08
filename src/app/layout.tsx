@@ -1,5 +1,4 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 import Header from '@/components/Header/Header'
 
@@ -18,7 +17,7 @@ function RT({
 }: {
   children: React.ReactNode
 }) {
-  console.log("rendering layout")
+  // console.log("rendering layout")
   // grid grid-rows-1 grid-cols-[0.8fr,2fr]
   return (
     <html lang="en">

@@ -9,6 +9,7 @@ import GitlabIcon from "../Icons/GitlabIcon";
 import LinkIcon from "../Icons/LinkIcon";
 import ReactIcon from "../Icons/ReactIcon";
 import NextJsIcon from "../Icons/NextJSIcon";
+import { showContentIfMobileMenuHidden } from "../util/HideIfMobile";
 
 
 type Props = {
@@ -38,7 +39,9 @@ const demoLinks = [
 export default function Carousel({images}: Props) {
   const {menuHidden} = useAppContext();
   const [currImg, setCurrImg] = useState<number>(0);
+  const showContent = showContentIfMobileMenuHidden();
   // console.log("CURR IMG", currImg, images[currImg]);
+  if (showContent)
   return (
     <div className={`${menuHidden ? "w-[100vw]" : "w-full"} h-full grid grid-rows-1 xs:grid-cols-[15%,70%,15%] sm:grid-cols-[15%,70%,15%] lg:grid-cols-[10%,80%,10%] md:grid-cols-[10%,80%,10%] bg-transparent mb-1 transition-[width]`}>
 
@@ -183,4 +186,5 @@ export default function Carousel({images}: Props) {
         </div> {/** right btn */}
     </div>
   );
+  return null;
 }

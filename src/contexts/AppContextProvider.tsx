@@ -13,6 +13,7 @@ function AppCtx({children}: Props) {
     const [appWidth, setAppWidth] = useState<number>(751);
     const [appHeight, setAppHeight] = useState<number>(751);
     const [menuHidden, setMenuHidden] = useState<boolean>(false);
+    const [hideBody, setHideBody] = useState<boolean>(false);
 
     useEffect(() => {
         function handleResize() {
@@ -34,7 +35,7 @@ function AppCtx({children}: Props) {
                     setAppHeight:setAppHeight,
                     setAppWidth: setAppWidth,
                     menuHidden: menuHidden,
-                    setMenuHidden: setMenuHidden
+                    setMenuHidden: setMenuHidden,
                 }
             }
         >

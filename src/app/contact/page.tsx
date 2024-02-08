@@ -1,12 +1,8 @@
-import Contact from "@/components/Contact";
-import HideIfMobile from "@/components/HideIfMobile";
-import { InferGetStaticPropsType } from "next";
 
+import Contact from "@/components/Contact";
 
 export default function ContactPage() {
     return (
-        <HideIfMobile>
             <Contact />
-        </HideIfMobile>
     );
 }
