@@ -74,7 +74,8 @@ function Client() {
                     ctx.strokeStyle = "white"
                     ctx.lineWidth = 2
                     ctx.beginPath();
-                    ctx.arc(cPos.X, cPos.Y, clamp(circle.radius-21, 4, 50), 0, 360);
+                    //TODO: make the ball bounce more accurate, use common vals in circle.ts and here
+                    ctx.arc(cPos.X, cPos.Y, clamp(circle.radius-21, 1, Number.MAX_SAFE_INTEGER), 0, 360);
                     ctx.fill();
                     ctx.stroke();
                 }
