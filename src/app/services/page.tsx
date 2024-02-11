@@ -10,13 +10,17 @@ export default function ServicesPage() {
     return (
 
             <div className="w-full h-full flex flex-col items-center">
-                <Animated delay={500}>
+                <Animated delay={10}>
                     <h1 style={{marginTop: "24px"}} className=" w-full h-fit p-2 uppercase add-blur rounded text-xl">
                         What I Offer
                     </h1>
                 </Animated>
                 
-                <Accordion />
+
+                <Animated delay={600}>
+                    <Accordion />
+                </Animated>
+                
 
             </div>
 

@@ -25,7 +25,6 @@ const AccordionData = [
     }
 ]
 
-
 export default function Accordion() {
   return (
     <div className="flex justify-center">
