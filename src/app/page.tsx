@@ -1,4 +1,5 @@
 "use client"
+import Link from "next/link";
 import Animated from "@/components/Animated";
 import { showContentIfMobileMenuHidden } from "@/components/util/HideIfMobile";
 
@@ -10,19 +11,20 @@ export default function Home() {
     <div className="flex flex-col sm:w-[100%] h-fit items-center my-[10%] bg-rgba">
 
         <Animated delay={0}>
-          <p>ROBERT SZABO</p>
+          <h1 className="text-xl text-center">ROBERT SZABO</h1>
         </Animated>
         <Animated delay={1000} > 
-          <p>Full stack engineer</p>
-        </Animated>
-        <Animated delay={1700}>
-          <p></p>
+          <h1 className="text-xl text-center">Full stack engineer</h1>
         </Animated>
         <Animated delay={2000}>
-          <p>Available for contract work</p>
+          <h2 className="text-center">Available for contract work</h2>
         </Animated>
         <Animated delay={3500}>
-          <p className="text-xl flex flex-wrap text-center">Looking for a high quality website? See what I offer on the services page</p>
+          <h2 className="text-xl flex flex-wrap text-center">Looking for a high quality website? Get in touch with me
+          <Link href="/contact">
+            <span className="text-siteBlue">&nbsp;here</span>
+            
+          </Link></h2>
         </Animated>
 
     </div>

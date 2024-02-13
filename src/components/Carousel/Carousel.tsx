@@ -167,7 +167,7 @@ export default function Carousel({images}: Props) {
           <thead>
             <tr>
               <th>
-                Tech used
+                tech used
               </th>
               <th>
                 source

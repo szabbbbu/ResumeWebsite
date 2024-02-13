@@ -68,7 +68,7 @@ function IsoLayer() {
         currGrid: GridPoint[][],
         ctx: CanvasRenderingContext2D
     ) {
-        if (!isoGrid2.current) return
+        if (!isoGrid2.current) return;
         const dh = isoGrid2.current.getHeightInterval();
         const dw = isoGrid2.current.getWidthInterval();
         /** Points  */
@@ -320,7 +320,7 @@ function IsoLayer() {
 
     /** INITIALIZE GRID */
     useEffect(() => {
-        threshold.current = (window.innerWidth < mobLim) ? 2.6 : 2;
+        threshold.current = (window.innerWidth < mobLim) ? 3 : 2;
         dim.current = (window.innerWidth < mobLim) ? 8 : 64;
         const w = window.innerWidth;
         const h = window.innerHeight;
@@ -360,7 +360,7 @@ function IsoLayer() {
                 }
                 isoGrid2.current?.updateGridSize(window.innerWidth, window.innerHeight);
                 layerRef.current.resizeCanvas(window.innerWidth, window.innerHeight);
-                threshold.current = lerp(window.innerWidth, 300, 2100, 3, 2.3);
+                threshold.current = lerp(window.innerWidth, 300, 2100, 2.7, 2.0);
             }
         }
         handleCanvasResize();

@@ -4,10 +4,11 @@ import { memo, useEffect, useState } from "react";
 type Props = {
     children: React.ReactNode;
     delay: number; //milliseconds
-    height? :string;
+    width?: string;
+    height?: string;
 }
 
-function AnimatedComponent({children, delay, height="h-fit"}: Props) {
+function AnimatedComponent({children, delay, width="w-fit", height="h-fit"}: Props) {
     const [show, setShow] = useState(false);
     useEffect(() => {
         setTimeout(() => {
@@ -17,7 +18,7 @@ function AnimatedComponent({children, delay, height="h-fit"}: Props) {
 
     return(
         <div
-            className={`w-fit ${height} ${show ? "fade-in" : "start-state"}`}
+            className={`${width} ${height} ${show ? "fade-in" : "start-state"}`}
         >
             {children}
         </div>
