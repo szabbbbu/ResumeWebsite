@@ -12,7 +12,7 @@ function AppCtx({children}: Props) {
     // console.log("app ctxt")
     const [appWidth, setAppWidth] = useState<number>(751);
     const [appHeight, setAppHeight] = useState<number>(751);
-    const [menuHidden, setMenuHidden] = useState<boolean>(true);
+    const [menuHidden, setMenuHidden] = useState<boolean>(false);
     const [activateMenu, setActivateMenu] = useState<boolean>(false);
     useEffect(() => {
         function handleResize() {

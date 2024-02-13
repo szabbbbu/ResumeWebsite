@@ -31,10 +31,14 @@ function RT({
         <AppContextProvider>
           <Header />
           
-        <main className="z-0 xs:flex sm:flex md:flex xs:absolute md:static inset-0 w-[100vw] h-[100vh] xs:overflow-scroll md:overflow-hidden">
+        <main className="z-0 xs:flex sm:flex md:flex xs:absolute md:static flex-col inset-0 w-[100vw] h-[100vh] xs:overflow-scroll md:overflow-hidden justify-center">
           {children}
         </main>
         </AppContextProvider>
+        {/* THE FOOTER */}
+        {/* <div className="absolute bottom-4 xs:right-[25%] md:right-[40%]">
+        &#169; Robert Szabo (2024)
+        </div> */}
       </body>
     </html>
   )

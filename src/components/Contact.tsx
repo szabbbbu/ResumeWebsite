@@ -26,7 +26,7 @@ export default function Contact () {
 
     if (showContent)
         return (
-                <div className="w-full h-[100vh] flex flex-col items-center justify-center">
+                <div className="w-full h-[90vh] flex flex-col items-center justify-center">
                     <h1
                     className="p-4 rounded add-blur border text-xl text-center w-[90%]"
                     >

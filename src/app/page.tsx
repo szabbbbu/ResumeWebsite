@@ -17,7 +17,7 @@ export default function Home() {
           <h1 className="text-xl text-center uppercase">Full stack engineer</h1>
         </Animated>
         <Animated delay={2000}>
-          <h2 className="text-center text-xl">Available for contract work</h2>
+          <h2 className="text-center text-xl">This is my portfolio website</h2>
         </Animated>
         <Animated delay={3000}>
           <h2 className="text-xl flex flex-wrap text-center">Looking for a high quality website? Get in touch with me
