@@ -76,8 +76,8 @@ export default function Contact () {
                         <p className="text-lg my-2 add-blur">
                             But Wait! Are you Human???
                         </p>
-                        {hCaptchaKey && 
-                            (
+              
+                     
                                 <HCaptcha
                                     sitekey="63cec785-a99d-4a00-b81f-207caccae4b3"
                                     theme="dark"
@@ -86,8 +86,6 @@ export default function Contact () {
                                         setCaptchaSolved(true);
                                     }}
                                 />
-                            )
-                        }
                         </div>
                     </div>
                     </div>    
