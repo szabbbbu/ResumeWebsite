@@ -114,7 +114,7 @@ export default function Carousel({images}: Props) {
 
   if (showContent)
   return (
-  <div className="grid grid-rows-[86%,14%] grid-cols-1 w-[100%] h-full ">
+  <div className="grid grid-rows-[86%,14%] grid-cols-1 w-[100%] h-full min-h-[600px] ">
     <div className={`w-[95%] h-[100%] grid grid-rows-1 grid-cols-[10%,80%,10%] bg-transparent mb-1 transition-[width] justify-self-center self-center`}>
       
     <LeftBtn />
