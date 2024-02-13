@@ -20,9 +20,9 @@ function AppCtx({children}: Props) {
             if (window.innerWidth < 768) {
                 setMenuHidden(true);
             }
-            else {
-                setMenuHidden(false);
-            }
+            // else {
+            //     // setMenuHidden(false);
+            // }
             setActivateMenu(true);
         }
 
