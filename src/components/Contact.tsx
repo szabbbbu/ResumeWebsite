@@ -79,7 +79,7 @@ export default function Contact () {
                         {hCaptchaKey && 
                             (
                                 <HCaptcha
-                                    sitekey={hCaptchaKey}
+                                    sitekey="63cec785-a99d-4a00-b81f-207caccae4b3"
                                     theme="dark"
                                     onLoad={() => console.log("loaded")}
                                     onVerify={(token, ekey) => {
