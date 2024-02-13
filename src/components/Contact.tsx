@@ -1,6 +1,6 @@
 "use client"
 import dynamic from "next/dynamic";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 const HCaptcha = dynamic(() => import('@hcaptcha/react-hcaptcha'), { ssr: false });
 import GithubIcon from "./Icons/GithubIcon";
 import { showContentIfMobileMenuHidden } from "./util/HideIfMobile";
