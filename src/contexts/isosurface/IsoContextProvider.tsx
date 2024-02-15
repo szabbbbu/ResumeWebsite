@@ -10,13 +10,10 @@ type Props = {
 
 
 export default function IsoContextProvider({children}: Props) {
-    const [circles, setCircles] = useState<Circle[]>([]);
     const circles2: MutableRefObject<Circle[]> = useRef<Circle[]>([]);
     return (
         <IsoContext.Provider
             value={{
-                circles: circles,
-                setCircles: setCircles,
                 circles2: circles2
             }}
         >

@@ -12,10 +12,6 @@ import NextJsIcon from "../Icons/NextJSIcon";
 import { showContentIfMobileMenuHidden } from "../util/HideIfMobile";
 
 
-type Props = {
-  images: StaticImageData[];
-}
-
 const gitIcons = [
   <GithubIcon/>
 ]
@@ -32,16 +28,17 @@ const demoLinks = [
   "https://mamont.us"
 ];
 
-
-
-
+import b from "@/../public/MamontovProductions.png";
+import mobB from "@/../public/MamontovProductions_Mobile.png";
+const images = [b];
+const mobImages = [mobB]
 
 //TODO: GET CURRENT HOVERED IMAGE FROM THE APP CONTEXT (to enable consistency between wide and mobile views)
-export default function Carousel({images}: Props) {
-  const {menuHidden} = useAppContext();
+export default function Carousel() {
+  const {appWidth} = useAppContext()
   const [currImg, setCurrImg] = useState<number>(0);
   const showContent = showContentIfMobileMenuHidden();
-  // console.log("CURR IMG", currImg, images[currImg]);
+  
   function LeftBtn() {
     return (
       <div className="xs:w-[36px] md:w-[64px] xs:h-[36px] md:h-[64px] p-1 self-center justify-self-center add-blur border z-10 hover:scale-105 transition-transform">
@@ -111,6 +108,15 @@ export default function Carousel({images}: Props) {
     );
   }
 
+  function populateImages(imgs: StaticImageData[]) {
+    return imgs.map((img) => {
+      return (
+          // <img className="object-cover" src={img.src}/>
+          <Image className="rounded border p-2 h-full" layout="" width={img.width} height={img.height} key={img.src} alt="carouselimg" src={img.src}/>
+      )
+    }) 
+  }
+
 
   if (showContent)
   return (
@@ -133,12 +139,7 @@ export default function Carousel({images}: Props) {
         <div className="flex max-w-[1000px] self-center justify-self-center h-full add-blur overflow-hidden">
           <div style={{transform:`translateX(-${100 * currImg}%)`}} className={`transition-transform grid grid-rows-1 grid-cols-[100%,100%]`}>
             {
-              images.map((img) => {
-                return (
-                    // <img className="object-cover" src={img.src}/>
-                    <Image className="rounded border p-2 h-full" layout="" width={img.width} height={img.height} key={img.src} alt="carouselimg" src={img.src}/>
-                )
-              })
+              appWidth >= 640 ? populateImages(images) : populateImages(mobImages)
             }
           </div>
         </div>

@@ -54,7 +54,7 @@ function IsoLayer() {
     // const {appWidth} = useAppContext();
 
     const layerRef = useRef<I_CanvasLayer>(null);
-    const {circles, circles2} = useIsoContext();
+    const {circles2} = useIsoContext();
     const animFrameId = useRef<number | null>(null)
     const threshold = useRef<number>(3);
     const dim = useRef<number>(64);

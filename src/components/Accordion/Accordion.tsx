@@ -7,14 +7,14 @@ const AccordionData = [
         body:"I can take any design document and turn it into a fast-loading & responsive modern web application. I handle everything from UI to the server logic that runs the site. Following the completion of your site, I offer hosting and maintenance services for 24/7 fixes and improvements. I work closely with clients to ensure the app perfectly fits their vision",
         cta: "Contact me for a free discussion & quote."
     },
-    // {
-    //     title: "why choose a developer",
-    //     body: "I build sites with one-of-a-kind designs. When choosing other no-code tools to build your online presence, you're confined to cookie-cutter layouts, and you usually get a page that looks generic. By getting a hand-made site you have full control over the site's capabilities and style. I build efficiant, yet graphically impressive web apps (with 2D/3D tools) that your visitors will remember and appreciate.",
-    //     cta: "hit me"
-    // },
+    {
+        title: "Shopify Headless Storefront Development",
+        body: "I can build a \"headless\" storefront for your shopify ecommerce website. Headless storefronts use shopify to manage inventory and sales, but use a custom frontend. This way you're free to work with any web design and integrate it seamlessly with your shopify store",
+        cta: "Email me to talk about your business"
+    },
     {
         title: "Tech I use",
-        body: "The languages I'm most familiar with are Typescript, Golang, Java & Python I can make a serverless application using NextJS, or a Hypermedia-driven Application using Golang & HTMX. Databases are chosen on a per-project basis. I have deep networking knowledge, I'm comfortable with lower level networking tasks if needed to implement what you need.",
+        body: "The languages I'm most familiar with are Typescript, Golang, Java & C. I can make a serverless application using NextJS, or a Hypermedia-driven Application using Golang & HTMX. Choosing the right tools depends on the requirements of your app. Databases are chosen on a per-project basis. I have deep networking knowledge, I'm comfortable with lower level networking tasks if needed to implement what you need.",
         cta: ""
     },
     {
