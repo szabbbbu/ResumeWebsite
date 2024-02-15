@@ -22,7 +22,7 @@ export default function Contact () {
 
     useEffect(() => {
         getHCaptchaKey().then(k => setHCaptchaKey(k));
-    }, []);
+    }, [setHCaptchaKey]);
 
     if (showContent)
         return (
