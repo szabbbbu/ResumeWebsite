@@ -82,7 +82,7 @@ export default function Contact () {
                             But Wait! Are you Human???
                         </p>
               
-                     {hCaptchaKey != null ? 
+                     {hCaptchaKey ? 
                             <HCaptcha
                                 sitekey={hCaptchaKey}
                                 theme="dark"
