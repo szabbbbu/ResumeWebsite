@@ -72,20 +72,21 @@ export default function Contact () {
                             >
                                 get in touch
                         </button>
-                        <div className={`w-full h-[200px] flex flex-col items-center ${activateCaptcha && !captchaSolved? "fade-in z-0" : "start-state -z-10"} `}>
+                        <div className={`w-full h-[200px] flex flex-col items-center ${activateCaptcha ? "fade-in z-0" : "start-state -z-10"} `}>
                         <p className="text-lg my-2 add-blur">
                             But Wait! Are you Human???
                         </p>
               
-                     
-                                <HCaptcha
-                                    sitekey="63cec785-a99d-4a00-b81f-207caccae4b3"
-                                    theme="dark"
-                                    onLoad={() => console.log("loaded")}
-                                    onVerify={(token, ekey) => {
-                                        setCaptchaSolved(true);
-                                    }}
-                                />
+                     {hCaptchaKey && 
+                            <HCaptcha
+                                sitekey={hCaptchaKey}
+                                theme="dark"
+                                onLoad={() => console.log("loaded")}
+                                onVerify={(token, ekey) => {
+                                    setCaptchaSolved(true);
+                                }}
+                            />
+                        }
                         </div>
                     </div>
                     </div>    
