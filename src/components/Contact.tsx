@@ -22,8 +22,6 @@ export default function Contact () {
 
     useEffect(() => {
         getHCaptchaKey().then(k => {
-            console.log("we got the hcaptcha key", k);
-            
             setHCaptchaKey(k)
         });
 
