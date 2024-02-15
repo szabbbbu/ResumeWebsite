@@ -22,7 +22,7 @@ export default function Contact () {
 
     useEffect(() => {
         getHCaptchaKey().then(k => {
-            console.log("we got the hcaptcha key");
+            console.log("we got the hcaptcha key", k);
             
             setHCaptchaKey(k)
         });
@@ -82,7 +82,7 @@ export default function Contact () {
                             But Wait! Are you Human???
                         </p>
               
-                     {hCaptchaKey && 
+                     {hCaptchaKey != null ? 
                             <HCaptcha
                                 sitekey={hCaptchaKey}
                                 theme="dark"
@@ -91,6 +91,8 @@ export default function Contact () {
                                     setCaptchaSolved(true);
                                 }}
                             />
+                            :
+                            <h1>loading...</h1>
                         }
                         </div>
                     </div>
