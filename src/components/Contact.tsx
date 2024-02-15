@@ -21,7 +21,12 @@ export default function Contact () {
     }
 
     useEffect(() => {
-        getHCaptchaKey().then(k => setHCaptchaKey(k));
+        getHCaptchaKey().then(k => {
+            console.log("we got the hcaptcha key");
+            
+            setHCaptchaKey(k)
+        });
+
     }, [setHCaptchaKey]);
 
     if (showContent)
