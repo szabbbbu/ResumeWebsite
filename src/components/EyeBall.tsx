@@ -1,17 +1,28 @@
 "use client"
-import { memo, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { getDistance } from "./util/Distance";
 import { lerp } from "./util/LinearInterpolation";
 import { clamp } from "./util/ClampFunctions";
+import Pair from "./util/Pair";
 
 function Eye() {
     const [eyeBallY, setEyeBallY] = useState<number>(50);
     const [eyeBallX, setEyeBallX] = useState<number>(50); // Initial X-coordinate
     const innerRef = useRef<SVGSVGElement>(null);
+    const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+    const animFrameRef = useRef<number | null>(null)
 
     useEffect(() => {
-    
+
         const handleMouseMove = (e: MouseEvent) => {
+            if (timeoutRef.current) {
+                clearTimeout(timeoutRef.current)
+            }
+            if (animFrameRef.current) {
+                cancelAnimationFrame(animFrameRef.current)
+            }
+            // console.log(e.clientX, e.clientY, eyeBallX, eyeBallY)
+
             if (innerRef.current) {
                 const clientRect = innerRef.current.getBoundingClientRect();
                 const svgCenterX = clientRect.left + clientRect.width / 2;
@@ -23,19 +34,39 @@ function Eye() {
                 const scalingFactor = clamp(lerp(getDistance(svgCenterX, svgCenterY, e.clientX, e.clientY), 0, 28), 0, 1);
                 const newX = 50 + (radius * Math.cos(angle) * scalingFactor);
                 const newY = 50 + (radius * Math.sin(angle) * scalingFactor);
-                // const newY = svgCenterY + radius * Math.sin(angle);
-        
+                // console.log("new x", newX)
                 setEyeBallX(newX);
                 setEyeBallY(newY);
+
+                /** HANDLE MOUSE LEAVE */
+                timeoutRef.current = setTimeout(() => {
+                    const p = new Pair(Math.floor(newX), Math.floor(newY))
+                    const moveBack = (x:number,y:number) => { 
+                        const animStep = () => {
+                            const dist = getDistance(50, x, 50, y)
+                            const dx = 50 - x
+                            const dy = 50 - y
+                            if (dist > 0.2) {
+                                // console.log("dist", dist)
+                                x += (dx * .11)
+                                y += (dy * .11)
+                                setEyeBallX(x)
+                                setEyeBallY(y)
+                                animFrameRef.current = requestAnimationFrame(animStep)
+                            }
+                        }
+                        animFrameRef.current = requestAnimationFrame(animStep)
+                    }
+                    moveBack(p.X, p.Y)
+                }, 1000)
             }
         };
 
         window.addEventListener("mousemove", handleMouseMove);
-
         return () => {
             window.removeEventListener("mousemove", handleMouseMove);
         }
-    }, []);
+    }, [setEyeBallX, setEyeBallY]);
 
     return (
         <svg
@@ -51,5 +82,5 @@ function Eye() {
     );
 }
 
-const EyeBall = memo(Eye);
+const EyeBall = Eye;
 export default EyeBall;

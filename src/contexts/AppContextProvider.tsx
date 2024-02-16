@@ -25,11 +25,11 @@ function AppCtx({children}: Props) {
             // }
             setActivateMenu(true);
         }
-
         handleResize();
         window.addEventListener("resize", handleResize);
         return () => {
             window.removeEventListener("resize", handleResize);
+
         }
     }, [appWidth])
     return(
