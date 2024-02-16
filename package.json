@@ -12,8 +12,6 @@
   },
   "dependencies": {
     "@hcaptcha/react-hcaptcha": "^1.9.3",
-    "@radix-ui/react-icons": "^1.3.0",
-    "embla-carousel-react": "^8.0.0-rc21",
     "next": "^14.0.4",
     "react": "^18",
     "react-dom": "^18"

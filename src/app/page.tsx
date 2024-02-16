@@ -2,7 +2,6 @@
 import Link from "next/link";
 import Animated from "@/components/Animated";
 import { showContentIfMobileMenuHidden } from "@/components/util/HideIfMobile";
-import { MouseEventHandler } from "react";
 
 export default function Home() {
   //TODO: don't start animations until the user closes the menu in mobile
@@ -19,7 +18,7 @@ export default function Home() {
           <h1 className="text-2xl text-center uppercase">Full stack engineer</h1>
         </Animated>
         <Animated delay={210}>
-          <h2 className="text-center text-2xl">I make web apps 😎</h2>
+          <h2 className="text-center text-2xl">I make web apps</h2>
         </Animated>
         <Animated delay={310}>
           <h2 className="text-xl text-center">
