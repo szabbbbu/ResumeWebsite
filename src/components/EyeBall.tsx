@@ -21,7 +21,6 @@ function Eye() {
             if (animFrameRef.current) {
                 cancelAnimationFrame(animFrameRef.current)
             }
-            // console.log(e.clientX, e.clientY, eyeBallX, eyeBallY)
 
             if (innerRef.current) {
                 const clientRect = innerRef.current.getBoundingClientRect();
@@ -39,34 +38,58 @@ function Eye() {
                 setEyeBallY(newY);
 
                 /** HANDLE MOUSE LEAVE */
-                timeoutRef.current = setTimeout(() => {
-                    const p = new Pair(Math.floor(newX), Math.floor(newY))
-                    const moveBack = (x:number,y:number) => { 
-                        const animStep = () => {
-                            const dist = getDistance(50, x, 50, y)
-                            const dx = 50 - x
-                            const dy = 50 - y
-                            if (dist > 0.2) {
-                                // console.log("dist", dist)
-                                x += (dx * .11)
-                                y += (dy * .11)
-                                setEyeBallX(x)
-                                setEyeBallY(y)
-                                animFrameRef.current = requestAnimationFrame(animStep)
-                            }
-                        }
-                        animFrameRef.current = requestAnimationFrame(animStep)
-                    }
-                    moveBack(p.X, p.Y)
-                }, 1000)
+                // timeoutRef.current = setTimeout(() => {
+                //     const p = new Pair(Math.floor(newX), Math.floor(newY))
+                //     const moveBack = (x:number,y:number) => { 
+                //         const animStep = () => {
+                //             const dist = getDistance(50, x, 50, y)
+                //             const dx = 50 - x
+                //             const dy = 50 - y
+                //             if (dist > 0.2) {
+                //                 // console.log("dist", dist)
+                //                 x += (dx * .11)
+                //                 y += (dy * .11)
+                //                 setEyeBallX(x)
+                //                 setEyeBallY(y)
+                //                 animFrameRef.current = requestAnimationFrame(animStep)
+                //             }
+                //         }
+                //         animFrameRef.current = requestAnimationFrame(animStep)
+                //     }
+                //     moveBack(p.X, p.Y)
+                // }, 1000)
             }
         };
 
+        const handleMouseLeave = () => {
+            // console.log("mouse exit")
+            timeoutRef.current = setTimeout(() => {
+                const p = new Pair(Math.floor(eyeBallX), Math.floor(eyeBallY));
+                const moveBack = (x:number,y:number) => { 
+                    const animStep = () => {
+                        const dist = getDistance(50, x, 50, y);
+                        const dx = 50 - x;
+                        const dy = 50 - y;
+                        if (dist > 0.2) {
+                            x += (dx * .11);
+                            y += (dy * .11);
+                            setEyeBallX(x);
+                            setEyeBallY(y);
+                            animFrameRef.current = requestAnimationFrame(animStep);
+                        }
+                    }
+                    animFrameRef.current = requestAnimationFrame(animStep);
+                }
+                moveBack(p.X, p.Y);
+            }, 1000);
+        };
         window.addEventListener("mousemove", handleMouseMove);
+        window.addEventListener("mouseout", handleMouseLeave);
         return () => {
             window.removeEventListener("mousemove", handleMouseMove);
+            window.removeEventListener("mouseout", handleMouseLeave);
         }
-    }, [setEyeBallX, setEyeBallY]);
+    }, [setEyeBallX, setEyeBallY, eyeBallX, eyeBallY]);
 
     return (
         <svg
