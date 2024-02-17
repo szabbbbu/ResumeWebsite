@@ -1,5 +1,5 @@
 "use client"
-import { memo, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef } from "react";
 import CanvasLayer from "./CanvasLayer";
 import { lerp } from "../../util/LinearInterpolation";
 import GridPoint from "../GridPoint";
@@ -51,8 +51,6 @@ ctx: CanvasRenderingContext2D) {
 }   
 
 function IsoLayer() {
-    // const {appWidth} = useAppContext();
-
     const layerRef = useRef<I_CanvasLayer>(null);
     const {circles2} = useIsoContext();
     const animFrameId = useRef<number | null>(null)
@@ -151,7 +149,6 @@ function IsoLayer() {
             case 12:
                 ctx.strokeStyle =`hsla(${400 - (220*lerp(sideD.X, 0, window.innerWidth))}, 100%, ${44+ 34*lerp(sideD.X, 0, window.innerWidth)}%)`
                 ctx.moveTo(sideD.X, sideD.Y);
-
                 ctx.lineTo(sideB.X, sideB.Y);
 
                 if (colNum == 1) {
@@ -166,7 +163,11 @@ function IsoLayer() {
                     if (currState == 12) {
                         drawEdgeCase(window.innerWidth, sideB.Y, window.innerWidth, upBound, ctx);
                     }
+                    else if (currState == 3) {
+                        drawEdgeCase(window.innerWidth, sideB.Y, window.innerWidth, downBound, ctx);
+                    }
                 }
+                
                 break;
             case 4: /** top right */
             case 11:
@@ -181,6 +182,9 @@ function IsoLayer() {
                 if (rowNum == 1 && currState == 11) {
                     drawEdgeCase(sideA.X, 0, leftBound, 0, ctx);
                 }
+                // else if (rowNum == currGrid[0].length - 1 && currState == 11) {
+                //     drawEdgeCase(window.innerWidth, sideB.Y, window.innerWidth, downBound, ctx)
+                // }
                 break;
             case 5: /** top right, bottom left */
                 ctx.strokeStyle =`hsla(${400 - (220*lerp(sideA.X, 0, window.innerWidth))}, 100%, ${44+ 34*lerp(sideA.X, 0, window.innerWidth)}%)`
@@ -307,9 +311,9 @@ function IsoLayer() {
                     if (colNum > 0 && rowNum > 0) {
                         determineContour(point, rowNum, colNum, currGrid, ctx);
                     }
-                    // ctx.beginPath();
-                    // ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
-                    // ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
+                    ctx.fill();
                     // ctx.fillText(`${point.getValue().toFixed(2)}`, point.getXPos() + 10, point.getYPos() + 10)
                 })
             })
@@ -376,6 +380,6 @@ function IsoLayer() {
     );
 }
 
-const IsosurfaceLayer = memo(IsoLayer);
+const IsosurfaceLayer = IsoLayer;
 export default IsosurfaceLayer;
 
