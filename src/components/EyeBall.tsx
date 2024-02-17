@@ -5,6 +5,7 @@ import { lerp } from "./util/LinearInterpolation";
 import { clamp } from "./util/ClampFunctions";
 import Pair from "./util/Pair";
 
+//TODO: WRITE UNIT TESTS FOR THIS COMPONENT
 function Eye() {
     const [eyeBallY, setEyeBallY] = useState<number>(50);
     const [eyeBallX, setEyeBallX] = useState<number>(50); // Initial X-coordinate
@@ -36,32 +37,10 @@ function Eye() {
                 // console.log("new x", newX)
                 setEyeBallX(newX);
                 setEyeBallY(newY);
-
-                /** HANDLE MOUSE LEAVE */
-                // timeoutRef.current = setTimeout(() => {
-                //     const p = new Pair(Math.floor(newX), Math.floor(newY))
-                //     const moveBack = (x:number,y:number) => { 
-                //         const animStep = () => {
-                //             const dist = getDistance(50, x, 50, y)
-                //             const dx = 50 - x
-                //             const dy = 50 - y
-                //             if (dist > 0.2) {
-                //                 // console.log("dist", dist)
-                //                 x += (dx * .11)
-                //                 y += (dy * .11)
-                //                 setEyeBallX(x)
-                //                 setEyeBallY(y)
-                //                 animFrameRef.current = requestAnimationFrame(animStep)
-                //             }
-                //         }
-                //         animFrameRef.current = requestAnimationFrame(animStep)
-                //     }
-                //     moveBack(p.X, p.Y)
-                // }, 1000)
             }
         };
 
-        const handleMouseLeave = () => {
+        const handleMouseOut = () => {
             // console.log("mouse exit")
             timeoutRef.current = setTimeout(() => {
                 const p = new Pair(Math.floor(eyeBallX), Math.floor(eyeBallY));
@@ -84,10 +63,10 @@ function Eye() {
             }, 1000);
         };
         window.addEventListener("mousemove", handleMouseMove);
-        window.addEventListener("mouseout", handleMouseLeave);
+        window.addEventListener("mouseout", handleMouseOut);
         return () => {
             window.removeEventListener("mousemove", handleMouseMove);
-            window.removeEventListener("mouseout", handleMouseLeave);
+            window.removeEventListener("mouseout", handleMouseOut);
         }
     }, [setEyeBallX, setEyeBallY, eyeBallX, eyeBallY]);
 
