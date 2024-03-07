@@ -1,4 +1,3 @@
-
 import AccordionItem from "@/components/Accordion/AccordionItem";
 
 const AccordionData = [
@@ -14,7 +13,7 @@ const AccordionData = [
     },
     {
         title: "Tech I use",
-        body: "The languages I'm most familiar with are Typescript, Golang, Java & C. I can make a serverless application using NextJS, or a Hypermedia-driven Application using Golang & HTMX. Choosing the right tools depends on the requirements of your app. Databases are chosen on a per-project basis. I have deep networking knowledge, I'm comfortable with lower level networking tasks if needed to implement what you need.",
+        body: "I currently enjoy using Typescript and/or Golang to build web projects. I can build Single page applications using React & NextJS. I'm also highly interested in hypermedia driven applications using newer tools like HTMX, and Alpine JS.",
         cta: ""
     },
     {

@@ -1,18 +1,21 @@
 "use client"
-import dynamic from "next/dynamic";
-import { useState, useEffect } from "react";
-const HCaptcha = dynamic(() => import('@hcaptcha/react-hcaptcha'), { ssr: false });
-import GithubIcon from "./Icons/GithubIcon";
+// import dynamic from "next/dynamic";
+import { useState, useEffect, useRef, ReactNode } from "react";
+import emailjs from "@emailjs/browser"
+// const HCaptcha = dynamic(() => import('@hcaptcha/react-hcaptcha'), { ssr: false });
 import { showContentIfMobileMenuHidden } from "./util/HideIfMobile";
+import HCaptcha from "@hcaptcha/react-hcaptcha";
 
 export default function Contact () {
-    const [emailCopied, setEmailCopied] = useState<boolean>(false);
+    const [emailSent, setEmailSent] = useState<boolean>(false);
+    const [emailLoading, setEmailLoading] = useState<boolean>(false);
     const [captchaSolved, setCaptchaSolved] = useState<boolean>(false);
-    const [activateCaptcha, setActivateCaptcha] = useState<boolean>(false);
     const [hCaptchaKey, setHCaptchaKey] = useState<string | null>(null)
 
-    // const captchaRef = useRef(null);
     const showContent = showContentIfMobileMenuHidden();
+
+    const formRef = useRef<HTMLFormElement | null>(null);
+    const captchaRef = useRef<HCaptcha | null>(null)
 
     async function getHCaptchaKey() {
         const resp = await fetch("/api/hkey");
@@ -22,80 +25,113 @@ export default function Contact () {
 
     useEffect(() => {
         getHCaptchaKey().then(k => {
+        // setTimeout(() =>  
             setHCaptchaKey(k)
+        // , 4000)
         });
 
-    }, [setHCaptchaKey]);
+    }, []);
+
+    function handleSubmitForm(e: React.FormEvent) {
+        e.preventDefault()
+        if (!captchaSolved) {
+            console.error("Form submitted without a solved captcha. Won't send form!")
+            return;
+        }
+        if (!formRef.current) return;
+        // if (!captchaRef.current) return;
+
+
+        captchaRef.current?.resetCaptcha()
+        console.log("send email!")
+
+        setEmailLoading(true);
+        emailjs.sendForm("service_85s264n", "template_5tvsrgn", formRef.current, {
+            publicKey: "TBGfNR4FMpIrpoxjM"
+        })
+        .then(resp => {
+            console.log("success!", resp)
+            setEmailSent(true)
+        })
+        .catch(err => {
+            console.error(err)
+        })
+        .finally(() => {
+            setEmailLoading(false);
+            setCaptchaSolved(false);
+        })
+    }
+
+    function handleVerify(token: string, ekey: string) {
+        // console.log("Captcha solved. Token:", token, ekey);
+        setCaptchaSolved(true);
+    }
 
     if (showContent)
         return (
-                <div className="w-full h-[90vh] flex flex-col items-center justify-center">
-                    <h1
-                    className="p-4 rounded add-blur border text-xl text-center w-[90%]"
-                    >
-                        Want to hire me for your next project?
-                    </h1>
-                    <div  className=" w-full h-[40%] grid grid-cols-1 grid-rows-[1fr,2fr,2fr] justify-center items-center">
-                        <div className={`xs:w-[90%] md:w-[80%] h-fit p-4 mt-3 justify-self-center flex flex-wrap items-center justify-evenly add-blur border rounded ${captchaSolved ? "fade-in" : "start-state"}`}>
-                        
-                            <div className={`grid grid-rows-1 xs:grid-cols-[2fr,1fr] md:grid-cols-[1fr,2fr,1fr,1fr] justify-center items-center add-blur`}>
-                                    <div className="text-lg text-center xs:hidden md:block">
-                                        <p>ok, here's my email!</p>
-                                    </div>
-                                    
-                                    <div style={{color: "#E1BOFF"}} className="md:text-2xl xs:text-lg mr-6 text-center">
-                                        talkto@bobby.global
-                                    </div>
-                                    <button 
-                                    onClick={async () => {
-                                        await navigator.clipboard.writeText("talkto@bobby.global")
-                                        setEmailCopied(true);
-                                    }}
-                                    className="xs:hidden md:block add-blur rounded justify-self-center border w-[100px] h-[32px] hover:bg-[rgba(50,50,50,0.7)] active:bg-[rgba(50,50,50,0.9)]">
-                                        {!emailCopied ? "copy": "copied!"}
-                                    </button>  
-                                    <a className={`justify-self-center`} href="https://github.com/szabbbbu" target="_blank">
-                                        <div className="w-fit h-fit hover:scale-105 transition-transform">
-                                            <GithubIcon/>
-                                        </div>
-                                    </a>
-                                    
-                            </div>
+            <div className="bg-rgba w-full h-full p-2 flex flex-col items-center">
+                <h1 className="mt-2 xs:text-sm md:text-lg">Get in Touch</h1>
+                <form 
+                    ref={formRef}
+                    name="h-captcha-response"
+                    className="flex flex-col w-[90%] xs:mt-4 md:mt-[0px] xs:items-center md:items-start"
+                    onSubmit={handleSubmitForm}
+                >
+                    <label htmlFor="name" className="mb-2 capitalize w-fit">
+                        *name
+                    </label>
+                    <input required className="px-2 text-black mb-4 w-full" type="text" name="name" id="" />
+                    <label htmlFor="email" className="mb-2 capitalize">
+                        *email
+                    </label>
+                    <input required className="px-2 text-black mb-4 w-full" type="email" name="email" id="" />
+                    <label htmlFor="subject" className="mb-2 capitalize">
+                        subject
+                    </label>
+                    <input name="subject" className="px-2 text-black mb-4 w-full" type="text" />
+                    <label htmlFor="msg" className="mb-2 capitalize">
+                        *message
+                    </label>
+                    <textarea required placeholder="Please fill all fields leading with '*'" name="msg" id="" rows={12} className="w-full text-black p-4"></textarea>
+                    {
+                        emailSent ? 
+                        <div
+                            className=" text-green-400 text-center w-full"
+                        >
+                            <p>
+                            message sent!
+                            </p>
                             
+                        </div> : null
+                    }
+                    <div className="flex w-full">
+                    {
+                        captchaSolved ? 
+                        <button className="w-[80%] h-fit py-2 mt-2 border rounded mx-auto" type="submit">
+
+                        
+                            {!emailLoading ? <span>SEND</span>: <span>sending message...</span>}
+                        
+                        
+                        </button>
+                        :
+                        hCaptchaKey ? 
+                        <div className="w-fit h-fit mt-2 mx-auto">
+                            <HCaptcha
+                                ref={captchaRef}
+                                theme="dark" 
+                                size="normal"
+                                sitekey={hCaptchaKey}
+                                onVerify={(token, ekey) => handleVerify(token, ekey)}
+                            />
                         </div>
 
-                    
-                    <div className={`h-fit w-full grid grid-cols-1 grid-rows-[1fr,2fr] rounded p-4`}>
-                        <button
-                        onClick={() => {
-                            // console.log("CLICKED!")
-                            setActivateCaptcha(true)
-                        }}
-                        className=" w-[60%] justify-self-center rounded border add-blur uppercase active:bg-[rgba(50,50,50,0.5)] hover:bg-[rgba(50,50,50,0.3)]"
-                            >
-                                get in touch
-                        </button>
-                        <div className={`w-full h-[200px] flex flex-col items-center ${activateCaptcha ? "fade-in z-0" : "start-state -z-10"} `}>
-                        <p className="text-lg my-2 add-blur">
-                            But Wait! Are you Human???
-                        </p>
-              
-                     {hCaptchaKey ? 
-                            <HCaptcha
-                                sitekey={hCaptchaKey}
-                                theme="dark"
-                                onLoad={() => console.log("loaded")}
-                                onVerify={(token, ekey) => {
-                                    setCaptchaSolved(true);
-                                }}
-                            />
-                            :
-                            <h1>loading...</h1>
-                        }
-                        </div>
+                        : <h1 className="border rounded mt-2 mx-auto xs:text-sm md:text-lg">loading captcha...</h1>  
+                    }
+                        
                     </div>
-                    </div>    
-                </div> 
+                </form>
+            </div>
         );
     return null;
 }
