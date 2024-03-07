@@ -69,7 +69,7 @@ export default function Contact () {
 
     if (showContent)
         return (
-            <div className="bg-rgba w-full h-full p-2 flex flex-col items-center">
+            <div className="bg-rgba w-full h-full p-2 flex flex-col items-center overflow-scroll">
                 <h1 className="mt-2 xs:text-sm md:text-lg">Get in Touch</h1>
                 <form 
                     ref={formRef}
