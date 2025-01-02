@@ -43,10 +43,10 @@ export default function Contact () {
 
 
         captchaRef.current?.resetCaptcha()
-        console.log("send email!")
+        // console.log("send email!")
 
         setEmailLoading(true);
-        emailjs.sendForm("service_85s264n", "template_5tvsrgn", formRef.current, {
+        emailjs.sendForm("service_ab3t9xb", "template_5tvsrgn", formRef.current, {
             publicKey: "TBGfNR4FMpIrpoxjM"
         })
         .then(resp => {
@@ -120,7 +120,7 @@ export default function Contact () {
                             <HCaptcha
                                 ref={captchaRef}
                                 theme="dark" 
-                                size="normal"
+                                size="compact"
                                 sitekey={hCaptchaKey}
                                 onVerify={(token, ekey) => handleVerify(token, ekey)}
                             />

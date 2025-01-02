@@ -1,7 +1,6 @@
 "use client"
 import { ReactNode, memo, useEffect, useState } from "react";
 import { AppContext } from "./AppContext";
-import Circle from "@/components/isosurface/ShapeSystem/Circle";
 
 
 type Props = {
