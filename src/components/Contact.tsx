@@ -40,8 +40,6 @@ export default function Contact () {
         }
         if (!formRef.current) return;
         // if (!captchaRef.current) return;
-
-
         captchaRef.current?.resetCaptcha()
         // console.log("send email!")
 
@@ -108,11 +106,7 @@ export default function Contact () {
                     {
                         captchaSolved ? 
                         <button className="w-[80%] h-fit py-2 mt-2 border rounded mx-auto" type="submit">
-
-                        
                             {!emailLoading ? <span>SEND</span>: <span>sending message...</span>}
-                        
-                        
                         </button>
                         :
                         hCaptchaKey ? 

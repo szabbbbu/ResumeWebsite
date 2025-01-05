@@ -13,11 +13,13 @@ import { showContentIfMobileMenuHidden } from "../util/HideIfMobile";
 
 
 const gitIcons = [
-  <GithubIcon/>
+  <GithubIcon/>,
+  "Closed Source!"
 ]
 
 const techIcons = [
-  [<ReactIcon/>, <NextJsIcon/>]
+  [<ReactIcon/>, <NextJsIcon/>],
+  [<HonojsIcon />, <HtmxIcon />, <BunjsIcon />]
 ]
 
 const gitLinks = [
@@ -25,13 +27,18 @@ const gitLinks = [
 ];
 
 const demoLinks = [
-  "https://mamont.us"
+  "https://mamont.us",
+  "https://akropoleisz.com"
 ];
 
 import b from "@/../public/MamontovProductions.png";
+import c from "@/../public/c.png"
 import mobB from "@/../public/MamontovProductions_Mobile.png";
-const images = [b];
-const mobImages = [mobB]
+import HonojsIcon from "../Icons/HonojsIcon";
+import HtmxIcon from "../Icons/HtmxIcon";
+import BunjsIcon from "../Icons/BunjsIcon";
+const images = [b, c];
+const mobImages = [mobB, c]
 
 //TODO: GET CURRENT HOVERED IMAGE FROM THE APP CONTEXT (to enable consistency between wide and mobile views)
 export default function Carousel() {
@@ -104,6 +111,14 @@ export default function Carousel() {
             </div>
 
           </div>
+        <div className="w-full flex-shrink-0 flex justify-center">
+            <div className="add-blur h-fit w-fit p-2 rounded ">
+              <span>
+                I've built a custom website for a pole dance and acrobatics studio in Budapest. The site is a multi-page application, with a monolitic architecture. The system facilitates daily business needs, like group class reservations for students, blog posts, etc.
+              </span>
+            </div>
+
+          </div>
         </>
     );
   }
@@ -116,7 +131,6 @@ export default function Carousel() {
       )
     }) 
   }
-
 
   if (showContent)
   return (

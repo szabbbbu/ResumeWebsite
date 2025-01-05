@@ -13,7 +13,7 @@ const AccordionData = [
     },
     {
         title: "Tech I use",
-        body: "I currently enjoy using Typescript and/or Golang to build web projects. I can build Single page applications using React & NextJS. I'm also highly interested in hypermedia driven applications using newer tools like HTMX, and Alpine JS.",
+        body: "For web applications, I use mostly use Typescript. I have experience with several languages. I use the React framework for single-page applications, but I am highly interested in older methods of development, like multi-page applications running with tools like HTMX and Nginx",
         cta: ""
     },
     {
