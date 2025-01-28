@@ -1,6 +1,7 @@
 "use client"
 // import dynamic from "next/dynamic";
 import { useState, useEffect, useRef, ReactNode } from "react";
+import { CopyIcon } from "@radix-ui/react-icons";
 import emailjs from "@emailjs/browser"
 // const HCaptcha = dynamic(() => import('@hcaptcha/react-hcaptcha'), { ssr: false });
 import { showContentIfMobileMenuHidden } from "./util/HideIfMobile";
@@ -68,7 +69,17 @@ export default function Contact () {
     if (showContent)
         return (
             <div className="bg-rgba w-full h-full p-2 flex flex-col items-center overflow-scroll">
-                <h1 className="mt-2 xs:text-sm md:text-lg">Get in Touch</h1>
+                <h1 className="mt-2 xs:text-sm md:text-lg">Get in Touch - Tell me about your project</h1>
+                <h1 className="flex items-center justify-center space-x-2">
+                    <span>
+                        <span className="text-siteBlue">EMAIL:</span> robert@oncomputer.us
+                    </span>
+                    <span onClick={async () => {
+                        await window.navigator.clipboard.writeText("robert@oncomputer.us");
+                    }} title="copy email">
+                        <CopyIcon className="hover:scale-110 active:scale-95 cursor-pointer" width={16} height={16} />
+                    </span>
+                </h1>
                 <form 
                     ref={formRef}
                     name="h-captcha-response"
