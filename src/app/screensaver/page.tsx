@@ -6,7 +6,9 @@ import { useEffect } from "react";
 export default function Screensaver() {
     const {menuHidden, setMenuHidden} = useAppContext();
     useEffect(() => {
-        setMenuHidden(true);
+        setTimeout(() => {
+            setMenuHidden(true);
+        }, 300)
 
     }, [])
     return (

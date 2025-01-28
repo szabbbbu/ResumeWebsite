@@ -9,7 +9,7 @@ function HeaderBtn() {
     return (
         <svg
         onClick={() => setMenuHidden(!menuHidden)}
-        className={`absolute z-10 ${!menuHidden ? "2xl:left-[20%] xl:left-[20%] lg:left-[20%] md:left-[20%] sm:left-[2%] xs:left-[2%]" : "left-[2%]" } top-[4.5%] cursor-pointer p-1 transition-[left] duration-300 ${menuHidden ? "rotate-[180deg]" : undefined} origin-center`}
+        className={`absolute z-10 ${!menuHidden ? "2xl:left-[20%] xl:left-[20%] lg:left-[20%] md:left-[20%] sm:left-[2%] xs:left-[2%]" : "left-[2%]" } top-[4.5%] cursor-pointer p-1 transition-all duration-300 ${menuHidden ? "rotate-[180deg]" : undefined} origin-center`}
         width="42.881439"
         height="42.881439"
         viewBox="0 0 42.881439 42.881439"
