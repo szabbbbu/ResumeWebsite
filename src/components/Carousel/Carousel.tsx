@@ -89,6 +89,11 @@ export default function Carousel() {
           Mamontov Productions
           </h1>
         </div>
+        <div className=" w-full flex justify-center flex-shrink-0">      
+          <h1 className="add-blur text-xl rounded p-2 text-center">
+            Akropoleisz Pole and Aerial Sports gym
+          </h1>
+        </div>
       </>
 
     )

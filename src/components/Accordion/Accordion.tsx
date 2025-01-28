@@ -7,9 +7,9 @@ const AccordionData = [
         cta: "Contact me for a free discussion & quote."
     },
     {
-        title: "Shopify Headless Storefront Development",
-        body: "I can build a \"headless\" storefront for your shopify ecommerce website. Headless storefronts use shopify to manage inventory and sales, but use a custom frontend. This way you're free to work with any web design and integrate it seamlessly with your shopify store",
-        cta: "Email me to talk about your business"
+        title: "Search Engine optimization for webpages",
+        body: "I help businesses maximize their online visibility through effective SEO strategies. By optimizing your website’s architecture, content, and technical performance, I can improve your search engine rankings, attract qualified leads, and ultimately grow your revenue. Let’s work together to ensure your site stands out in a competitive digital landscape.",
+        cta: "Contact for a free discussion and quote"
     },
     {
         title: "Tech I use",
