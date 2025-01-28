@@ -13,7 +13,7 @@ const AccordionData = [
     },
     {
         title: "Tech I use",
-        body: "For web applications, I use mostly use Typescript. I have experience with several languages. I use the React framework for single-page applications, but I am highly interested in older methods of development, like multi-page applications running with tools like HTMX and Nginx",
+        body: "I specialize in building web applications using TypeScript and React for single-page applications, with a strong interest in traditional multi-page development approaches leveraging tools like HTMX and Nginx. I also have experience programming in Java, Python, and C++. I prioritize selecting the most optimal technology for each use case, adapting quickly to new tools and frameworks without bias to ensure the best solutions.",
         cta: ""
     },
     {

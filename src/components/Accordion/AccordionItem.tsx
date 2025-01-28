@@ -28,7 +28,7 @@ export default memo(function AccordionItem({title, body, cta}: Props) {
             </div>
             <div
             className={`${itemOpen ? "h-auto" : "h-0"} overflow-y-auto add-blur`}>
-                <p>{body}</p>
+                <p className="tracking-wider leading-6">{body}</p>
                 <Link href="/contact">
                     <span className="hover:text-pink-500 my-2 transition-[font-size]"><b>{cta}</b></span>
                 </Link>
