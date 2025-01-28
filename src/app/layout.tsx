@@ -31,7 +31,7 @@ function RT({
         <AppContextProvider>
           <Header />
           
-        <main className="z-0 xs:flex sm:flex md:flex xs:absolute md:static flex-col inset-0 w-[100vw] h-[100vh] xs:overflow-scroll md:overflow-hidden justify-center">
+        <main className="z-0 xs:flex sm:flex md:flex xs:absolute md:static flex-col inset-0 w-[100vw] h-[100vh] overflow-y-scroll justify-center">
           {children}
         </main>
         </AppContextProvider>

@@ -27,7 +27,7 @@ export default function Accordion() {
   return (
     <div className="flex justify-center">
         <div
-        className="  w-[90%] h-auto grid grid-cols-1 grid-rows-auto p-9 border rounded overflow-scroll add-blur"
+        className="w-[90%] h-auto grid grid-cols-1 grid-rows-auto p-9 border rounded overflow-scroll add-blur"
         style={{rowGap: "24px"}}
         >
             {

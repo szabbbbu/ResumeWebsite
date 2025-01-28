@@ -10,7 +10,7 @@ function HeaderComponent() {
     if (activateMenu)
         return(
             /**TODO: make the header animate away with a button */
-            <section className={`${menuHidden ? "w-0" : "md:w-[25%] lg:w-[25%] xl:w-[25%] 2xl:w-[25%] sm:w-[100%] xs:w-[100%] z-[1]"} transition-[width] flex flex-col items-start justify-start overflow-hidden`}>
+            <section className={`${menuHidden ? "w-0" : "md:w-[25%] lg:w-[25%] xl:w-[25%] 2xl:w-[25%] sm:w-[100%] xs:w-[100%] z-[1]"} transition-[width] flex flex-col items-start justify-start overflow-scroll`}>
                 <HeaderControllerBtn />
                 <nav
                 className={`w-full flex flex-col justify-start items-start h-full bg-rgba`}
