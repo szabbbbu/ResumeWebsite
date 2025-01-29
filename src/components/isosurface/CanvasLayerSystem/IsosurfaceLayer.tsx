@@ -326,7 +326,7 @@ function IsoLayer() {
     /** INITIALIZE GRID */
     useEffect(() => {
         threshold.current = (window.innerWidth < mobLim) ? 0.5 : 1;
-        dim.current = (window.innerWidth < mobLim) ? 10 : 64;
+        dim.current = 10;
         const w = window.innerWidth;
         const h = window.innerHeight;
         const gridInstance = new Grid(dim.current, w, h);
@@ -337,7 +337,7 @@ function IsoLayer() {
                 ctx.imageSmoothingEnabled = true;
                 ctx.imageSmoothingQuality = "high";
             }
-        }   
+        }
         //start marching squares
         update();
         return () => {
@@ -351,18 +351,9 @@ function IsoLayer() {
     useEffect(() => {
         function handleCanvasResize() {
             if (layerRef.current) {
-                if (window.innerWidth > mobLim && dim.current == 8) {
-                    // console.log("reinit grid", dim.current)
-                    dim.current = 64;
-                    const gridInstance = new Grid(64, window.innerWidth, window.innerHeight);
-                    isoGrid2.current = gridInstance;
-                }
-                else if (window.innerWidth <= mobLim && dim.current == 64) {
-                    // console.log("reinit grid", dim.current)
-                    dim.current = 8;
-                    const gridInstance = new Grid(8, window.innerWidth, window.innerHeight);
-                    isoGrid2.current = gridInstance;
-                }
+                const newCols = Math.floor(window.innerWidth / 16);
+                const gridInstance = new Grid(newCols, window.innerWidth, window.innerHeight)
+                isoGrid2.current = gridInstance;
                 isoGrid2.current?.updateGridSize(window.innerWidth, window.innerHeight);
                 layerRef.current.resizeCanvas(window.innerWidth, window.innerHeight);
                 threshold.current = lerp(window.innerWidth, 300, 2100, 1, 2.0);
