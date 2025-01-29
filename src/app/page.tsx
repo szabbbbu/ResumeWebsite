@@ -22,7 +22,7 @@ export default function Home() {
             </h1>
           </Animated>
           <Animated delay={160}>
-            <h1 className="text-2xl">
+            <h1 className="text-2xl text-center uppercase">
               📍 Budapest, Hungary
             </h1>
           </Animated>

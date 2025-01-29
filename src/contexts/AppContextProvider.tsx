@@ -17,18 +17,14 @@ function AppCtx({children}: Props) {
         function handleResize() {
             setAppWidth(window.innerWidth);
             if (window.innerWidth < 768) {
-                setMenuHidden(true);
+                if (window.innerWidth < appWidth) setMenuHidden(true);
             }
-            // else {
-            //     // setMenuHidden(false);
-            // }
             setActivateMenu(true);
         }
         handleResize();
         window.addEventListener("resize", handleResize);
         return () => {
             window.removeEventListener("resize", handleResize);
-
         }
     }, [appWidth])
     return(
