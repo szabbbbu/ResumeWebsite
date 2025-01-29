@@ -54,7 +54,7 @@ function IsoLayer() {
     const layerRef = useRef<I_CanvasLayer>(null);
     const {circles2} = useIsoContext();
     const animFrameId = useRef<number | null>(null)
-    const threshold = useRef<number>(3);
+    const threshold = useRef<number>(0);
     const dim = useRef<number>(64);
     const isoGrid2 = useRef<Grid | null>(null);
     const mobLim = 768;
@@ -292,12 +292,13 @@ function IsoLayer() {
                     circles2.current.forEach(circle => {
                         const circlePos: Pair = circle.getPos();
                         const newDistance = getDistance(point.getXPos(), point.getYPos(), circlePos.X, circlePos.Y);
-                        inverseSum += 1/newDistance
+                        const influence = Math.exp(-newDistance / circle.radius); // Use EXPONENTIAL DECAY
+                        inverseSum += influence;
                         distValuesPerCircle.push(newDistance);
                         // point.setValue(newDistance);
                     });
                     // const normVal = normalize(inverseSum*100, 0, 3); 
-                    const normVal = inverseSum*100
+                    const normVal = inverseSum*6
                     if (normVal >= threshold.current) {
                         ctx.fillStyle = "blue";
                         point.setOccupied(true);
@@ -324,7 +325,7 @@ function IsoLayer() {
 
     /** INITIALIZE GRID */
     useEffect(() => {
-        threshold.current = (window.innerWidth < mobLim) ? 3 : 2;
+        threshold.current = (window.innerWidth < mobLim) ? 0.5 : 1;
         dim.current = (window.innerWidth < mobLim) ? 10 : 64;
         const w = window.innerWidth;
         const h = window.innerHeight;
@@ -351,20 +352,20 @@ function IsoLayer() {
         function handleCanvasResize() {
             if (layerRef.current) {
                 if (window.innerWidth > mobLim && dim.current == 8) {
-                    console.log("reinit grid", dim.current)
+                    // console.log("reinit grid", dim.current)
                     dim.current = 64;
                     const gridInstance = new Grid(64, window.innerWidth, window.innerHeight);
                     isoGrid2.current = gridInstance;
                 }
                 else if (window.innerWidth <= mobLim && dim.current == 64) {
-                    console.log("reinit grid", dim.current)
+                    // console.log("reinit grid", dim.current)
                     dim.current = 8;
                     const gridInstance = new Grid(8, window.innerWidth, window.innerHeight);
                     isoGrid2.current = gridInstance;
                 }
                 isoGrid2.current?.updateGridSize(window.innerWidth, window.innerHeight);
                 layerRef.current.resizeCanvas(window.innerWidth, window.innerHeight);
-                threshold.current = lerp(window.innerWidth, 300, 2100, 2.7, 2.0);
+                threshold.current = lerp(window.innerWidth, 300, 2100, 1, 2.0);
             }
         }
         handleCanvasResize();

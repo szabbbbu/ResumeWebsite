@@ -27,9 +27,9 @@ function Client() {
             for (let i = 0; i < 7; i++) {
                 let randRadius: number;
                 if (i % 2 == 0) // big circle
-                    randRadius = Math.floor(Math.random() * (m/16) + m/12);
+                    randRadius = Math.floor(Math.random() * (m/12) + m/12);
                 else // small circle
-                    randRadius = Math.floor((Math.random() * m/20) + m/16);
+                    randRadius = Math.floor((Math.random() * m/12) + m/16);
                 const randX = Math.floor(Math.random() * (window.innerWidth - (2*(randRadius + 60))) + randRadius + 60);
                 const randY = Math.floor(Math.random() * (window.innerHeight - (2*(randRadius + 60))) + randRadius + 60);
                 // console.log("rand:",appHeight, randX, randY)

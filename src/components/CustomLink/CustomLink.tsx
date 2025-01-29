@@ -4,7 +4,8 @@ import Styles from "./CustomLink.module.css";
 import { usePathname, useRouter } from "next/navigation";
 import { useAppContext } from "@/contexts/useAppContext";
 
-//TODO: FIX NAVIGATION TO WORK WITH ROUTER CALLS, NO LINK
+//TODO: FIX NAVIGATION TO WORK WITH ROUTER CALLS, NO LINK 
+// why?
 
 type Props = {
     to: string;
