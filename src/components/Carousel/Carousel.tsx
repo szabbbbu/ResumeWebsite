@@ -27,7 +27,7 @@ const gitLinks = [
 ];
 
 const demoLinks = [
-  "https://mamont.us",
+  "https://slidesdemo.vercel.app/",
   "https://akropoleisz.com"
 ];
 
@@ -170,10 +170,7 @@ export default function Carousel() {
             <Descs />
 
           </div>
-          
         </div>
-
-        
       </div> {/** content */}
 
     <RightBtn />
@@ -201,10 +198,10 @@ export default function Carousel() {
           <tbody className="">
             <tr className="">
               <td className="">
-                <div className="flex justify-evenly hover:scale-105 transition-transform">
+                <div className="flex justify-evenly">
                   {
                   techIcons[currImg].map((icon, i) => {
-                    return <div key={i}>{icon}</div>
+                    return <div className="hover:scale-105 transition-transform" key={i}>{icon}</div>
                   })
                   }
                 </div>

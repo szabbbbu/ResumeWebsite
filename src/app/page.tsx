@@ -18,12 +18,7 @@ export default function Home() {
         <div className="flex space-x-2">
           <Animated delay={110} > 
             <h1 className="text-2xl text-center uppercase">
-              Full stack engineer
-            </h1>
-          </Animated>
-          <Animated delay={160}>
-            <h1 className="text-2xl text-center uppercase">
-              📍 Budapest, Hungary
+              Software Developer
             </h1>
           </Animated>
 
