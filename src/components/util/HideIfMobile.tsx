@@ -9,7 +9,6 @@ import { useAppContext } from "@/contexts/useAppContext";
  * 
  * 
  */
-//true == show content
 
 
 export function showContentIfMobileMenuHidden(): boolean {

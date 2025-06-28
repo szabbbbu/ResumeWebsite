@@ -26,7 +26,6 @@ class GridPoints {
         this.widthInterval = this.Width / this.Cols;
         this.heightInterval = this.Height / this.Rows;
         this.GridPoints = this.assembleGridPoints();
-        console.log("grid created");
     }
     
     private assembleGridPoints(): GridPoint[][] {

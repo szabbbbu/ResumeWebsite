@@ -83,7 +83,6 @@ function IsoLayer() {
         const sideBScalingFactor = lerp(threshold.current, topRight.getValue(), btmRight.getValue());
         const sideCScalingFactor = lerp(threshold.current, btmLeft.getValue(),btmRight.getValue());
         const sideDScalingFactor = lerp(threshold.current, topLeft.getValue(), btmLeft.getValue());
-        // console.log(sideDScalingFactor);
         const f = 0
         /** Square sides */
         const sideA: Pair = new Pair(
@@ -312,10 +311,6 @@ function IsoLayer() {
                     if (colNum > 0 && rowNum > 0) {
                         determineContour(point, rowNum, colNum, currGrid, ctx);
                     }
-                    // ctx.beginPath();
-                    // ctx.arc(point.getXPos(), point.getYPos(), 1, 0, 360)
-                    // ctx.fill();
-                    // ctx.fillText(`${point.getValue().toFixed(2)}`, point.getXPos() + 10, point.getYPos() + 10)
                 })
             })
             isoGrid2.current.setGrid(currGrid);

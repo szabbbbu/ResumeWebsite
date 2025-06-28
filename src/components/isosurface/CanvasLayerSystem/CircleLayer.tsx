@@ -1,5 +1,5 @@
 "use client"
-import {useEffect, useRef, memo, useCallback} from "react"
+import {useEffect, useRef, memo, useCallback, useState} from "react"
 import CanvasLayer from "./CanvasLayer"
 import Circle from "../ShapeSystem/Circle";
 import useIsoContext from "@/contexts/isosurface/useIsoContext";
@@ -17,6 +17,7 @@ function Client() {
     const { circles2} = useIsoContext();
     const layerRef = useRef<I_CanvasLayer>(null);
     const animFrameId = useRef<number | null>(null);
+    const prevWidth = useRef<number>(0)
     // console.log("WHAT")
 
     const generateCircles = useCallback((ctx: CanvasRenderingContext2D) => {
@@ -27,7 +28,7 @@ function Client() {
             for (let i = 0; i < 7; i++) {
                 let randRadius: number;
                 if (i % 2 == 0) // big circle
-                    randRadius = Math.floor(Math.random() * (m/12) + m/12);
+                    randRadius = Math.floor(Math.random() * (m/14) + m/14);
                 else // small circle
                     randRadius = Math.floor((Math.random() * m/12) + m/16);
                 const randX = Math.floor(Math.random() * (window.innerWidth - (2*(randRadius + 60))) + randRadius + 60);
@@ -41,6 +42,20 @@ function Client() {
         circles2.current = circles
     }, [circles2.current]);
 
+    const decreaseCircleSize = useCallback(() => {
+        for (let i = 0; i < circles2.current.length; i++) {
+            if (circles2.current[i].radius > 60) {
+                circles2.current[i].radius -= (Math.random() * .2) + .2
+             }
+        }
+    }, [circles2.current])
+    const increaseCircleSize = useCallback(() => {
+        for (let i = 0; i < circles2.current.length; i++) {
+            if (circles2.current[i].radius < 120) {
+                circles2.current[i].radius += (Math.random() * .2) + .2
+            }
+        }
+    }, [circles2.current])
 
     /** RUNS ON STARTUP */
     useEffect(() => {
@@ -53,6 +68,8 @@ function Client() {
                 generateCircles(ctx);
             }
         }
+        prevWidth.current = window.innerWidth
+        // console.log("WIDTH: ", prevWidth)
     }, []);
 
     /** HANDLES ANIMATION */
@@ -79,8 +96,7 @@ function Client() {
                     ctx.fill();
                     ctx.stroke();
                 }
-                // circle.drawShape()
-                // circle.getGridStatus();
+
             })
             animFrameId.current = requestAnimationFrame(animate);
         }
@@ -95,7 +111,19 @@ function Client() {
     useEffect(() => {
         function handleCanvasResize() {
             if(layerRef.current) {
+
                 layerRef.current.resizeCanvas(window.innerWidth, window.innerHeight);
+            }
+
+            const ctx = layerRef.current?.getCanvasContext()
+            if (ctx) {
+                if (window.innerWidth < prevWidth.current) {
+                    decreaseCircleSize()
+                }
+                else if (window.innerWidth > prevWidth.current) {
+                    increaseCircleSize()
+                }
+                prevWidth.current = window.innerWidth
             }
         }
 

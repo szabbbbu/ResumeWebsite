@@ -3,7 +3,7 @@ import AccordionItem from "@/components/Accordion/AccordionItem";
 const AccordionData = [
     {
         title: "Bespoke website Development / Maintenance",
-        body:"I can take any design document and turn it into a fast-loading & responsive modern web application. I handle everything from UI to the server logic that runs the site. Following the completion of your site, I offer hosting and maintenance services for 24/7 fixes and improvements. I work closely with clients to ensure the app perfectly fits their vision",
+        body:"I handle everything from UI to the server logic that runs the site. Following the completion of your site, I offer hosting and maintenance services for 24/7 fixes and improvements. I work closely with clients to ensure the app perfectly fits their vision",
         cta: "Contact"
     },
     {
